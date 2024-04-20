@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary Color -->
+    <color name="Primary_700">#0E21A0</color>
+    <color name="Primary_500">#034BD9</color>
+    <color name="Primary_200">#BFD7FF</color>
+    <color name="Primary_100">#E4EDFF</color>
+
+    <!-- Neutral Color -->
+    <color name="Neutral_900">#2D2D2D</color>
+    <color name="Neutral_500">#CBCBCB</color>
+    <color name="Neutral_200">#F1F1F1</color>
+    <color name="Neutral_100">#FFFFFF</color>
+
+    <!-- Semantic  Color -->
+    <color name="Semantic_700">#EC1D2B</color>
+    <color name="Semantic_500">#FFC50A</color>
+    <color name="Semantic_100">#FEE8EB</color>
+
+</resources>

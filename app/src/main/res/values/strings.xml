@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Final Project</string>
+
+    //Headings splash
+    <string name="heading_one">Fast &amp; Convenient</string>
+    <string name="heading_two">Good price</string>
+    <string name="heading_three">Flexible exchange policy</string>
+    <string name="heading_fourth">Be proactive in scheduling.</string>
+
+    //Description splash
+    <string name="desc_one">The app is clearly easy to search and pay for</string>
+    <string name="desc_two">Dont worry about the price because there is a comparison of prices between hotels</string>
+    <string name="desc_three">Change your room before the specified check-in deadline without worrying about any fees.</string>
+    <string name="desc_fourth">Booking becomes easier with Toogo</string>
+
+</resources>
