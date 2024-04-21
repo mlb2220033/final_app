@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.finalproject"
-        minSdk = 34
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -49,4 +49,8 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     implementation("com.google.code.gson:gson:2.9.1")
+
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation ("com.firebaseui:firebase-ui-database:8.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 }
