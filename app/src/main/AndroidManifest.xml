@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".booking.SuccessfulActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.PaymentMethodActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.ViewBookingActivity"
             android:exported="false" />
         <activity
