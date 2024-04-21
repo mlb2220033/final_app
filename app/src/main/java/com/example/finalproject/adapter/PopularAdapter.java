@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalproject.databinding.ViewholderPopularBinding;
 import com.example.finalproject.model.ItemsModel;
 
 import com.google.android.gms.common.api.Api;
