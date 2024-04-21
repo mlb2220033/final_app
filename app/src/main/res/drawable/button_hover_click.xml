@@ -17,7 +17,7 @@
             <corners android:radius="15dp"/>
         </shape>
         <!-- Đặt màu văn bản khi hover -->
-        <color android:color="@color/Primary_500"/>
+        <color android:color="@color/Neutral_500"/>
     </item>
     <!-- Màu nền và màu văn bản mặc định -->
     <item>

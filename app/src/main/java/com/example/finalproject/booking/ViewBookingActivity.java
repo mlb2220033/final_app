@@ -25,6 +25,11 @@ public class ViewBookingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_booking);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+/*        Objects.requireNonNull(getSupportActionBar()).hide();*/
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
     }
 }

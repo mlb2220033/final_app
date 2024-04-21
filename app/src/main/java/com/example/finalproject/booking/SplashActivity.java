@@ -2,7 +2,6 @@ package com.example.finalproject.booking;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -30,10 +29,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         addViews();
         addEvents();
-        splashDisplayed();
+/*        splashDisplayed();*/
     }
 
-    private void splashDisplayed() {
+/*    private void splashDisplayed() {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean splashDisplayed = preferences.getBoolean(PREF_SPLASH_DISPLAYED, false);
 
@@ -46,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
             finish();
             return;
         }
-    }
+    }*/
 
     private void addEvents() {
         btnBack.setVisibility(View.GONE);

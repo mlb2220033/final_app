@@ -14,18 +14,13 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.finalproject.R;
 
 public class SplashAdapter extends PagerAdapter {
-
     Context context;
-
     int images[] = {
-
             R.drawable.image1,
             R.drawable.image2,
             R.drawable.image3,
             R.drawable.image4
-
     };
-
     int headings[] = {
 
             R.string.heading_one,
@@ -33,21 +28,15 @@ public class SplashAdapter extends PagerAdapter {
             R.string.heading_three,
             R.string.heading_fourth
     };
-
     int description[] = {
-
             R.string.desc_one,
             R.string.desc_two,
             R.string.desc_three,
             R.string.desc_fourth
     };
-
     public SplashAdapter(Context context){
-
         this.context = context;
-
     }
-
     @Override
     public int getCount() {
         return  headings.length;
@@ -72,17 +61,11 @@ public class SplashAdapter extends PagerAdapter {
         slidetitleimage.setImageResource(images[position]);
         slideHeading.setText(headings[position]);
         slideDesciption.setText(description[position]);
-
         container.addView(view);
-
         return view;
-
     }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
         container.removeView((LinearLayout)object);
-
     }
 }
