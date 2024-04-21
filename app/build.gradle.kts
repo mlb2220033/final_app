@@ -23,7 +23,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    // a comment
+
     buildFeatures{
         viewBinding = true
         dataBinding = true
