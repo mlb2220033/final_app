@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openHomeScreen(View view) {
-        Intent intent = new Intent(this, PaymentActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
 
 //        Intent intent = new Intent(this, PaymentActivity.class);
 //        Intent intent = new Intent(this, ResultSearchActivity.class);
