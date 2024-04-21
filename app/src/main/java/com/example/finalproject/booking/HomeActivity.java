@@ -64,7 +64,7 @@ public class HomeActivity extends FireBaseActivity {
                         binding.recycleViewRecom.setLayoutManager(layoutManager);
                         binding.recycleViewRecom.setAdapter(new RecomAdapter(items));
                     }
-                    binding.progressBarItem.setVisibility(View.VISIBLE);
+                    binding.progressBarItem.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -93,7 +93,7 @@ public class HomeActivity extends FireBaseActivity {
                         binding.recycleViewPopular.setLayoutManager(layoutManager);
                         binding.recycleViewPopular.setAdapter(new PopularAdapter(items));
                     }
-                    binding.progressBarPopular.setVisibility(View.VISIBLE);
+                    binding.progressBarPopular.setVisibility(View.INVISIBLE);
                 }
             }
 
