@@ -141,13 +141,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                 } else if (TextUtils.isEmpty(txtRePwd)) {
                     Toast.makeText(RegisterActivity.this, "Please Confirm Password", Toast.LENGTH_SHORT).show();
-                    edtPasswordRegister.setError("Password Confirmation is required");
-                    edtPasswordRegister.requestFocus();
+                    edtRePasswordRegister.setError("Password Confirmation is required");
+                    edtRePasswordRegister.requestFocus();
 
                 } else if (!txtPwd.equals(txtRePwd)) {
                     Toast.makeText(RegisterActivity.this, "Please fill same password", Toast.LENGTH_SHORT).show();
-                    edtPasswordRegister.setError("Password Confirmation is required");
-                    edtPasswordRegister.requestFocus();
+                    edtRePasswordRegister.setError("Password Confirmation is required");
+                    edtRePasswordRegister.requestFocus();
 
                     // Clear cái pwd sai
                     edtPasswordRegister.clearComposingText();
