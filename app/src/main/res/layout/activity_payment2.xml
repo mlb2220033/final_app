@@ -410,7 +410,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/light_blue_background"
+            android:background="@drawable/btn_blue_background"
             android:text="CONFIRM"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
