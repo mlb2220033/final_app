@@ -20,12 +20,6 @@
             android:name=".booking.Payment2Activity"
             android:exported="false" />
         <activity
-            android:name=".booking.SuccessfulActivity"
-            android:exported="false" />
-        <activity
-            android:name=".booking.PaymentMethodActivity"
-            android:exported="false" />
-        <activity
             android:name=".booking.ViewBookingActivity"
             android:exported="false" />
         <activity

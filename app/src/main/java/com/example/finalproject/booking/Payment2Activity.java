@@ -122,7 +122,7 @@ public class Payment2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Payment2Activity.this);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Payment2Activity.this,R.style.AppBottomSheetDialogTheme);
                 View view1 = LayoutInflater.from(Payment2Activity.this).inflate(R.layout.add_new_card,null);
                 bottomSheetDialog.setContentView(view1);
                 bottomSheetDialog.show();
