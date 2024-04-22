@@ -16,10 +16,10 @@ import com.example.finalproject.R;
 public class SplashAdapter extends PagerAdapter {
     Context context;
     int images[] = {
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4
+            R.drawable.img1,
+            R.drawable.img2,
+            R.drawable.img3,
+            R.drawable.img4
     };
     int headings[] = {
 

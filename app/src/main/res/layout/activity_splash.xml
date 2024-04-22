@@ -14,7 +14,6 @@
         android:background="#00000000"
         android:text="Skip"
         android:textColor="@color/Primary_500"
-
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
