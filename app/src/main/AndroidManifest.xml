@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".booking.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.ProfileMainActivity"
             android:exported="false" />
         <activity

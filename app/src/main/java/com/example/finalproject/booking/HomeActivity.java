@@ -65,21 +65,7 @@ public class HomeActivity extends FireBaseActivity {
             }
         });
 
-        Favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
-                //startActivity(intent);
-            }
-        });
 
-        Chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
-                //startActivity(intent);
-            }
-        });
     }
 
     private void intitRecom() {
