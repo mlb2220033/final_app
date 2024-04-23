@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,8 @@ import com.example.finalproject.booking.RegisterActivity;
 public class LoginActivity extends AppCompatActivity {
 
     EditText edtLPassword;
+    TextView txtForgetPassword;
+
     ImageView imgShowHidePwdLogin;
     Button btnLogin;
 
@@ -58,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addViews() {
         edtLPassword = findViewById(R.id.edtLPassword);
+        txtForgetPassword =findViewById(R.id.txtForgetPassword);
 
         imgShowHidePwdLogin =findViewById(R.id.imgShowHidePwdLogin);
         imgShowHidePwdLogin.setImageResource(R.drawable.eye_hide);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
@@ -30,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtFullName, edtUserName, edtPasswordRegister,
             edtRePasswordRegister, edtEmail, edtPhone;
     private ProgressBar progressBar;
+    private static final String TAG="RegisterActivity";
 
     ImageView imgShowHidePwdRegister, imgShowHideRePwdRegister;
     Button btnRegister;
@@ -182,11 +187,27 @@ public class RegisterActivity extends AppCompatActivity {
                                                                             | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();*/
+                        } else {
+                            try{
+                                throw task.getException();
+                                } catch (FirebaseAuthWeakPasswordException e){
+                                    edtPasswordRegister.setError("Your password is to weak. Kindly use a mix of alphabets, numbers and special characters");
+                                    edtPasswordRegister.requestFocus();
+                                } catch (FirebaseAuthInvalidCredentialsException e){
+                                    edtPasswordRegister.setError("Your email is invalid or already in use. Kindly re-enter");
+                                    edtPasswordRegister.requestFocus();
+                                } catch (FirebaseAuthUserCollisionException e) {
+                                    edtPasswordRegister.setError("User is already registered with this email. Use another username");
+                                    edtPasswordRegister.requestFocus();
+                                } catch (Exception e){
+                                    Log.e(TAG, e.getMessage());
+                                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 
-
+                                }
                         }
                     }
                 });
+
     }
 
     public void signInClicked(View view) {
