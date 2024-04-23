@@ -30,6 +30,13 @@
         <item name="android:background">@drawable/rounded_dialog</item>
     </style>
 
+    <style name="notiModelSwtich" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/Primary_700</item>
+        <item name="colorSwitchThumbNormal">@color/Primary_200</item>
+        <item name="android:colorForeground">#990E21A0</item>
+
+    </style>
+
     <style name="ButtonShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">120dp</item>
