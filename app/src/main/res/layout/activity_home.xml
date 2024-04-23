@@ -488,9 +488,10 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <LinearLayout
+                    android:id="@+id/Home"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -534,9 +535,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Favorite"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:orientation="vertical">
 
@@ -556,9 +558,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Chat"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:orientation="vertical">
 
@@ -578,9 +581,10 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Profile"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.2"
                     android:orientation="vertical">
 
