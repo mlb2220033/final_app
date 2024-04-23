@@ -197,7 +197,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUserInfo() {
         // change progress dialog mess
-        progressDialog.setMessage("Saving User Info..");
+        progressDialog.setMessage("Saving User Info");
         //get current timestamp
         long timestamp = MyUtils.timestamp();
         String registeredUserEmail = firebaseAuth.getCurrentUser().getEmail();
