@@ -31,7 +31,7 @@ public class PaymentActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaymentActivity.this, PaymentActivity.class);
+                Intent intent = new Intent(PaymentActivity.this, Payment2Activity.class);
                 startActivity(intent);
             }
         });

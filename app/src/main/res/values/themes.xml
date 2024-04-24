@@ -20,6 +20,23 @@
     <style name="ProcessBar" parent="">
         <item name="colorAccent">@color/Primary_500</item>
     </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModelStyle</item>
+    </style>
+    <style name="AppModelStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+    <style name="notiModelSwtich" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/Primary_700</item>
+        <item name="colorSwitchThumbNormal">@color/Primary_200</item>
+        <item name="android:colorForeground">#990E21A0</item>
+
+    </style>
+
     <style name="ButtonShape" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">120dp</item>
@@ -29,6 +46,7 @@
             @style/ButtonShape
         </item>
     </style>
+
     <style name="Theme.Booking" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>

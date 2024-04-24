@@ -1,9 +1,11 @@
 package com.example.finalproject.booking;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 
 
+import com.example.finalproject.R;
 import com.example.finalproject.adapter.PopularAdapter;
 import com.example.finalproject.adapter.RecomAdapter;
 import com.example.finalproject.adapter.SliderAdapter;
@@ -33,6 +36,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends FireBaseActivity {
     private ActivityHomeBinding binding;
+    LinearLayout Profile, Favorite, Chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,25 @@ public class HomeActivity extends FireBaseActivity {
 
         initBanner();
         initPopular();
-        intitRecom();
+        intitRecom();addViews();
+        addEvents();
+    }
+
+    private void addViews() {
+        Profile = findViewById(R.id.Profile);
+
+    }
+
+    private void addEvents() {
+        Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void intitRecom() {
