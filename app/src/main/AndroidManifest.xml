@@ -32,6 +32,12 @@
             android:name=".booking.ResultSearchActivity"
             android:exported="false" />
         <activity
+            android:name=".booking.HotelDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.ViewRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.PaymentActivity"
             android:exported="false" />
         <activity

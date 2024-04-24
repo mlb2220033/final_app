@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
+import com.example.finalproject.booking.ViewBookingActivity;
 import com.example.finalproject.model.Room;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +48,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
         holder.txtRoomPrice.setText(String.valueOf(room.getRoomPrice()));
 
         Picasso.get().load(room.getRoomImage()).into(holder.imgRoom);
+
+        holder.btnReserver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context activityContext = v.getContext();
+                Intent intent = new Intent(activityContext, ViewBookingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activityContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,6 +68,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
 
     public class ViewHodel extends RecyclerView.ViewHolder {
         ImageView imgRoom;
+        Button btnReserver;
         TextView txtRoomName, txtroomArea, txtroomBed,txtRoomPrice;
         public ViewHodel(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +78,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
             txtroomBed = itemView.findViewById(R.id.txtroomBed);
             txtRoomPrice = itemView.findViewById(R.id.txtRoomPrice);
             imgRoom = itemView.findViewById(R.id.imgRoom);
+            btnReserver = itemView.findViewById(R.id.btnReserver);
         }
     }
 }

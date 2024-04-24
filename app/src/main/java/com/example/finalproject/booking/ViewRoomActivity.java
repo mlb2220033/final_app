@@ -76,8 +76,5 @@ public class ViewRoomActivity extends AppCompatActivity {
         rvRoom.setAdapter(roomAdapter);
     }
 
-    public void openViewBooking(View view) {
-        Intent intent = new Intent(getApplicationContext(), ViewBookingActivity.class);
-        startActivity(intent);
-    }
+
 }

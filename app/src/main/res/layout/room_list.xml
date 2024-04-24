@@ -89,8 +89,7 @@
                 android:textColor="@color/Neutral_100"
                 android:layout_gravity="center_vertical"
                 android:text="Reserver"
-                android:textSize="14dp"
-                android:onClick="openViewBooking"/>
+                android:textSize="14dp" />
 
         </LinearLayout>
 
