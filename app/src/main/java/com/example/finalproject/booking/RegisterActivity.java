@@ -58,8 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-
-
         imgShowHidePwdRegister = findViewById(R.id.imgShowHidePwdRegister);
         imgShowHideRePwdRegister = findViewById(R.id.imgShowHideRePwdRegister);
         imgShowHidePwdRegister.setImageResource(R.drawable.eye_hide);
@@ -175,8 +173,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account");
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(txtEmail, txtPwd)
-            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(txtEmail, txtPwd)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     // User Register success, save info to fb db
@@ -190,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     Log.e(TAG, "onFailure", e);
                     progressDialog.dismiss();
-                    MyUtils.toast(RegisterActivity.this, "Failed due to"+e.getMessage());
+                    MyUtils.toast(RegisterActivity.this, "Failed er due to"+e.getMessage());
                 }
             });
     }

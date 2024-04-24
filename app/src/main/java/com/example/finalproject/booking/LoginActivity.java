@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LOGIN_TAG";
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
