@@ -1,5 +1,8 @@
 package com.example.finalproject.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +14,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
+import com.example.finalproject.booking.HotelDetailActivity;
 import com.example.finalproject.model.Hotel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
-public class HotelAdapter extends FirebaseRecyclerAdapter<Hotel,HotelAdapter.ViewHodel> {
+import java.util.ArrayList;
 
-    public HotelAdapter(@NonNull FirebaseRecyclerOptions<Hotel> options) {
-        super(options);
+public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
+    ArrayList<Hotel> hotelList;
+    Context context;
+
+    public HotelAdapter(ArrayList<Hotel> listHotet, Context context) {
+        this.hotelList = listHotet;
+        this.context = context;
+    }
+
+    @NonNull
+    @Override
+    public HotelAdapter.ViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.hotel_list,parent,false);
+        return new ViewHodel(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull HotelAdapter.ViewHodel holder, int position, @NonNull Hotel hotel) {
+    public void onBindViewHolder(@NonNull HotelAdapter.ViewHodel holder, int position) {
+
+        Hotel hotel = hotelList.get(position);
 
         holder.txtHotelName.setText(hotel.getHotelName());
         holder.txtHotelAddress.setText(hotel.getHotelAddress());
@@ -41,9 +56,6 @@ public class HotelAdapter extends FirebaseRecyclerAdapter<Hotel,HotelAdapter.Vie
             public void onClick(View v) {
                 holder.imgLike.setVisibility(View.GONE);
                 holder.imgDisLike.setVisibility(View.VISIBLE);
-
-//                updateIsLikeInDatabase(song.getSongID(), true);
-
                 Toast.makeText(v.getContext(), "Added to favorites list", Toast.LENGTH_SHORT).show();
             }
         });
@@ -53,21 +65,35 @@ public class HotelAdapter extends FirebaseRecyclerAdapter<Hotel,HotelAdapter.Vie
             public void onClick(View v) {
                 holder.imgDisLike.setVisibility(View.GONE);
                 holder.imgLike.setVisibility(View.VISIBLE);
-
-//                updateIsLikeInDatabase(song.getSongID(), false);
-
                 Toast.makeText(v.getContext(), "Removed from favorites list", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, HotelDetailActivity.class);
+
+                intent.putExtra("hotelID", hotel.getHotelID());
+                Log.d("HotelAdapter", "Hotel ID: " + hotel.getHotelID());
+
+                intent.putExtra("txtHotelName",hotel.getHotelName());
+                intent.putExtra("txtHotelAddress",hotel.getHotelAddress());
+                intent.putExtra("txtPricePerNight",hotel.getPricePerNight());
+                intent.putExtra("imgHotel",hotel.getHotelImage());
+                intent.putExtra("txtStarRating",hotel.getStarRating());
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
 
             }
         });
     }
 
-    @NonNull
     @Override
-    public HotelAdapter.ViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hotel_list,parent,false);
-        return new ViewHodel(view);
+    public int getItemCount() {
+        return hotelList.size();
     }
+
 
     public class ViewHodel extends RecyclerView.ViewHolder {
         ImageView imgHotel, imgLike, imgDisLike;

@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/transparent"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,8 +80,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:background="@drawable/button_design"
+                    android:background="@drawable/button_hover_click"
                     android:text="5"
                     android:drawableTop="@drawable/ic_five_star"
                     />
@@ -91,7 +89,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:background="@drawable/button_design"
                     android:text="4"
                     android:drawableTop="@drawable/ic_four_star"/>
@@ -100,7 +97,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:background="@drawable/button_design"
                     android:text="3"
                     android:drawableTop="@drawable/ic_3_star"/>
@@ -109,7 +105,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:background="@drawable/button_design"
                     android:text="2"
                     android:drawableTop="@drawable/ic_2_star"/>
@@ -119,7 +114,6 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:background="@drawable/button_design"
                     android:text="1"
                     android:drawableTop="@drawable/ic_1_star"/>
@@ -261,14 +255,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:background="@drawable/round_content"
+            android:background="@drawable/button_hover_click"
             android:text="Apply"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
-            android:background="@drawable/round_content"
+            android:background="@drawable/button_hover_click"
             android:text="Reset"/>
     </LinearLayout>
 
