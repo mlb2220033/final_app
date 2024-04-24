@@ -1,5 +1,6 @@
 package com.example.finalproject.booking;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,51 +10,78 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalproject.R;
 import com.example.finalproject.databinding.ActivityLoginBinding;
 import com.example.finalproject.model.MyUtils;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
-
     EditText edtPassword;
     ImageView imgShowHidePwdLogin;
     private ActivityLoginBinding binding;
-    private static final String TAG = "LOGIN_TAG";
+    private static final String TAG_E = "LOGIN_EMAIL_TAG";
+    private static final String TAG_G = "LOGIN_GOOGLE_TAG";
+    //    private static final String TAG_P = "LOGIN_PHONE_TAG";
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        imgShowHidePwdLogin = findViewById(R.id.imgShowHidePwdLogin); // Add this line
-        addEvents();
-
+        imgShowHidePwdLogin = findViewById(R.id.imgShowHidePwdLogin);
         Toast.makeText(LoginActivity.this, "You can Login now", Toast.LENGTH_SHORT).show();
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-    }
 
-    private void addEvents() {
+        // Google
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        // handle login btnGG click
+        binding.imgbtnLoginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                beginGoogleLogin();
+            }
+        });
+
+        // Email
         imgShowHidePwdLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,13 +106,122 @@ public class LoginActivity extends AppCompatActivity {
         binding.txtSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterEmailActivity.class));
             }
         });
     }
-    private String txtEmail, txtPwd;
 
-    private void validateData(){
+
+    //Google
+    private void beginGoogleLogin () {
+        Log.d(TAG_G, "beginGoogleLogin");
+        Intent googleSignInIntent = mGoogleSignInClient.getSignInIntent();
+        googleSignInnARL.launch(googleSignInIntent);
+    }
+    private ActivityResultLauncher<Intent> googleSignInnARL = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+                    Log.d(TAG_G, "onActivityResult");
+                    if (o.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = o.getData();
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                        try {
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            Log.d(TAG_G, "onActivityResult: AccountID:" + account.getId());
+                            firebaseAuthWithGoogleAccount(account.getIdToken());
+                        } catch (Exception e) {
+                            Log.e(TAG_G, "onActivityResult", e);
+                        }
+                    } else {
+                        Log.d(TAG_G, "onActivityResult: Cancelled..!");
+                        MyUtils.toast(LoginActivity.this, "Cancelled..!");
+
+                    }
+                }
+            }
+    );
+
+    private void firebaseAuthWithGoogleAccount (String idToken){
+        Log.d(TAG_G, "firebaseAuthWithGoogleAccount: idToken: " + idToken);
+        // AuthCredential to setup credential to signin
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
+        firebaseAuth.signInWithCredential(credential)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        if (authResult.getAdditionalUserInfo().isNewUser()) {
+                            Log.d(TAG_G, "onSuccess: Account Created...");
+                            // New User, acc created and save info in realtimedb
+                            updateUserInfoDb();
+                        } else {
+                            Log.d(TAG_G, "onSuccess: Logged In...");
+                            // New User, acc created
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finishAffinity();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG_G, "onFailure: ", e);
+                    }
+                });
+    }
+
+    private void updateUserInfoDb () {
+        Log.d(TAG_G, "updateUserInfoDb: ");
+
+        progressDialog.setMessage("Saving user Info..");
+        progressDialog.show();
+
+        long timestamp = MyUtils.timestamp();
+        String registeredUserEmail = firebaseAuth.getCurrentUser().getEmail();
+        String registeredUserUid = firebaseAuth.getUid();
+        String name = firebaseAuth.getCurrentUser().getDisplayName();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("email", registeredUserEmail);
+        hashMap.put("full name", name);
+        hashMap.put("username", "");
+        hashMap.put("phone code", "");
+        hashMap.put("phone number", "");
+        hashMap.put("profileImageUrl", "");
+        hashMap.put("timestamp", timestamp);
+        hashMap.put("token", "");
+        hashMap.put("userType", MyUtils.USER_TYPE_GOOGLE);
+        hashMap.put("uid", registeredUserUid);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(registeredUserUid)
+                .setValue(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG_G, "onSuccess: Info Saved...");
+                        progressDialog.dismiss();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finishAffinity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG_G, "onFailure", e);
+                        MyUtils.toast(LoginActivity.this, "Failed to save due to" + e.getMessage());
+                        progressDialog.dismiss();
+                    }
+                });
+
+    }
+
+
+    // Email
+    private String txtEmail, txtPwd;
+    private void validateData() {
         txtEmail = binding.edtEmail.getText().toString().trim();
         txtPwd = binding.edtPassword.getText().toString();
         if (TextUtils.isEmpty(txtEmail)) {
@@ -103,34 +241,30 @@ public class LoginActivity extends AppCompatActivity {
             loginUser();
         }
     }
-
     private void loginUser() {
         progressDialog.setMessage("Logging In...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(txtEmail, txtPwd)
-            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                @Override
-                public void onSuccess(AuthResult authResult) {
-                    Log.d(TAG, "onSuccess: Logged in...");
-                    progressDialog.dismiss();
-
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e(TAG, "onFailure", e);
-                    progressDialog.dismiss();
-                    MyUtils.toast(LoginActivity.this, "Failded due to"+e.getMessage());
-                }
-            });
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Log.d(TAG_E, "onSuccess: Logged in...");
+                        progressDialog.dismiss();
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG_E, "onFailure", e);
+                        progressDialog.dismiss();
+                        MyUtils.toast(LoginActivity.this, "Failed due to" + e.getMessage());
+                    }
+                });
     }
-
     public void signUpClicked(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterEmailActivity.class);
         startActivity(intent);
     }
 }
