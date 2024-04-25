@@ -87,14 +87,14 @@
                                 android:text="Price per night"
                                 android:layout_marginEnd="10dp"
                                 android:textColor="@color/Primary_500"
-                                android:textSize="14sp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="VNĐ"
                                 android:textColor="@color/Primary_500"
-                                android:textSize="14sp"
+                                android:textSize="16sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -148,7 +148,8 @@
                         android:id="@+id/txtHotelDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="Chờ Data"
+                        android:textColor="@color/Neutral_900" />
 
 
                 </LinearLayout>
@@ -162,24 +163,34 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:src="@drawable/edt_background"/>
+                        android:src="@drawable/edt_background" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:text="Facilities"
+                        android:layout_marginBottom="30dp"
+                        android:text="Common Facilities"
                         android:textColor="@color/Neutral_900"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtHotelFacilities"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_gravity="center_horizontal"></androidx.recyclerview.widget.RecyclerView>
 
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:onClick="openFacilitiesDetail"
+                        android:text="See All Facilities"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/Primary_500"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -198,7 +209,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="Policy"
+                        android:text="Review"
                         android:textColor="@color/Neutral_900"
                         android:textSize="16sp"
                         android:textStyle="bold" />

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:theme="@style/AppBottomSheetDialogTheme"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,9 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
+            android:layout_margin="20dp"
             android:text="Filters"
-            android:textColor="@color/Neutral_900"
+            android:textColor="@color/Primary_700"
             android:textSize="18sp"
             android:textStyle="bold" />
 

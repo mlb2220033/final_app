@@ -2,6 +2,9 @@ package com.example.finalproject.booking;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +18,10 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.finalproject.R;
+import com.example.finalproject.adapter.HotelAdapter;
+import com.example.finalproject.adapter.HotelFacilitiesAdapter;
+import com.example.finalproject.model.Hotel;
+import com.example.finalproject.model.HotelFacilities;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,17 +36,41 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     ImageSlider imgSlider;
 
-    TextView txtHotelName, txtHotelAddress, txtPricePerNight,txtStarRating, txtViewRoom;
+    TextView txtHotelName, txtHotelAddress, txtPricePerNight, txtStarRating, txtViewRoom;
     String hotelID;
+    RecyclerView rvFac;
+    HotelFacilitiesAdapter hotelFacilitiesAdapter;
+    ArrayList<HotelFacilities> hotelFacList;
+    FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
         addViews();
-//        addEvents();
         getDataFromPreviousActivity();
         setupImageSlider();
+        getFactilities();
+    }
+
+    private void getFactilities() {
+        firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelFacilities")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            HotelFacilities hotelFac = dataSnapshot.getValue(HotelFacilities.class);
+                            hotelFacList.add(hotelFac);
+                            Log.d("Facilities___", hotelFac.toString());
+                        }
+                        hotelFacilitiesAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
 
@@ -58,8 +89,20 @@ public class HotelDetailActivity extends AppCompatActivity {
         txtPricePerNight = findViewById(R.id.txtPricePerNight);
         txtStarRating = findViewById(R.id.txtStarRating);
 
+//      Slider Image
         imgSlider = findViewById(R.id.imgSlider);
         txtViewRoom = findViewById(R.id.txtViewRoom);
+
+//       Factilities List
+        rvFac = findViewById(R.id.rvFac);
+        hotelFacList = new ArrayList<>();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        hotelFacilitiesAdapter = new HotelFacilitiesAdapter(hotelFacList, getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvFac.setLayoutManager(linearLayoutManager);
+        rvFac.setNestedScrollingEnabled(false);
+        rvFac.setAdapter(hotelFacilitiesAdapter);
+
 
     }
 
@@ -88,6 +131,12 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     public void openViewRoom(View view) {
         Intent intent = new Intent(getApplicationContext(), ViewRoomActivity.class);
+        intent.putExtra("hotelID", hotelID);
+        startActivity(intent);
+    }
+
+    public void openFacilitiesDetail(View view) {
+        Intent intent = new Intent(getApplicationContext(), HotelFacilitiesDetailActivity.class);
         intent.putExtra("hotelID", hotelID);
         startActivity(intent);
     }
