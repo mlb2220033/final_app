@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "697452755216",
+    "firebase_url": "https://bookinghotel-319fa-default-rtdb.firebaseio.com",
     "project_id": "bookinghotel-319fa",
     "storage_bucket": "bookinghotel-319fa.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.example.finalproject"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCSJbN_l64w8CYmq1UFucDphNUsgD2Bt0c"
@@ -20,7 +26,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697452755216:android:b86ca8b1d722632fcd8d95",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSJbN_l64w8CYmq1UFucDphNUsgD2Bt0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
