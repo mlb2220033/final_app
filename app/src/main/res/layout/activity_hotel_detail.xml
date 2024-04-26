@@ -231,54 +231,37 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:src="@drawable/edt_background"/>
+                        android:src="@drawable/edt_background" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="Policy"
+                        android:text="Accommadation Policies"
                         android:textColor="@color/Neutral_900"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPol"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginTop="15dp">
 
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:src="@drawable/edt_background"/>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:text="Policy"
-                        android:textColor="@color/Neutral_900"
-                        android:textSize="16sp"
+                        android:onClick="openPolicies"
+                        android:text="See All Policies"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/Primary_500"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-
                 </LinearLayout>
-
-
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -291,11 +274,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/discount_background"
+        android:background="@drawable/button_hover_click"
         android:elevation="8dp"
         android:text="View Room"
         android:gravity="center"
-        android:textColor="@color/Primary_500"
+        android:textColor="@color/Primary_100"
         android:textSize="18sp"
         android:textStyle="bold"
         android:onClick="openViewRoom"/>

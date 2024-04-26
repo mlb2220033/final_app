@@ -7,7 +7,6 @@
         android:id="@+id/txtFacItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
         android:layout_marginBottom="10dp"
         android:text="Facilities"
         android:textColor="@color/Neutral_900"

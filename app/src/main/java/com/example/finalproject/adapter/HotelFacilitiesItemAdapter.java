@@ -62,7 +62,6 @@ public class HotelFacilitiesItemAdapter extends RecyclerView.Adapter<HotelFacili
             public void onClick(View v) {
                 hotelFac.setExpandable(!hotelFac.isExpandable());
                 list = hotelFac.getNestedList();
-                Log.d("Facilities_Ad", hotelFac.toString());
                 notifyItemChanged(holder.getAdapterPosition());
             }
         });

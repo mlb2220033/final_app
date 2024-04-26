@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +48,7 @@ public class ResultSearchActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
                     recycleList.add(hotel);
+                    Log.d("Facilities", recycleList.toString());
                 }
                 hotelAdapter.notifyDataSetChanged();
             }

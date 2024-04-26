@@ -20,8 +20,11 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesAdapter;
+import com.example.finalproject.adapter.HotelFacilitiesItemAdapter;
+import com.example.finalproject.adapter.HotelPoliciesAdapter;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.HotelFacilities;
+import com.example.finalproject.model.HotelPolicies;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +46,10 @@ public class HotelDetailActivity extends AppCompatActivity {
     ArrayList<HotelFacilities> hotelFacList;
     FirebaseDatabase firebaseDatabase;
 
+    RecyclerView rvPol;
+    List<HotelPolicies> hotelPoliciesList;
+    HotelPoliciesAdapter hotelPoliciesAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +58,30 @@ public class HotelDetailActivity extends AppCompatActivity {
         getDataFromPreviousActivity();
         setupImageSlider();
         getFactilities();
+        getPolicies();
+    }
+
+    private void getPolicies() {
+        firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelPocities")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int count = 0;
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (count >= 2)
+                                break;
+                            HotelPolicies hotelPol = dataSnapshot.getValue(HotelPolicies.class);
+                            hotelPoliciesList.add(hotelPol);
+                            count++;
+                        }
+                        hotelPoliciesAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     private void getFactilities() {
@@ -61,7 +92,6 @@ public class HotelDetailActivity extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             HotelFacilities hotelFac = dataSnapshot.getValue(HotelFacilities.class);
                             hotelFacList.add(hotelFac);
-                            Log.d("Facilities___", hotelFac.toString());
                         }
                         hotelFacilitiesAdapter.notifyDataSetChanged();
                     }
@@ -93,7 +123,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         imgSlider = findViewById(R.id.imgSlider);
         txtViewRoom = findViewById(R.id.txtViewRoom);
 
-//       Factilities List
+//      Factilities List
         rvFac = findViewById(R.id.rvFac);
         hotelFacList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -103,6 +133,15 @@ public class HotelDetailActivity extends AppCompatActivity {
         rvFac.setNestedScrollingEnabled(false);
         rvFac.setAdapter(hotelFacilitiesAdapter);
 
+//      Policies List
+        rvPol = findViewById(R.id.rvPol);
+        rvPol.setHasFixedSize(true);
+        rvPol.setLayoutManager(new LinearLayoutManager(this));
+
+        hotelPoliciesList = new ArrayList<>();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        hotelPoliciesAdapter = new HotelPoliciesAdapter(hotelPoliciesList);
+        rvPol.setAdapter(hotelPoliciesAdapter);
 
     }
 
@@ -137,6 +176,12 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     public void openFacilitiesDetail(View view) {
         Intent intent = new Intent(getApplicationContext(), HotelFacilitiesDetailActivity.class);
+        intent.putExtra("hotelID", hotelID);
+        startActivity(intent);
+    }
+
+    public void openPolicies(View view) {
+        Intent intent = new Intent(getApplicationContext(), HotelPoliciesActivity.class);
         intent.putExtra("hotelID", hotelID);
         startActivity(intent);
     }
