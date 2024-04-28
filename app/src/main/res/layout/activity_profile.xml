@@ -89,12 +89,12 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
 
-                        <com.google.android.material.imageview.ShapeableImageView1
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/txtProfile"
                             android:layout_width="130dp"
                             android:layout_height="130dp"
                             android:scaleType="centerCrop"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView1"
                             android:src="@drawable/ic_avatar" />
 
                     </androidx.cardview.widget.CardView>
