@@ -17,6 +17,11 @@
         <item name="cornerSize">15dp</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.circleImageView1" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="ProcessBar" parent="">
         <item name="colorAccent">@color/Primary_500</item>
     </style>

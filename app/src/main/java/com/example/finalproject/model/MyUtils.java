@@ -1,7 +1,10 @@
 package com.example.finalproject.model;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class MyUtils {
 
@@ -14,6 +17,15 @@ public class MyUtils {
 
     public static long timestamp(){
         return System.currentTimeMillis();
+    }
+
+    public static String formattedTimestampData(Long timestamp){
+        Calendar calendar =Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+
+        String date = DateFormat.format("dd/MM/yyyy",calendar).toString();
+
+        return date;
     }
 
 }

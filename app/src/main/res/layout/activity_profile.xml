@@ -89,7 +89,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
 
-                        <com.google.android.material.imageview.ShapeableImageView
+                        <com.google.android.material.imageview.ShapeableImageView1
                             android:id="@+id/txtProfile"
                             android:layout_width="130dp"
                             android:layout_height="130dp"
