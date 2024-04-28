@@ -68,12 +68,12 @@ public class ProfileActivity extends FireBaseActivity {
 
                     String formattedDate = MyUtils.formattedTimestampData(Long.parseLong(timestamp));
 
-                    binding.txtEmail.setText(email);
+                    /*//binding.txtEmail.setText(email);
                     binding.txtName.setText(name);
                     binding.txtDOB.setText(dob);
                     binding.txtPhone.setText(phone);
                     binding.txtMemberSince.setText("Member since " +formattedDate);
-                    binding.txtLocation.setText(location);
+                    binding.txtLocation.setText(location);*/
 
                     if (userType.equals(MyUtils.USER_TYPE_EMAIL)) {
                         boolean isVerified = firebaseAuth.getCurrentUser().isEmailVerified();

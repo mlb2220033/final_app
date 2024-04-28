@@ -120,9 +120,9 @@
                         android:id="@+id/txtName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="Sanskar Tiwari"
+                        android:text="AAAAAA"
                         android:textColor="#424242"
                         android:textSize="21sp"
                         android:textStyle="bold" />
@@ -187,36 +187,132 @@
                         android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
+
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/oval_pr100_background"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_phone" />
+                                android:src="@drawable/ic_profile_pro" />
 
-                            <TextView
-                                android:id="@+id/txtPhone"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilName"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="Leeds, United Kingdom"
-                                android:textColor="@color/Neutral_900"
-                                android:textSize="15sp" />
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:hint="Name"
+
+                                android:paddingStart="16dp"
+                                android:paddingBottom="5dp"
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/Primary_700"
+                                app:endIconTint="@color/Primary_700"
+                                app:hintTextColor="@color/Primary_700">
+
+                                <EditText
+                                    android:id="@+id/edtName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName|textCapWords" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/oval_pr100_background"
+                                android:padding="6dp"
+                                android:src="@drawable/ic_dob" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilDOB"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:hint="DOB (dd/MM/yyyy)"
+
+                                android:paddingStart="16dp"
+                                android:paddingBottom="5dp"
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/Primary_700"
+                                app:endIconTint="@color/Primary_700"
+                                app:hintTextColor="@color/Primary_700">
+
+                                <EditText
+                                    android:id="@+id/edtDOB"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text|datetime" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/oval_pr100_background"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_mail" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilEmail"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:hint="Email"
+
+                                android:paddingStart="16dp"
+                                android:paddingBottom="5dp"
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/Primary_700"
+                                app:endIconTint="@color/Primary_700"
+                                app:hintTextColor="@color/Primary_700">
+
+                                <EditText
+                                    android:id="@+id/edtEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textEmailAddress" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
@@ -225,64 +321,84 @@
                                 android:padding="8dp"
                                 android:src="@drawable/ic_loca" />
 
-                            <TextView
-                                android:id="@+id/txtLocation"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilLoca"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:hint="Location"
 
-                                android:layout_marginLeft="20dp"
-                                android:text="+91 7999193854"
-                                android:textColor="@color/Neutral_900"
-                                android:textSize="15sp" />
+                                android:paddingStart="16dp"
+                                android:paddingBottom="5dp"
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/Primary_700"
+                                app:endIconTint="@color/Primary_700"
+                                app:hintTextColor="@color/Primary_700">
+
+                                <EditText
+                                    android:id="@+id/edtLocation"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/oval_pr100_background"
-                                android:padding="10dp"
-                                android:src="@drawable/ic_mail" />
-
-                            <TextView
-                                android:id="@+id/txtEmail"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="sanskar@theindianappguy.com"
-                                android:textColor="@color/Neutral_900"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
 
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:background="@drawable/oval_pr100_background"
                                 android:padding="8dp"
-                                android:src="@drawable/ic_dob" />
+                                android:src="@drawable/ic_phone" />
 
-                            <TextView
-                                android:id="@+id/txtDOB"
+                            <com.hbb20.CountryCodePicker
+                                android:id="@+id/countryCode"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="Leeds, United Kingdom"
-                                android:textColor="@color/Neutral_900"
-                                android:textSize="15sp" />
+                                android:layout_marginStart="16dp"
+                                android:gravity="center"
+                                app:ccp_autoDetectCountry="true"
+                                app:ccp_rememberLastSelection="true"
+                                app:ccp_showNameCode="false" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilPhone"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:hint="Phone Number"
+
+                                android:paddingBottom="5dp"
+                                app:boxCornerRadiusBottomEnd="8dp"
+                                app:boxCornerRadiusBottomStart="8dp"
+                                app:boxCornerRadiusTopEnd="8dp"
+                                app:boxCornerRadiusTopStart="8dp"
+                                app:boxStrokeColor="@color/Primary_700"
+                                app:endIconTint="@color/Primary_700"
+                                app:hintTextColor="@color/Primary_700">
+
+                                <EditText
+                                    android:id="@+id/edtPhone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPhonetic" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
                         </LinearLayout>
+
+
 
                     </LinearLayout>
                 </LinearLayout>
@@ -290,9 +406,29 @@
                 <!--Skills Details-->
             </LinearLayout>
 
-            <!--Experience Bottom Cards-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="598dp">
 
-            <!--Review Bottom Cards-->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnConfirm"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/btn_blue_background"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="SAVE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
