@@ -39,8 +39,8 @@ public class HotelDetailActivity extends AppCompatActivity {
 
     ImageSlider imgSlider;
 
-    TextView txtHotelName, txtHotelAddress, txtPricePerNight, txtStarRating, txtViewRoom;
-    String hotelID;
+    TextView txtHotelName, txtHotelAddress, txtPricePerNight, txtStarRating, txtViewRoom, txtContactHotel, txtHotelPhone, txtHotelGmail;
+    String hotelID, hotelName;
     RecyclerView rvFac;
     HotelFacilitiesAdapter hotelFacilitiesAdapter;
     ArrayList<HotelFacilities> hotelFacList;
@@ -104,20 +104,31 @@ public class HotelDetailActivity extends AppCompatActivity {
     }
 
 
-    private void getDataFromPreviousActivity() {
+    public void getDataFromPreviousActivity() {
         Intent intent = getIntent();
         hotelID = intent.getStringExtra("hotelID");
         txtHotelName.setText(getIntent().getStringExtra("txtHotelName"));
         txtHotelAddress.setText(getIntent().getStringExtra("txtHotelAddress"));
+        txtHotelPhone.setText(getIntent().getStringExtra("txtHotelPhone"));
+        txtHotelGmail.setText(getIntent().getStringExtra("txtHotelGmail"));
+
         txtPricePerNight.setText(String.valueOf(getIntent().getFloatExtra("txtPricePerNight", 0.00f)));
         txtStarRating.setText(String.valueOf(getIntent().getFloatExtra("txtStarRating", 0.0f)));
+
     }
 
     private void addViews() {
+
         txtHotelName = findViewById(R.id.txtHotelName);
+        txtContactHotel = findViewById(R.id.txtContactHotel);
         txtHotelAddress = findViewById(R.id.txtHotelAddress);
+        txtHotelPhone = findViewById(R.id.txtHotelPhone);
+        txtHotelGmail = findViewById(R.id.txtHotelGmail);
         txtPricePerNight = findViewById(R.id.txtPricePerNight);
         txtStarRating = findViewById(R.id.txtStarRating);
+
+        hotelName = getIntent().getStringExtra("txtHotelName");
+        txtContactHotel.setText(txtContactHotel.getText().toString() + hotelName + " ?");
 
 //      Slider Image
         imgSlider = findViewById(R.id.imgSlider);

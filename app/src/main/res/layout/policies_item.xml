@@ -8,12 +8,12 @@
         android:id="@+id/llPol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imgPolIcon"
@@ -37,12 +37,18 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPolItem"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="-8dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPolItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="-20dp"></androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+
     </LinearLayout>
 
 </LinearLayout>

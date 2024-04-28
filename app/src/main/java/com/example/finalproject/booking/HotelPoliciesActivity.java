@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelFacilitiesAdapter;
@@ -28,14 +30,25 @@ public class HotelPoliciesActivity extends AppCompatActivity {
     HotelPoliciesItemAdapter hotelPoliciesAdapter;
     String hotelID;
     FirebaseDatabase firebaseDatabase;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_policies);
         addViews();
+        addEvents();
         getDataFromPreviousActivity();
         getPolicies();
+    }
+
+    private void addEvents() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -66,6 +79,8 @@ public class HotelPoliciesActivity extends AppCompatActivity {
 
 
     private void addViews() {
+
+        imgBack = findViewById(R.id.imgBack);
 
         rvPol = findViewById(R.id.rvPol);
         rvPol.setHasFixedSize(true);

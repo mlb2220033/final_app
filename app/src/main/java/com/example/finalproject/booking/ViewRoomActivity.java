@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelAdapter;
@@ -29,15 +30,26 @@ public class ViewRoomActivity extends AppCompatActivity {
     ArrayList<Room> roomArrayList;
     String hotelID;
     FirebaseDatabase firebaseDatabase;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_room);
         addViews();
+        addEvents();
         getDataFromPreviousActivity();
         getData();
 
+    }
+
+    private void addEvents() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getDataFromPreviousActivity() {
@@ -48,7 +60,7 @@ public class ViewRoomActivity extends AppCompatActivity {
     private void getData() {
         firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelRoom")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
+                    @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Room room = dataSnapshot.getValue(Room.class);
@@ -65,13 +77,15 @@ public class ViewRoomActivity extends AppCompatActivity {
         });
     }
     private void addViews() {
+        imgBack = findViewById(R.id.imgBack);
+
         rvRoom = findViewById(R.id.rvRoom);
         roomArrayList = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        roomAdapter = new RoomAdapter(roomArrayList,getApplicationContext());
+        roomAdapter = new RoomAdapter(roomArrayList, getApplicationContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvRoom.setLayoutManager(linearLayoutManager);
-        rvRoom.addItemDecoration(new DividerItemDecoration(rvRoom.getContext(),DividerItemDecoration.VERTICAL));
+        rvRoom.addItemDecoration(new DividerItemDecoration(rvRoom.getContext(), DividerItemDecoration.VERTICAL));
         rvRoom.setNestedScrollingEnabled(false);
         rvRoom.setAdapter(roomAdapter);
     }

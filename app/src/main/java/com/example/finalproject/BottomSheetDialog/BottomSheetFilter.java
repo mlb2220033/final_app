@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.finalproject.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -30,6 +31,7 @@ public class BottomSheetFilter extends BottomSheetDialogFragment {
 
         dialog.setContentView(view);
         bottomSheetBehavior = BottomSheetBehavior.from((View)view.getParent());
+
         return dialog;
     }
 

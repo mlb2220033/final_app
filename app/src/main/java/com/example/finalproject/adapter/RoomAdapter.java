@@ -46,6 +46,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
         holder.txtroomArea.setText(room.getRoomArea());
         holder.txtroomBed.setText(room.getRoomBed());
         holder.txtRoomPrice.setText(String.valueOf(room.getRoomPrice()));
+        holder.txtroomPerson.setText(String.valueOf(room.getRoomPerson()));
 
         Picasso.get().load(room.getRoomImage()).into(holder.imgRoom);
 
@@ -69,7 +70,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
     public class ViewHodel extends RecyclerView.ViewHolder {
         ImageView imgRoom;
         Button btnReserver;
-        TextView txtRoomName, txtroomArea, txtroomBed,txtRoomPrice;
+        TextView txtRoomName, txtroomArea, txtroomBed, txtRoomPrice, txtroomPerson;
+
         public ViewHodel(@NonNull View itemView) {
             super(itemView);
 
@@ -77,6 +79,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
             txtroomArea = itemView.findViewById(R.id.txtroomArea);
             txtroomBed = itemView.findViewById(R.id.txtroomBed);
             txtRoomPrice = itemView.findViewById(R.id.txtRoomPrice);
+            txtroomPerson = itemView.findViewById(R.id.txtroomPerson);
             imgRoom = itemView.findViewById(R.id.imgRoom);
             btnReserver = itemView.findViewById(R.id.btnReserver);
         }

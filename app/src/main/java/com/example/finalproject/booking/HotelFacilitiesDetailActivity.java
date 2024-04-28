@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -30,14 +32,25 @@ public class HotelFacilitiesDetailActivity extends AppCompatActivity {
     HotelFacilitiesItemAdapter hotelFacItemAdapter;
     FirebaseDatabase firebaseDatabase;
     String hotelID;
+    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_facilities_detail);
         addViews();
+        addEvents();
         getDataFromPreviousActivity();
         getFacItem();
+    }
+
+    private void addEvents() {
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getDataFromPreviousActivity() {
@@ -67,6 +80,8 @@ public class HotelFacilitiesDetailActivity extends AppCompatActivity {
     }
 
     private void addViews() {
+        imgBack = findViewById(R.id.imgBack);
+
         rvFacDetail = findViewById(R.id.rvFacDetail);
         rvFacDetail.setHasFixedSize(true);
         rvFacDetail.setLayoutManager(new LinearLayoutManager(this));
