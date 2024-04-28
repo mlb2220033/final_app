@@ -74,13 +74,15 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
                 Intent intent = new Intent(context, HotelDetailActivity.class);
 
                 intent.putExtra("hotelID", hotel.getHotelID());
-                Log.d("HotelAdapter", "Hotel ID: " + hotel.getHotelID());
 
-                intent.putExtra("txtHotelName",hotel.getHotelName());
-                intent.putExtra("txtHotelAddress",hotel.getHotelAddress());
-                intent.putExtra("txtPricePerNight",hotel.getPricePerNight());
-                intent.putExtra("imgHotel",hotel.getHotelImage());
-                intent.putExtra("txtStarRating",hotel.getStarRating());
+                intent.putExtra("txtHotelName", hotel.getHotelName());
+                intent.putExtra("txtHotelAddress", hotel.getHotelAddress());
+                intent.putExtra("txtPricePerNight", hotel.getPricePerNight());
+                intent.putExtra("imgHotel", hotel.getHotelImage());
+                intent.putExtra("txtStarRating", hotel.getStarRating());
+                intent.putExtra("txtHotelPhone", hotel.getHotelPhone());
+                intent.putExtra("txtHotelGmail", hotel.getHotelGmail());
+                Log.d("HotelDetailActivity", "Hotel " + hotel.getHotelGmail());
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

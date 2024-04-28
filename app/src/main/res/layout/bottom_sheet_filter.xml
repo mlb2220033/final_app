@@ -2,19 +2,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:theme="@style/AppBottomSheetDialogTheme"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    android:theme="@style/AppBottomSheetDialogTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -44,9 +46,21 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <SearchView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchViewLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:startIconDrawable="@drawable/ic_hotel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchViewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Input here"
+                android:paddingStart="70dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </LinearLayout>
 

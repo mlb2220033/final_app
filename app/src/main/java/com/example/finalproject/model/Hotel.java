@@ -1,8 +1,8 @@
 package com.example.finalproject.model;
 
 public class Hotel {
-    String hotelID, hotelName, hotelImage, hotelAddress;
-    Float PricePerNight,StarRating;
+    String hotelID, hotelName, hotelImage, hotelAddress, hotelPhone, hotelGmail;
+    Float PricePerNight, StarRating;
     boolean Liked;
 
     public Hotel() {
@@ -72,5 +72,21 @@ public class Hotel {
 
     public void setLiked(boolean liked) {
         Liked = liked;
+    }
+
+    public String getHotelPhone() {
+        return hotelPhone;
+    }
+
+    public void setHotelPhone(String hotelPhone) {
+        this.hotelPhone = hotelPhone;
+    }
+
+    public String getHotelGmail() {
+        return hotelGmail;
+    }
+
+    public void setHotelGmail(String hotelGmail) {
+        this.hotelGmail = hotelGmail;
     }
 }

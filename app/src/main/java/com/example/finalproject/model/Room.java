@@ -3,17 +3,19 @@ package com.example.finalproject.model;
 public class Room {
     String roomID, roomName, roomImage, roomArea,roomBed;
     Float roomPrice;
+    int roomPerson;
 
     public Room() {
     }
 
-    public Room(String roomID, String roomName, String roomImage, String roomArea, String roomBed, Float roomPrice) {
+    public Room(String roomID, String roomName, String roomImage, String roomArea, String roomBed, Float roomPrice, int roomPerson) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.roomImage = roomImage;
         this.roomArea = roomArea;
         this.roomBed = roomBed;
         this.roomPrice = roomPrice;
+        this.roomPerson = roomPerson;
     }
 
     public String getRoomID() {
@@ -62,5 +64,13 @@ public class Room {
 
     public void setRoomPrice(Float roomPrice) {
         this.roomPrice = roomPrice;
+    }
+
+    public int getRoomPerson() {
+        return roomPerson;
+    }
+
+    public void setRoomPerson(int roomPerson) {
+        this.roomPerson = roomPerson;
     }
 }

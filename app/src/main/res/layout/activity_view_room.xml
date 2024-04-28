@@ -7,16 +7,29 @@
     android:orientation="vertical"
     tools:context=".booking.ViewRoomActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/Primary_500">
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        </Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/Neutral_900" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="View Room Type"
+            android:textColor="@color/Neutral_900"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRoom"

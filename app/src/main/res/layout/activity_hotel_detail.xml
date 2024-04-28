@@ -31,7 +31,7 @@
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/imgSlider"
                 android:layout_width="wrap_content"
-                android:layout_height="220dp"
+                android:layout_height="250dp"
                 app:iss_auto_cycle="true"
                 app:iss_period="1000"
                 app:iss_delay="0"/>
@@ -110,14 +110,14 @@
                             android:id="@+id/imageStarRating"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginEnd="5dp"
+                            android:layout_marginEnd="10dp"
                             android:src="@drawable/ic_star" />
 
                         <TextView
                             android:id="@+id/txtStarRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="bottom"
                             android:text="0" />
 
                     </LinearLayout>
@@ -236,7 +236,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginBottom="10dp"
                         android:text="Accommadation Policies"
                         android:textColor="@color/Neutral_900"
                         android:textSize="16sp"
@@ -246,13 +246,13 @@
                         android:id="@+id/rvPol"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
+                        android:layout_marginTop="10dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="0dp"
                         android:layout_height="wrap_content"
                         android:onClick="openPolicies"
                         android:text="See All Policies"
@@ -261,6 +261,95 @@
                         android:textColor="@color/Primary_500"
                         android:textSize="14sp"
                         android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/edt_background" />
+
+                    <TextView
+                        android:id="@+id/txtContactHotel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="Have a question for "
+                        android:textColor="@color/Neutral_900"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_phone"
+                            android:tint="@color/Primary_200" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:text="Hotline:"
+                            android:textColor="@color/Neutral_900" />
+
+                        <TextView
+                            android:id="@+id/txtHotelPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="hotelPhone"
+                            android:textColor="@color/Neutral_900" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_mail"
+                            android:tint="@color/Primary_200" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
+                            android:text="Gmail:"
+                            android:textColor="@color/Neutral_900" />
+
+                        <TextView
+                            android:id="@+id/txtHotelGmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="hotelGmail"
+                            android:textColor="@color/Neutral_900" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
