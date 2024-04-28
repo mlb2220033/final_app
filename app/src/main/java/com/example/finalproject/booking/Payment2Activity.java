@@ -141,7 +141,7 @@ public class Payment2Activity extends AppCompatActivity {
             }
         });
 
-        Button btnConfirm = findViewById(R.id.btnConfirm);
+        Button btnConfirm = findViewById(R.id.btnUpdate);
 
         // Set click listener for btnConfirm
         btnConfirm.setOnClickListener(new View.OnClickListener() {

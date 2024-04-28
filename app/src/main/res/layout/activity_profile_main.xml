@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/Primary_700"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -48,15 +49,18 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/brg_profile_main" />
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imgAva"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_avatar"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_avatar" />
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView1" />
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -80,7 +84,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/txtEmail"
+                            android:id="@+id/txtverification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"

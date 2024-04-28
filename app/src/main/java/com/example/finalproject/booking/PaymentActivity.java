@@ -26,7 +26,7 @@ public class PaymentActivity extends AppCompatActivity {
             return insets;
         });
 
-        btnConfirm=findViewById(R.id.btnConfirm);
+        btnConfirm=findViewById(R.id.btnUpdate);
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

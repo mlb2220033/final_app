@@ -1,11 +1,15 @@
 package com.example.finalproject.booking;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
@@ -19,31 +23,101 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.bumptech.glide.Glide;
 import com.example.finalproject.R;
 import com.example.finalproject.databinding.ActivityHomeBinding;
 import com.example.finalproject.databinding.ActivityProfileMainBinding;
+import com.example.finalproject.model.MyUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.collection.BuildConfig;
 
 public class ProfileMainActivity extends FireBaseActivity {
     private ActivityProfileMainBinding binding;
+
+    private static final String TAG ="PROFILE_TAG";
+
+    private ProgressDialog progressDialog;
+
+    private ImageView btnBack;
+
     RelativeLayout relaProfile, relaLogout,relaShare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityProfileMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_profile_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         addViews();
         addEvents();
+        loadMyInfo();
     }
+
+    private void loadMyInfo() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        myRef.child(""+firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String name = "" + snapshot.child("full name").getValue();
+                    String profileImageUrl = "" + snapshot.child("profileImageUrl").getValue();
+
+                    String userType = "" + snapshot.child("userType").getValue();
+
+
+                    //binding.txtEmail.setText(email);
+                    binding.txtName.setText(name);
+
+
+                    if (userType.equals(MyUtils.USER_TYPE_EMAIL)) {
+                        boolean isVerified = firebaseAuth.getCurrentUser().isEmailVerified();
+
+                        if (isVerified){
+                            //binding.verifyAccount.setVisibility(View.VISIBLE);
+                            binding.txtverification.setText("Verified");
+                        } else {
+                            //binding.verifyAccount.setVisibility(View.VISIBLE);
+                            binding.txtverification.setText("Not Verified");
+                        }
+                    } else {
+                        //binding.verifyAccount.setVisibility(View.GONE);
+                        binding.txtverification.setText("Verified");
+                    }
+
+                    try {
+                        Glide.with(ProfileMainActivity.this)
+                                .load(profileImageUrl)
+                                .placeholder(R.drawable.ic_avatar)
+                                .into(binding.imgAva);
+
+                    } catch (Exception e){
+                        Log.e(TAG,"onDataChange: ",e);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle database error
+            }
+        });
+
+
+    }
+
 
     private void addViews() {
         relaProfile = findViewById(R.id.relaProfile);
@@ -52,6 +126,9 @@ public class ProfileMainActivity extends FireBaseActivity {
     }
 
     private void addEvents() {
+
+        final boolean[] isShareClicked = {false};
+
         relaProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +141,7 @@ public class ProfileMainActivity extends FireBaseActivity {
         });
 
         relaLogout.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 relaLogout.setBackgroundResource(R.drawable.pro_occlick);
@@ -74,7 +152,7 @@ public class ProfileMainActivity extends FireBaseActivity {
         relaShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                relaShare.setBackgroundResource(R.drawable.pro_occlick);
+
                 try {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -102,11 +180,17 @@ public class ProfileMainActivity extends FireBaseActivity {
         builder.setView(view);
         final  AlertDialog alertDialog = builder.create();
 
+        final boolean[] isConfirmed = {false};
+
         confirmExit.findViewById(R.id.ConfirmExit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                firebaseAuth.signOut();
+                // Đánh dấu rằng người dùng đã xác nhận
+                isConfirmed[0] = true;
                 alertDialog.dismiss();
-                finish();
+                finishAffinity();
+
             }
         });
 
