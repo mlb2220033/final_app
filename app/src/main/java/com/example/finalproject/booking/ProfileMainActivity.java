@@ -45,7 +45,7 @@ public class ProfileMainActivity extends FireBaseActivity {
 
     private ImageView btnBack;
 
-    RelativeLayout relaProfile, relaLogout,relaShare;
+    RelativeLayout relaProfile, relaLogout,relaShare,relaChangePwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +123,7 @@ public class ProfileMainActivity extends FireBaseActivity {
         relaProfile = findViewById(R.id.relaProfile);
         relaLogout = findViewById(R.id.relaLogout);
         relaShare = findViewById(R.id.relaShare);
+        relaChangePwd = findViewById(R.id.relaChangePwd);
     }
 
     private void addEvents() {
@@ -138,6 +139,25 @@ public class ProfileMainActivity extends FireBaseActivity {
 
         }
 
+        });
+        relaChangePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                relaChangePwd.setBackgroundResource(R.drawable.pro_occlick);
+
+                if(firebaseAuth.getCurrentUser() == null){
+                    MyUtils.toast(ProfileMainActivity.this,"Login Required...!");
+                    // Yêu cầu đăng nhập
+                    Intent intent = new Intent(ProfileMainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    // Đã đăng nhập
+                    Intent intent = new Intent(ProfileMainActivity.this, ChangePasswordActivity.class);
+                    startActivity(intent);
+
+                }
+
+            }
         });
 
         relaLogout.setOnClickListener(new View.OnClickListener() {

@@ -60,4 +60,5 @@ dependencies {
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 
     implementation ("com.hbb20:ccp:2.7.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }
