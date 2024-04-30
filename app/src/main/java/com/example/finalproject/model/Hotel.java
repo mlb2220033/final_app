@@ -1,6 +1,8 @@
 package com.example.finalproject.model;
 
-public class Hotel {
+import java.io.Serializable;
+
+public class Hotel implements Serializable {
     String hotelID, hotelName, hotelImage, hotelAddress, hotelPhone, hotelGmail;
     Float PricePerNight, StarRating;
     boolean Liked;

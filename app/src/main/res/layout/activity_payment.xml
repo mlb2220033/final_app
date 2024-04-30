@@ -121,13 +121,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="33dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_payment" />
+                            android:src="@drawable/ic_success" />
 
                         <TextView
                             android:id="@+id/textView17"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Payment"
+                            android:text="Review"
                             android:textAlignment="center"
                             android:textColor="#808080" />
 
@@ -160,13 +160,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="33dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_success" />
+                            android:src="@drawable/ic_payment" />
 
                         <TextView
                             android:id="@+id/textView9"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Review"
+                            android:text="Payment"
                             android:textAlignment="center"
                             android:textColor="#808080" />
                     </LinearLayout>
@@ -203,11 +203,11 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editTextText2"
+                    android:id="@+id/edtFullNamePayment"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/edt_background"
+                    android:background="@drawable/edt_normal_click"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="Full Name"
@@ -228,15 +228,15 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editTextText33"
+                    android:id="@+id/edtPhonePayment"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/edt_background"
+                    android:background="@drawable/edt_normal_click"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="01234"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:padding="8dp"
                     android:textSize="16sp" />
 
@@ -253,14 +253,14 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/editTextText3"
+                    android:id="@+id/edtAddressPayment"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/edt_background"
+                    android:background="@drawable/edt_normal_click"
                     android:drawablePadding="8dp"
                     android:ems="10"
-                    android:hint="address hotel"
+                    android:hint="Hotel address..."
                     android:inputType="text"
                     android:padding="8dp"
                     android:textSize="16sp" />
@@ -293,11 +293,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:background="@drawable/edt_background"
+                            android:background="@drawable/edt_normal_click"
                             android:drawablePadding="8dp"
                             android:ems="10"
                             android:hint="Date"
-                            android:inputType="text"
+                            android:inputType="date"
                             android:padding="8dp"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -325,11 +325,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-                            android:background="@drawable/edt_background"
+                            android:background="@drawable/edt_normal_click"
                             android:drawablePadding="8dp"
                             android:ems="10"
                             android:hint="Date"
-                            android:inputType="text"
+                            android:inputType="date"
                             android:padding="8dp"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -352,7 +352,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/edt_background"
+                    android:background="@drawable/edt_normal_click"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="Type room ...."
@@ -372,20 +372,19 @@
                 android:padding="4dp">
 
                 <EditText
-                    android:id="@+id/editTextText8"
+                    android:id="@+id/edtInputDiscount"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
                     android:inputType="text"
-                    android:text="Name"
                     android:textSize="14sp"
                     android:paddingStart="8dp"
                     android:background="#00ffffff"
                     android:hint="Enter Your Coupon"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button3"
+                    android:id="@+id/btnApplyDiscount"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -422,7 +421,7 @@
                     android:textColor="@color/Neutral_900"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtView69" />
 
                 <TextView
                     android:id="@+id/textView35"
@@ -437,26 +436,48 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView36"
+                    android:id="@+id/txtView69"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Discount"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+                <TextView
+                    android:id="@+id/txtSubtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="TextView"
+                    android:text="0"
                     android:textColor="@color/Neutral_900"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView37"
+                    android:id="@+id/txtVAT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:text="TextView"
+                    android:text="0"
                     android:textColor="@color/Neutral_900"
                     app:layout_constraintBottom_toBottomOf="@+id/textView38"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView38" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="VND"
+                    android:textColor="@color/Neutral_900"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtVAT"
+                    app:layout_constraintEnd_toStartOf="@+id/txtVAT"
+                    app:layout_constraintTop_toTopOf="@+id/txtVAT" />
 
                 <View
                     android:id="@+id/view2"
@@ -485,16 +506,62 @@
                     app:layout_constraintTop_toBottomOf="@+id/view2" />
 
                 <TextView
-                    android:id="@+id/textView39"
+                    android:id="@+id/txtTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="0"
                     android:textColor="@color/Neutral_900"
                     android:textSize="18sp"
+                    android:layout_marginEnd="16dp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView34"
-                    app:layout_constraintEnd_toEndOf="@+id/textView37"
-                    app:layout_constraintTop_toTopOf="@+id/textView34" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView34"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VND"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtTotal"
+                    app:layout_constraintEnd_toStartOf="@+id/txtTotal"
+                    app:layout_constraintTop_toTopOf="@+id/txtTotal"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VND"
+                    android:textColor="@color/Neutral_900"
+                    app:layout_constraintEnd_toStartOf="@+id/txtSubtotal"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/txtDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/Neutral_900"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtView69"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtView69"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VND"
+                    android:textColor="@color/Neutral_900"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/txtDiscount"
+                    app:layout_constraintTop_toTopOf="@+id/txtDiscount"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtDiscount"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
