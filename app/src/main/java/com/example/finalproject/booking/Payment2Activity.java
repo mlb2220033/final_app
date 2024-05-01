@@ -135,7 +135,9 @@ public class Payment2Activity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(Payment2Activity.this, PaymentActivity.class);
+                startActivity(intent);
+
             }
         });
 
