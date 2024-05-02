@@ -15,18 +15,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="34">
         <activity
-            android:name=".booking.ChangePasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".booking.HotelPoliciesActivity"
+            android:name=".booking.ForgotPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".booking.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".booking.RegisterEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.LoginPhoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.OtpVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.ResultSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.HotelPoliciesActivity"
             android:exported="false" />
         <activity
             android:name=".booking.ProfileActivity"
@@ -39,9 +51,6 @@
             android:exported="false" />
         <activity
             android:name=".booking.ViewBookingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".booking.ResultSearchActivity"
             android:exported="false" />
         <activity
             android:name=".booking.HotelDetailActivity"

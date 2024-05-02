@@ -17,7 +17,7 @@
         android:src="@drawable/topimg" />
 
     <ImageView
-        android:id="@+id/imgbtnBack"
+        android:id="@+id/imgbtnPBack"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_alignParentTop="true"
@@ -27,7 +27,7 @@
         android:src="@mipmap/ic_close" />
 
     <ImageView
-        android:id="@+id/imgR2"
+        android:id="@+id/imgPR2"
         android:layout_width="match_parent"
         android:layout_height="76dp"
         android:layout_gravity="center"
@@ -36,10 +36,10 @@
         android:src="@drawable/ic_logo" />
 
     <TextView
-        android:id="@+id/txtR1"
+        android:id="@+id/txtRP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgR2"
+        android:layout_below="@+id/imgPR2"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/open_sans_bold"
         android:text="Now,Sign up!"
@@ -47,10 +47,10 @@
         android:textSize="26sp" />
 
     <TextView
-        android:id="@+id/txtR2"
+        android:id="@+id/txtRP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtR1"
+        android:layout_below="@+id/txtRP1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans_bold"
@@ -61,7 +61,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtR2"
+        android:layout_below="@+id/txtRP2"
         android:layout_marginTop="26dp"
         android:fontFamily="@font/open_sans"
         android:orientation="vertical"
@@ -265,7 +265,7 @@
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/imgR3"
+        android:id="@+id/imgPR3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

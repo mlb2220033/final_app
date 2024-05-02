@@ -49,7 +49,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     implementation("com.google.code.gson:gson:2.9.1")
-    
+
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.gms:google-services:4.4.1")
     implementation("com.google.android.gms:play-services-auth:21.1.0")
@@ -58,6 +58,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-database:8.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
 
     implementation ("com.hbb20:ccp:2.7.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")

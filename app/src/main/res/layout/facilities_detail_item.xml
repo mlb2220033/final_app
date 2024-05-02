@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="8dp"
-                android:tint="@color/Primary_200" />
+                app:tint="@color/Primary_200" />
 
             <TextView
                 android:id="@+id/txtFacName"

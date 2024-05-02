@@ -67,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        binding.txtForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
         // Google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("697452755216-5s86ps8hoo3o7bm9aui6r3s8329ebkpq.apps.googleusercontent.com")
@@ -78,6 +84,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 beginGoogleLogin();
+            }
+        });
+
+        //handle login btnPhoneNumber
+        binding.imgbtnLoginPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, LoginPhoneActivity.class ));
+
             }
         });
 

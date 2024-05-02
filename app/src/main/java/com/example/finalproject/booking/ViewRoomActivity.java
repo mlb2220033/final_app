@@ -61,20 +61,20 @@ public class ViewRoomActivity extends AppCompatActivity {
         firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelRoom")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Room room = dataSnapshot.getValue(Room.class);
-                    roomArrayList.add(room);
-                    Log.d("FirebaseData", "Room: " + room.getRoomID().toString());
-                }
-                roomAdapter.notifyDataSetChanged();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            Room room = dataSnapshot.getValue(Room.class);
+                            roomArrayList.add(room);
+                            Log.d("FirebaseData", "Room: " + room.getRoomID().toString());
+                        }
+                        roomAdapter.notifyDataSetChanged();
 
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
     }
     private void addViews() {
         imgBack = findViewById(R.id.imgBack);

@@ -35,14 +35,14 @@
         android:text="Welcome, Sign in!"
         android:textSize="26sp"
         android:textColor="@color/Primary_500"
-        android:id="@+id/txtR1"/>
+        android:id="@+id/txtRP1"/>
 
 
     <LinearLayout
         android:id="@+id/zoneInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtR1"
+        android:layout_below="@+id/txtRP1"
         android:layout_marginTop="15dp"
         android:orientation="vertical"
         android:paddingStart="20dp"

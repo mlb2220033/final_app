@@ -66,4 +66,10 @@
         <!-- Customize your theme here. -->
         <item name="materialButtonOutlinedStyle">@style/Widget.App.Button</item>
     </style>
+
+    <style name="TextAppearance.App.TextInputLayout" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <!-- Customize your text appearance here -->
+    </style>
+
+
 </resources>
