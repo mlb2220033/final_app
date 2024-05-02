@@ -38,6 +38,9 @@
             android:name=".booking.ChangePasswordActivity"
             android:exported="false" />
         <activity
+            android:name=".booking.GuestAndRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.HotelPoliciesActivity"
             android:exported="false" />
         <activity
@@ -63,6 +66,12 @@
             android:exported="false" />
         <activity
             android:name=".booking.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.SearchLocationActivity"
             android:exported="false" />
         <activity
             android:name=".booking.FireBaseActivity"

@@ -77,12 +77,12 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
 
                 intent.putExtra("txtHotelName", hotel.getHotelName());
                 intent.putExtra("txtHotelAddress", hotel.getHotelAddress());
+                intent.putExtra("txtHotelDescription", hotel.getHotelDescription());
                 intent.putExtra("txtPricePerNight", hotel.getPricePerNight());
                 intent.putExtra("imgHotel", hotel.getHotelImage());
                 intent.putExtra("txtStarRating", hotel.getStarRating());
                 intent.putExtra("txtHotelPhone", hotel.getHotelPhone());
                 intent.putExtra("txtHotelGmail", hotel.getHotelGmail());
-                Log.d("HotelDetailActivity", "Hotel " + hotel.getHotelGmail());
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -107,6 +107,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             txtHotelAddress = itemView.findViewById(R.id.txtHotelAddress);
             txtPricePerNight = itemView.findViewById(R.id.txtPricePerNight);
             txtStarRating = itemView.findViewById(R.id.txtStarRating);
+
             imgHotel = itemView.findViewById(R.id.imgHotel);
             imgLike = itemView.findViewById(R.id.imgLike);
             imgDisLike = itemView.findViewById(R.id.imgDisLike);

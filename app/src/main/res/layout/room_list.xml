@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textColor="@color/Neutral_900"
             android:text="Room Name" />
 

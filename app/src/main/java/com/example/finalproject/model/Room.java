@@ -1,15 +1,15 @@
 package com.example.finalproject.model;
 
 public class Room {
-    String roomID, roomName, roomImage, roomArea,roomBed;
+    String roomName, roomImage, roomArea, roomBed;
     Float roomPrice;
     int roomPerson;
 
     public Room() {
     }
 
-    public Room(String roomID, String roomName, String roomImage, String roomArea, String roomBed, Float roomPrice, int roomPerson) {
-        this.roomID = roomID;
+    public Room(String roomName, String roomImage, String roomArea, String roomBed, Float roomPrice, int roomPerson) {
+
         this.roomName = roomName;
         this.roomImage = roomImage;
         this.roomArea = roomArea;
@@ -18,13 +18,7 @@ public class Room {
         this.roomPerson = roomPerson;
     }
 
-    public String getRoomID() {
-        return roomID;
-    }
 
-    public void setRoomID(String roomID) {
-        this.roomID = roomID;
-    }
 
     public String getRoomName() {
         return roomName;

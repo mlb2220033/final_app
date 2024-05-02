@@ -103,7 +103,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/editTextText"
+                    android:id="@+id/edtSearch"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"

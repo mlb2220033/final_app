@@ -17,6 +17,7 @@ import com.example.finalproject.adapter.HotelAdapter;
 import com.example.finalproject.adapter.RoomAdapter;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.Room;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,7 +31,7 @@ public class ViewRoomActivity extends AppCompatActivity {
     ArrayList<Room> roomArrayList;
     String hotelID;
     FirebaseDatabase firebaseDatabase;
-    ImageView imgBack;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,9 @@ public class ViewRoomActivity extends AppCompatActivity {
 
     }
 
+
     private void addEvents() {
-        imgBack.setOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -62,14 +64,14 @@ public class ViewRoomActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Room room = dataSnapshot.getValue(Room.class);
                             roomArrayList.add(room);
-                            Log.d("FirebaseData", "Room: " + room.getRoomID().toString());
                         }
                         roomAdapter.notifyDataSetChanged();
 
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -77,7 +79,8 @@ public class ViewRoomActivity extends AppCompatActivity {
                 });
     }
     private void addViews() {
-        imgBack = findViewById(R.id.imgBack);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         rvRoom = findViewById(R.id.rvRoom);
         roomArrayList = new ArrayList<>();

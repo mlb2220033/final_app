@@ -3,18 +3,21 @@ package com.example.finalproject.model;
 import java.io.Serializable;
 
 public class Hotel implements Serializable {
-    String hotelID, hotelName, hotelImage, hotelAddress, hotelPhone, hotelGmail;
+    String hotelID, hotelName, hotelImage, hotelAddress, hotelDescription, hotelPhone, hotelGmail;
     Float PricePerNight, StarRating;
     boolean Liked;
 
     public Hotel() {
     }
 
-    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, Float pricePerNight, Float starRating, boolean liked) {
+    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, String hotelDescription, String hotelPhone, String hotelGmail, Float pricePerNight, Float starRating, boolean liked) {
         this.hotelID = hotelID;
         this.hotelName = hotelName;
         this.hotelImage = hotelImage;
         this.hotelAddress = hotelAddress;
+        this.hotelDescription = hotelDescription;
+        this.hotelPhone = hotelPhone;
+        this.hotelGmail = hotelGmail;
         PricePerNight = pricePerNight;
         StarRating = starRating;
         Liked = liked;
@@ -50,6 +53,14 @@ public class Hotel implements Serializable {
 
     public void setHotelAddress(String hotelAddress) {
         this.hotelAddress = hotelAddress;
+    }
+
+    public String getHotelDescription() {
+        return hotelDescription;
+    }
+
+    public void setHotelDescription(String hotelDescription) {
+        this.hotelDescription = hotelDescription;
     }
 
     public Float getPricePerNight() {

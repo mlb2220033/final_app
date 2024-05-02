@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -37,22 +38,26 @@ import java.util.ArrayList;
 public class HomeActivity extends FireBaseActivity {
     private ActivityHomeBinding binding;
     LinearLayout Profile, Favorite, Chat;
+    EditText edtSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
 
         initBanner();
         initPopular();
-        intitRecom();addViews();
+        intitRecom();
+        addViews();
         addEvents();
     }
 
     private void addViews() {
         Profile = findViewById(R.id.Profile);
+        edtSearch = findViewById(R.id.edtSearch);
+
 
     }
 
@@ -61,6 +66,14 @@ public class HomeActivity extends FireBaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        edtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });

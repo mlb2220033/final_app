@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -58,8 +59,10 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-database:8.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+    val mdcVersion = "1.0.0"
+    implementation("com.google.android.material:material:$mdcVersion")
 
 
-    implementation ("com.hbb20:ccp:2.7.1")
+    implementation("com.hbb20:ccp:2.7.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }
