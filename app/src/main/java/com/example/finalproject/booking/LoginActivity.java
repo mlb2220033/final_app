@@ -2,7 +2,9 @@ package com.example.finalproject.booking;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -42,22 +44,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText edtPassword;
+    EditText edtEmail, edtPassword;
     ImageView imgShowHidePwdLogin;
     private ActivityLoginBinding binding;
     private static final String TAG_E = "LOGIN_EMAIL_TAG";
     private static final String TAG_G = "LOGIN_GOOGLE_TAG";
-    //    private static final String TAG_P = "LOGIN_PHONE_TAG";
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
-
     private GoogleSignInClient mGoogleSignInClient;
+    private static final String PREF_EMAIL = "pref_email";
+    private static final String PREF_PASSWORD = "pref_password";
+    private static final String PREF_CHECKBOX_STATE = "pref_checkbox_state";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        edtPassword = findViewById(R.id.edtPassword);
         imgShowHidePwdLogin = findViewById(R.id.imgShowHidePwdLogin);
         Toast.makeText(LoginActivity.this, "You can Login now", Toast.LENGTH_SHORT).show();
 
@@ -67,6 +72,15 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", Context.MODE_PRIVATE);
+        String savedEmail = sharedPreferences.getString(PREF_EMAIL, "");
+        String savedPassword = sharedPreferences.getString(PREF_PASSWORD, "");
+        binding.edtEmail.setText(savedEmail);
+        binding.edtPassword.setText(savedPassword);
+
+        // Retrieve and set checkbox state
+        boolean isCheckboxChecked = sharedPreferences.getBoolean(PREF_CHECKBOX_STATE, false);
+        binding.chkSaveLoginInfo.setChecked(isCheckboxChecked);
         binding.txtForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, LoginPhoneActivity.class ));
-
             }
         });
 
@@ -100,22 +113,29 @@ public class LoginActivity extends AppCompatActivity {
         imgShowHidePwdLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
-                    // If pwd is visible then Hide
-                    edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    imgShowHidePwdLogin.setImageResource(R.drawable.eye_hide);
+                if (edtPassword != null && edtPassword.getTransformationMethod() != null) {
+                    // Log values for debugging
+                    Log.d("LoginActivity", "edtPassword: " + edtPassword);
+                    Log.d("LoginActivity", "Transformation method: " + edtPassword.getTransformationMethod());
+
+                    if (edtPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                        // If pwd is visible then Hide
+                        edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        imgShowHidePwdLogin.setImageResource(R.drawable.eye_hide);
+                    } else {
+                        edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        imgShowHidePwdLogin.setImageResource(R.drawable.eye_show);
+                    }
                 } else {
-                    edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imgShowHidePwdLogin.setImageResource(R.drawable.eye_show);
+                    // Handle null reference gracefully
+                    Log.e("LoginActivity", "edtPassword or its transformation method is null");
                 }
             }
         });
 
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                validateData();
-            }
+            public void onClick(View v) {validateData();}
         });
 
         binding.txtSignUp.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +250,6 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 });
-
     }
 
 
@@ -247,7 +266,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Re-Enter Your Email", Toast.LENGTH_SHORT).show();
             binding.edtEmail.setError("Valid email is required");
             binding.edtEmail.requestFocus();
-
         } else if (TextUtils.isEmpty(txtPwd)) {
             Toast.makeText(this, "Please Enter Your Password", Toast.LENGTH_SHORT).show();
             binding.edtPassword.setError("Password is required");
@@ -266,6 +284,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         Log.d(TAG_E, "onSuccess: Logged in...");
                         progressDialog.dismiss();
+
+                        // Save checkbox state in SharedPreferences
+                        saveCheckboxState(binding.chkSaveLoginInfo.isChecked());
+                        if (binding.chkSaveLoginInfo.isChecked()) {
+                            // Save email and password in SharedPreferences
+                            saveLoginCredentials(txtEmail, txtPwd);
+                        }
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     }
                 })
@@ -278,6 +303,24 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+    // Method to save email and password in SharedPreferences
+    private void saveLoginCredentials(String email, String password) {
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREF_EMAIL, email);
+        editor.putString(PREF_PASSWORD, password);
+        editor.apply();
+    }
+    // Method to save checkbox state in SharedPreferences
+    private void saveCheckboxState(boolean isChecked) {
+        SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PREF_CHECKBOX_STATE, isChecked);
+        editor.apply();
+    }
+
     public void signUpClicked(View view) {
         Intent intent = new Intent(this, RegisterEmailActivity.class);
         startActivity(intent);
