@@ -111,8 +111,8 @@
             android:id="@+id/chkSaveLoginInfo"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/open_sans"
-            android:paddingTop="10dp"
             android:text="Save a login information"
             android:textSize="16sp" />
 
@@ -214,7 +214,7 @@
             android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/button_loginfb"/>
+            android:src="@drawable/buton_loginphone"/>
     </LinearLayout>
 
     <ImageView
@@ -228,5 +228,15 @@
         android:layout_marginRight="-72dp"
         android:layout_marginBottom="-54dp"
         android:src="@drawable/topimg" />
+
+
+    <!-- Overlay view for internet connection status -->
+    <View
+        android:id="@+id/overlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.6"
+        android:visibility="gone" />
 
 </RelativeLayout>

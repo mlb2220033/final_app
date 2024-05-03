@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -64,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
 
         edtPassword = findViewById(R.id.edtPassword);
         imgShowHidePwdLogin = findViewById(R.id.imgShowHidePwdLogin);
-        Toast.makeText(LoginActivity.this, "You can Login now", Toast.LENGTH_SHORT).show();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -72,6 +73,16 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // check internet
+        if(!checkInternet()){
+            findViewById(R.id.overlayView).setVisibility(View.VISIBLE);
+            DialogNoInternet dialogNoInternet = new DialogNoInternet(LoginActivity.this);
+            dialogNoInternet.setCancelable(false);
+            dialogNoInternet.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+            dialogNoInternet.show();
+        }
+
+        // Save login email info
         SharedPreferences sharedPreferences = getSharedPreferences("login_prefs", Context.MODE_PRIVATE);
         String savedEmail = sharedPreferences.getString(PREF_EMAIL, "");
         String savedPassword = sharedPreferences.getString(PREF_PASSWORD, "");
@@ -146,6 +157,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private boolean checkInternet() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
 
     //Google
     private void beginGoogleLogin () {

@@ -71,5 +71,14 @@
         app:layout_constraintStart_toStartOf="@+id/slideSplash">
     </LinearLayout>
 
+    <!-- Overlay view for internet connection status -->
+    <View
+        android:id="@+id/overlayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.6"
+        android:visibility="gone" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

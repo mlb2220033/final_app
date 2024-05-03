@@ -1,7 +1,11 @@
 package com.example.finalproject.booking;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -29,23 +33,40 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         addViews();
         addEvents();
-/*        splashDisplayed();*/
+        if (isFirstTime()) {
+            // If it's the first time, show SplashActivity
+            if (!checkInternet()) {
+                showNoInternetDialog();
+            }
+        } else {
+            // If it's not the first time, directly go to LoginActivity
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            finish();
+        }
     }
-
-/*    private void splashDisplayed() {
+    private boolean checkInternet() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+    private boolean isFirstTime() {
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean splashDisplayed = preferences.getBoolean(PREF_SPLASH_DISPLAYED, false);
-
         if (!splashDisplayed) {
+            // If it's the first time, update the preference
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(PREF_SPLASH_DISPLAYED, true);
             editor.apply();
-        } else {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
-            return;
         }
-    }*/
+        return !splashDisplayed;
+    }
+
+    private void showNoInternetDialog() {
+        findViewById(R.id.overlayView).setVisibility(View.VISIBLE);
+        DialogNoInternet dialogNoInternet = new DialogNoInternet(SplashActivity.this);
+        dialogNoInternet.setCancelable(false);
+        dialogNoInternet.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        dialogNoInternet.show();
+    }
 
     private void addEvents() {
         btnBack.setVisibility(View.GONE);

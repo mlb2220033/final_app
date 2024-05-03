@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        app:cardBackgroundColor="#9CDEF6">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:layout_above="@id/imgShapeDivider"
+                android:layout_toEndOf="@id/imgBird">
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="108dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_cloud_2" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/imgShapeDivider"
+                android:layout_marginEnd="-191dp"
+                android:layout_marginBottom="-87dp"
+                android:layout_toStartOf="@+id/imgBird"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_cloud_3" />
+
+            <ImageView
+                android:id="@+id/imgBird"
+                android:layout_width="187dp"
+                android:layout_height="118dp"
+                android:layout_above="@id/imgShapeDivider"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-120dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_bird" />
+
+            <ImageView
+                android:id="@+id/imgShapeDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/shape" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/imgShapeDivider"
+                android:layout_marginTop="-133dp"
+                android:background="@color/Neutral_100">
+
+                <TextView
+
+                    android:id="@+id/txtTilNoInternet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="No Internet Connection"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSubNoInternet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTilNoInternet"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:lineSpacingExtra="8dp"
+                    android:text="Unable to connect to the Internet.\n Please check your Wifi and Airplane Mode to use the app"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/btnRetry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtSubNoInternet"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="17dp"
+
+                    android:background="@drawable/button_hover_click"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="5dp"
+                    android:text="Retry"
+                    android:textColor="@color/Primary_100">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="188dp"
+                android:layout_height="196dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_cloud_1" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

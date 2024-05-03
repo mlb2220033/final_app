@@ -102,7 +102,6 @@
                 android:layout_height="50dp"
                 android:background="@drawable/edt_normal_click"
                 android:inputType="phone"
-                android:hint="Phone Number"
                 android:paddingStart="8dp"
                 />
         </com.google.android.material.textfield.TextInputLayout>

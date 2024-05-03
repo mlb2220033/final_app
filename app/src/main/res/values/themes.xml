@@ -67,6 +67,10 @@
         <item name="materialButtonOutlinedStyle">@style/Widget.App.Button</item>
     </style>
 
+    <style name="TextAppearance.App.TextInputLayout" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <!-- Define any attributes you want to apply to TextInputLayout text appearance -->
+    </style>
+
     <style name="HotelDetailToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
     </style>
