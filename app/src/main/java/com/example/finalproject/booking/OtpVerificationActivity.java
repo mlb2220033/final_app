@@ -61,8 +61,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
         binding = ActivityOtpVerificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -70,11 +68,12 @@ public class OtpVerificationActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Retrieve phone number from EditText
+        phoneNumberWithCode = getIntent().getStringExtra("phoneNumberWithCode");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         phoneCode = getIntent().getStringExtra("phoneCode");
 
         // Check if phoneNumber is not empty before starting verification
-        if (!TextUtils.isEmpty(phoneNumber)) {
+        if (!TextUtils.isEmpty(phoneNumberWithCode)) {
             phoneLoginCallBack();
             startPhoneNumberVerification();
         } else {
@@ -129,9 +128,6 @@ public class OtpVerificationActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         binding.btnVerifyOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +148,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
         });
     }
 
-    private String phoneCode = "", phoneNumber = "", phoneNumberWithCode = phoneCode + phoneNumber;
+    private String phoneCode = "", phoneNumber="", phoneNumberWithCode = "" ;
 
     private void startPhoneNumberVerification() {
         progressDialog.setMessage("Sending OTP to: " + phoneNumber);
@@ -161,7 +157,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
         // Setup phone auth option with Phone number, timeout, callback
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(firebaseAuth)
-                        .setPhoneNumber(phoneNumber)
+                        .setPhoneNumber(phoneNumberWithCode)
                         .setTimeout(60L, java.util.concurrent.TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallBacks)
@@ -171,7 +167,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
     }
     private void resendVerificationCode(PhoneAuthProvider.ForceResendingToken token){
         Log.d(TAG_P, "Resending verification code...");
-        progressDialog.setMessage("Resending OTP to " + phoneNumberWithCode);
+        progressDialog.setMessage("Resending OTP to " + phoneNumber);
         progressDialog.show();
 
         //setup phone auth option withPhone number, timeout, callback
@@ -213,8 +209,7 @@ public class OtpVerificationActivity extends AppCompatActivity {
                 forceResendingToken = token;
 
                 progressDialog.dismiss();
-                MyUtils.toast(OtpVerificationActivity.this, "OTP sent to"+phoneNumberWithCode);
-
+                MyUtils.toast(OtpVerificationActivity.this, "OTP sent to: "+phoneNumber);
             }
 
             @Override

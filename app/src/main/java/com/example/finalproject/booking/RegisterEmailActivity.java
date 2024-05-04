@@ -67,22 +67,17 @@ public class RegisterEmailActivity extends AppCompatActivity {
         imgShowHidePwdRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edtPassword != null && edtRePassword != null) {
-                    if (edtPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
-                        // If password is visible, then hide
-                        edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        edtRePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                        imgShowHidePwdRegister.setImageResource(R.drawable.eye_hide);
-                        imgShowHideRePwdRegister.setImageResource(R.drawable.eye_hide);
-                    } else {
-                        edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                        edtRePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                        imgShowHidePwdRegister.setImageResource(R.drawable.eye_show);
-                        imgShowHideRePwdRegister.setImageResource(R.drawable.eye_show);
-                    }
-                }
+                togglePasswordVisibility(binding.edtPassword, imgShowHidePwdRegister);
             }
         });
+
+        imgShowHideRePwdRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleRePasswordVisibility(binding.edtRePassword, imgShowHideRePwdRegister);
+            }
+        });
+
         // Register
         binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +92,34 @@ public class RegisterEmailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void toggleRePasswordVisibility(EditText edtRePassword, ImageView imgShowHideRePwdRegister) {
+        if (edtRePassword != null && edtRePassword.getTransformationMethod() != null) {
+            if (edtRePassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                edtRePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                imgShowHideRePwdRegister.setImageResource(R.drawable.eye_show);
+            } else {
+                edtRePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                imgShowHideRePwdRegister.setImageResource(R.drawable.eye_hide);
+            }
+        } else {
+            Log.e("RegisterEmailActivity", "EditText or its transformation method is null");
+        }
+    }
+    private void togglePasswordVisibility(EditText edtPassword, ImageView imgShowHidePwdRegister) {
+        if (edtPassword != null && edtPassword.getTransformationMethod() != null) {
+            if (edtPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                imgShowHidePwdRegister.setImageResource(R.drawable.eye_show);
+            } else {
+                edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                imgShowHidePwdRegister.setImageResource(R.drawable.eye_hide);
+            }
+        } else {
+            Log.e("RegisterEmailActivity", "EditText or its transformation method is null");
+        }
+    }
+
     private String txtEmail, txtPwd, txtRePwd, txtFullName, txtUserName, txtPhone ;
     private void validateData(){
         txtEmail = binding.edtEmail.getText().toString().trim();

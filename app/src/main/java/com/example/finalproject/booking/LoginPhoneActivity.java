@@ -78,8 +78,9 @@ public class LoginPhoneActivity extends AppCompatActivity {
         } else {
             // Pass the phone number to OtpVerificationActivity
             Intent intent = new Intent(LoginPhoneActivity.this, OtpVerificationActivity.class);
-            intent.putExtra("phoneNumber", phoneNumberWithCode);
+            intent.putExtra("phoneNumber", phoneNumber);
             intent.putExtra("phoneCode", phoneCode);
+            intent.putExtra("phoneNumberWithCode", phoneNumberWithCode);
             startActivity(intent);
         }
     }

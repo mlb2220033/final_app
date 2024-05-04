@@ -29,7 +29,7 @@
     <ImageView
         android:id="@+id/imgPR2"
         android:layout_width="match_parent"
-        android:layout_height="163dp"
+        android:layout_height="185dp"
         android:layout_gravity="center"
         android:paddingTop="30dp"
         android:paddingBottom="20dp"
@@ -85,25 +85,24 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneNumberTil"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+            android:layout_width="339dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="-3dp"
             android:layout_toEndOf="@id/phoneCodeNumber"
             android:hint="Phone Number"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
             app:boxCornerRadiusBottomEnd="8dp"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
-            >
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
             <EditText
                 android:id="@+id/edtLPhoneNumber"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/edt_normal_click"
                 android:inputType="phone"
-                android:paddingStart="8dp"
-                />
+                android:paddingStart="8dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </RelativeLayout>
