@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Facilities"
+        android:lineSpacingExtra="3dp"
         android:textColor="@color/Neutral_900"
         android:textSize="14sp" />
 

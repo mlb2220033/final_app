@@ -43,8 +43,9 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
 
         holder.txtHotelName.setText(hotel.getHotelName());
         holder.txtHotelAddress.setText(hotel.getHotelAddress());
-        holder.txtPricePerNight.setText(String.valueOf(hotel.getPricePerNight()));
-        holder.txtStarRating.setText(String.valueOf(hotel.getStarRating()));
+        holder.txtPricePerNight.setText(String.format("%,.2f", hotel.getPricePerNight()) + " VNĐ");
+        holder.txtStarRating.setText(String.format("%.1f", hotel.getStarRating()));
+
 
         Picasso.get().load(hotel.getHotelImage()).into(holder.imgHotel);
 
@@ -56,7 +57,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             public void onClick(View v) {
                 holder.imgLike.setVisibility(View.GONE);
                 holder.imgDisLike.setVisibility(View.VISIBLE);
-                Toast.makeText(v.getContext(), "Added to favorites list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Remove from favorites list", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -65,7 +66,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             public void onClick(View v) {
                 holder.imgDisLike.setVisibility(View.GONE);
                 holder.imgLike.setVisibility(View.VISIBLE);
-                Toast.makeText(v.getContext(), "Removed from favorites list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Add to favorites list", Toast.LENGTH_SHORT).show();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {

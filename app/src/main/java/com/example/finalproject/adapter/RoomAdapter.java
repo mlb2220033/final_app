@@ -45,7 +45,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
         holder.txtRoomName.setText(room.getRoomName());
         holder.txtroomArea.setText(room.getRoomArea());
         holder.txtroomBed.setText(room.getRoomBed());
-        holder.txtRoomPrice.setText(String.valueOf(room.getRoomPrice()));
+        holder.txtRoomPrice.setText(String.format("%,.2f", room.getRoomPrice()) + " VNĐ");
         holder.txtroomPerson.setText(String.valueOf(room.getRoomPerson()));
 
         Picasso.get().load(room.getRoomImage()).into(holder.imgRoom);

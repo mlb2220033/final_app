@@ -89,6 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="15dp"
                             android:text="Hotel Address"
+                            android:lineSpacingExtra="3dp"
                             android:textColor="@color/Neutral_900"
                             android:textSize="14sp" />
                         <LinearLayout
@@ -101,13 +102,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="Price per night"
                                 android:layout_marginEnd="10dp"
-                                android:textColor="@color/Primary_500"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="VNĐ"
                                 android:textColor="@color/Primary_500"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -167,6 +161,7 @@
                         android:ellipsize="end"
                         android:maxLines="3"
                         android:text="Hotel Description"
+                        android:lineSpacingExtra="3dp"
                         android:textColor="@color/Neutral_900" />
 
                     <TextView
@@ -313,6 +308,7 @@
                         android:layout_marginBottom="25dp"
                         android:text="Have a question for "
                         android:textColor="@color/Neutral_900"
+                        android:lineSpacingExtra="3dp"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 

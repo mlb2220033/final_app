@@ -190,7 +190,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         txtHotelPhone.setText(getIntent().getStringExtra("txtHotelPhone"));
         txtHotelGmail.setText(getIntent().getStringExtra("txtHotelGmail"));
 
-        txtPricePerNight.setText(String.valueOf(getIntent().getFloatExtra("txtPricePerNight", 0.00f)));
+        txtPricePerNight.setText(String.format("%,.2f", getIntent().getFloatExtra("txtPricePerNight", 0.00f)) + " VNĐ");
         txtStarRating.setText(String.valueOf(getIntent().getFloatExtra("txtStarRating", 0.0f)));
 
 

@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:text="Hotel Address"
+                android:lineSpacingExtra="3dp"
                 android:textColor="@color/Neutral_900"
                 android:textSize="14sp" />
 
@@ -91,13 +92,6 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VNĐ"
-                    android:textColor="@color/Primary_500"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
