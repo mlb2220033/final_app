@@ -137,7 +137,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:src="@drawable/ic_travel"
-            android:tint="@color/Neutral_900" />
+            android:tint="@color/Neutral_500" />
     </RelativeLayout>
 
 

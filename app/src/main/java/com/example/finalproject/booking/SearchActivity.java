@@ -37,21 +37,25 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void dateRangePicker() {
-        MaterialDatePicker materialDatePicker = MaterialDatePicker.Builder.dateRangePicker()
-                .setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds())).build();
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTheme(R.style.ThemeOverlay_App_MaterialCalendar);
+        builder.setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds()));
+        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
         txtPeriod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(), "Tag_picker");
-                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-                    @Override
-                    public void onPositiveButtonClick(Object selection) {
-                        txtPeriod.setText(materialDatePicker.getHeaderText());
-                    }
-                });
+            }
+        });
+
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+            @Override
+            public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                txtPeriod.setText(materialDatePicker.getHeaderText());
             }
         });
     }
+
 
     private void addEvents() {
 

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:theme="@style/AppBottomSheetDialogTheme">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,19 +13,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:text="Filters"
-            android:textColor="@color/Primary_700"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="Filters"
+                android:textColor="@color/Primary_500"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imgCancel"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_cancel"
+                android:tint="@color/Neutral_500" />
+
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,26 +51,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_margin="3dp"
             android:text="Hotel Name"
             android:textColor="@color/Neutral_900"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchViewLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <EditText
+            android:id="@+id/edtHotelName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:startIconDrawable="@drawable/ic_hotel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchViewText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input here"
-                android:paddingStart="70dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/button_design"
+            android:drawableStart="@drawable/ic_find"
+            android:drawablePadding="25dp"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/Neutral_900"
+            android:textColorHint="@color/Neutral_500"
+            android:textCursorDrawable="@drawable/cursor_custom" />
 
 
     </LinearLayout>
@@ -77,209 +88,219 @@
             android:layout_gravity="left"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginBottom="10dp"
             android:textColor="@color/Neutral_900"
             android:text="Star Rating" />
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:layout_marginVertical="20dp"
+                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn5Start"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/txt5star"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_hover_click"
-                    android:text="5"
-                    android:drawableTop="@drawable/ic_five_star"
-                    />
-                <Button
-                    android:id="@+id/btn4Start"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:background="@drawable/button_design"
-                    android:text="4"
-                    android:drawableTop="@drawable/ic_four_star"/>
-                <Button
-                    android:id="@+id/btn3Start"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_design"
-                    android:text="3"
-                    android:drawableTop="@drawable/ic_3_star"/>
-                <Button
-                    android:id="@+id/btn2Start"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_design"
-                    android:text="2"
-                    android:drawableTop="@drawable/ic_2_star"/>
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp">
 
-                <Button
-                    android:id="@+id/btn1Start"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_design"
-                    android:text="1"
-                    android:drawableTop="@drawable/ic_1_star"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="5"
+                        android:textColor="@color/Neutral_900" />
 
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_star" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/txt4star"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_design"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="4"
+                        android:textColor="@color/Neutral_900" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_star" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/txt3star"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/button_design"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="3"
+                        android:textColor="@color/Neutral_900" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_star" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/txt2star"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/button_design"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="2"
+                        android:textColor="@color/Neutral_900" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_star" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/txt1star"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/button_design"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="1"
+                        android:textColor="@color/Neutral_900" />
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_star" />
+
+                </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/Neutral_900"
-            android:text="Sort by" />
-
-        <RadioGroup
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:theme="@style/RadioButtonStyle">
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textSize="16dp"
+                android:layout_gravity="left"
+                android:text="Sort by"
                 android:textColor="@color/Neutral_900"
-                android:text="Price (high to low)"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/radioButton2"
+            <RadioGroup
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:theme="@style/RadioButtonStyle">
+
+                <RadioButton
+                    android:id="@+id/radioHigh2Low"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:paddingStart="10dp"
+                    android:text="Price (high to low)"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="16dp" />
+
+                <RadioButton
+                    android:id="@+id/radioLow2High"
+                    android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:layout_marginTop="10dp"
                 android:textColor="@color/Neutral_900"
                 android:paddingStart="10dp"
                 android:text="Price (low to high)" />
-
         </RadioGroup>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/Neutral_900"
-            android:text="Price Range" />
+            android:layout_gravity="center">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_hover_click"
+                android:text="Apply"
+                android:textColor="@color/Neutral_100"
+                android:textStyle="bold" />
 
-
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/button_no"
+                android:text="Reset"
+                android:textColor="@color/Primary_500"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_margin="3dp"
-            android:text="Property facilities"
-            android:textColor="@color/Neutral_900"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="CheckBox" />
-
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="CheckBox" />
-
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="CheckBox" />
-
-        <CheckBox
-            android:id="@+id/checkBox4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="CheckBox" />
-
-        <CheckBox
-            android:id="@+id/checkBox5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingStart="10dp"
-            android:text="CheckBox" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:background="@drawable/button_hover_click"
-            android:text="Apply"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/button_hover_click"
-            android:text="Reset"/>
-    </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

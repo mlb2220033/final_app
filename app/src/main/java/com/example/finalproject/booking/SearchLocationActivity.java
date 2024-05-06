@@ -80,9 +80,11 @@ public class SearchLocationActivity extends AppCompatActivity {
                     list.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Location location = dataSnapshot.getValue(Location.class);
-                        if (location.getCity().toLowerCase().contains(searchText.toLowerCase()) ||
+                        if (location.getWard().toLowerCase().contains(searchText.toLowerCase()) ||
                                 location.getDistrict().toLowerCase().contains(searchText.toLowerCase()) ||
-                                location.getWard().toLowerCase().contains(searchText.toLowerCase())) {
+                                location.getCity().toLowerCase().contains(searchText.toLowerCase()) ||
+                                (location.getWard() + ", " + location.getDistrict() + ", " + location.getCity()).toLowerCase().contains(searchText.toLowerCase()) ||
+                                (location.getWard() + " " + location.getDistrict() + " " + location.getCity()).toLowerCase().contains(searchText.toLowerCase())) {
                             list.add(location);
                         }
                     }

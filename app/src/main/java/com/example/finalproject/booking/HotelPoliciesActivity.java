@@ -53,7 +53,7 @@ public class HotelPoliciesActivity extends AppCompatActivity {
 
 
     private void getPolicies() {
-        firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelPocities")
+        firebaseDatabase.getReference().child("Hotels").child(hotelID).child("hotelPolicies")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
