@@ -66,7 +66,7 @@
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
-                        android:layout_width="match_parent"
+                        android:layout_width="235dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginStart="16dp"
@@ -91,7 +91,15 @@
                             android:text="TextView"
                             android:textColor="@color/Neutral_200"
                             android:textSize="14sp" />
+
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imgVHome"
+                        android:layout_width="45dp"
+                        android:layout_height="51dp"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/ic_home_w" />
 
                 </LinearLayout>
 

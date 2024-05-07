@@ -43,7 +43,7 @@ public class ProfileMainActivity extends FireBaseActivity {
 
     private ProgressDialog progressDialog;
 
-    private ImageView btnBack;
+    private ImageView btnBack, imgVHome;
 
     RelativeLayout relaProfile, relaLogout,relaShare,relaChangePwd;
     @Override
@@ -124,9 +124,18 @@ public class ProfileMainActivity extends FireBaseActivity {
         relaLogout = findViewById(R.id.relaLogout);
         relaShare = findViewById(R.id.relaShare);
         relaChangePwd = findViewById(R.id.relaChangePwd);
+        imgVHome = findViewById(R.id.imgVHome);
     }
 
     private void addEvents() {
+
+        imgVHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileMainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final boolean[] isShareClicked = {false};
 
