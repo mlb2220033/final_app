@@ -111,13 +111,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="33dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_payment_sc" />
+                            android:src="@drawable/ic_success_sc" />
 
                         <TextView
                             android:id="@+id/textView17"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Payment"
+                            android:text="Review"
                             android:textAlignment="center"
                             android:textColor="#808080" />
 
@@ -150,13 +150,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="33dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_success" />
+                            android:src="@drawable/ic_payment" />
 
                         <TextView
                             android:id="@+id/textView9"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Review"
+                            android:text="Payment"
                             android:textAlignment="center"
                             android:textColor="#808080" />
                     </LinearLayout>

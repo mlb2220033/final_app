@@ -33,11 +33,12 @@ import java.util.Objects;
 public class ViewBookingActivity extends AppCompatActivity {
 
     ImageView btnBack;
-    Button btnConfirm;
+    Button btnConfirm, btnShowImageGallery;
     ImageView imgHotelBKDetail;
     TextView txtHotelNameBKDetail, txtHotelAddressBKDetail, txtPriceBKDetail,
             txtVATBKDetail, txtTotalPriceBKDetail, txtAfterApplyDiscount,
             txtDiscountBKDetail, txtFullNameBKDetail, txtAddressBKDetail, txtPhoneBKDetail;
+    Hotel hotel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,15 @@ public class ViewBookingActivity extends AppCompatActivity {
             }
         });
 
+        btnShowImageGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewBookingActivity.this, ViewImageGalleryActivity.class);
+                intent.putExtra("hotel_id", hotel.getHotelID());
+                startActivity(intent);
+            }
+        });
+
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +87,7 @@ public class ViewBookingActivity extends AppCompatActivity {
     private void addView() {
         btnBack = findViewById(R.id.btnBack);
         btnConfirm = findViewById(R.id.btnConfirm);
+        btnShowImageGallery = findViewById(R.id.btnShowImageGallery);
         imgHotelBKDetail = findViewById(R.id.imgHotelBKDetail);
         txtHotelNameBKDetail = findViewById(R.id.txtHotelNameBKDetail);
         txtHotelAddressBKDetail = findViewById(R.id.txtHotelAddressBKDetail);
@@ -91,7 +102,7 @@ public class ViewBookingActivity extends AppCompatActivity {
     }
 
     private void setupUIWithDataPassing() {
-        Hotel hotel = getIntent().getSerializableExtra("hotel_item", Hotel.class);
+        hotel = getIntent().getSerializableExtra("hotel_item", Hotel.class);
         float subTotal = getIntent().getFloatExtra("subTotal", 0);
         Float vat = getIntent().getFloatExtra("vat", 0);
         Float total = getIntent().getFloatExtra("total", 0);

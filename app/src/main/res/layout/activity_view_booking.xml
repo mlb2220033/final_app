@@ -204,10 +204,10 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnShowImageGallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Amenities"
+                    android:text="View Images Gallery"
                     android:textSize="14sp"
                     android:textAllCaps="false"
                     android:textStyle="bold"
@@ -238,7 +238,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/txtCheckInBKDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="27 May, Tue"
@@ -260,7 +260,7 @@
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/txtCheckOutBKDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -283,6 +283,7 @@
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/txtGuestNumbBKDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
@@ -338,12 +339,12 @@
                     android:layout_marginEnd="4dp"
                     android:text="Phone numbers"
                     android:textColor="@color/Neutral_900"
-                    android:textSize="12sp"/>
+                    android:textSize="13sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textColor="@color/Neutral_900"
                     android:layout_marginEnd="4dp"/>
                 <TextView
@@ -353,7 +354,7 @@
                     android:layout_weight="1"
                     android:text="Addres"
                     android:textColor="@color/Neutral_900"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:lines="1" />
             </LinearLayout>
         </LinearLayout>

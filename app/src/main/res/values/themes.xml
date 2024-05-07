@@ -26,6 +26,10 @@
         <item name="colorAccent">@color/Primary_500</item>
     </style>
 
+    <style name="ProcessBarWhite" parent="">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
     <style name="AppBottomSheetDialogTheme"
         parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModelStyle</item>
