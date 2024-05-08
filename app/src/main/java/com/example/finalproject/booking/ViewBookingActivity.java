@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -28,7 +29,11 @@ import com.example.finalproject.databinding.ActivityViewBookingBinding;
 import com.example.finalproject.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class ViewBookingActivity extends AppCompatActivity {
 
@@ -37,7 +42,8 @@ public class ViewBookingActivity extends AppCompatActivity {
     ImageView imgHotelBKDetail;
     TextView txtHotelNameBKDetail, txtHotelAddressBKDetail, txtPriceBKDetail,
             txtVATBKDetail, txtTotalPriceBKDetail, txtAfterApplyDiscount,
-            txtDiscountBKDetail, txtFullNameBKDetail, txtAddressBKDetail, txtPhoneBKDetail;
+            txtDiscountBKDetail, txtFullNameBKDetail, txtAddressBKDetail, txtPhoneBKDetail,
+            txtCheckInBKDetail, txtCheckOutBKDetail, txtGuestNumbBKDetail;
     Hotel hotel;
 
     @Override
@@ -99,6 +105,9 @@ public class ViewBookingActivity extends AppCompatActivity {
         txtTotalPriceBKDetail = findViewById(R.id.txtTotalPriceBKDetail);
         txtAfterApplyDiscount = findViewById(R.id.txtAfterApplyDiscount);
         txtDiscountBKDetail = findViewById(R.id.txtDiscountBKDetail);
+        txtCheckInBKDetail = findViewById(R.id.txtCheckInBKDetail);
+        txtCheckOutBKDetail = findViewById(R.id.txtCheckOutBKDetail);
+        txtGuestNumbBKDetail = findViewById(R.id.txtGuestNumbBKDetail);
     }
 
     private void setupUIWithDataPassing() {
@@ -132,5 +141,15 @@ public class ViewBookingActivity extends AppCompatActivity {
         txtTotalPriceBKDetail.setText(String.format("VND %,.0f", total));
         txtAfterApplyDiscount.setText(String.format("VND %,.0f", afterApplyDiscount));
         txtDiscountBKDetail.setText(String.format("VND %,.0f", discount));
+        txtCheckInBKDetail.setText(convertDateFromTimeStamp(DataHolder.check_in));
+        txtCheckOutBKDetail.setText(convertDateFromTimeStamp(DataHolder.check_out));
+        txtGuestNumbBKDetail.setText(DataHolder.guests + " Guests");
+    }
+
+    private String convertDateFromTimeStamp(Long time) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM, EEE", Locale.getDefault());
+        return dateFormat.format(calendar.getTime());
     }
 }

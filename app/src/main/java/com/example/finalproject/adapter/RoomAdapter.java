@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
+import com.example.finalproject.booking.PaymentActivity;
 import com.example.finalproject.booking.ViewBookingActivity;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Room;
 import com.squareup.picasso.Picasso;
 
@@ -54,7 +56,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
             @Override
             public void onClick(View v) {
                 Context activityContext = v.getContext();
-                Intent intent = new Intent(activityContext, ViewBookingActivity.class);
+                Intent intent = new Intent(activityContext, PaymentActivity.class);
+                DataHolder.type_room = room.getRoomName();
+                DataHolder.room_price = room.getRoomPrice();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activityContext.startActivity(intent);
             }

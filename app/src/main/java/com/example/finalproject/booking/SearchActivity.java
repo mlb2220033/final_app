@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.finalproject.R;
+import com.example.finalproject.model.DataHolder;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
@@ -52,6 +53,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
                 txtPeriod.setText(materialDatePicker.getHeaderText());
+                DataHolder.check_in = selection.first;
+                DataHolder.check_out = selection.second;
             }
         });
     }
@@ -95,6 +98,8 @@ public class SearchActivity extends AppCompatActivity {
                     intent.putExtra("roomCount", roomCount);
                     intent.putExtra("guestsCount", guestsCount);
                     intent.putExtra("txtPeriod", period);
+                    DataHolder.guests = guestsCount;
+                    DataHolder.room_numbers = roomCount;
                     startActivity(intent);
                 } else {
                     txtMessage.setVisibility(View.VISIBLE);

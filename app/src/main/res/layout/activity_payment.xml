@@ -290,6 +290,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:id="@+id/edtCheckIn"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_weight="1"
@@ -322,6 +323,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:id="@+id/edtCheckOut"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_weight="1"
@@ -349,6 +351,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/edtTypeRoom"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -445,7 +448,7 @@
                     android:textColor="@color/Neutral_900"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_subtotalPrice" />
 
                 <TextView
                     android:id="@+id/txtSubtotal"
@@ -562,6 +565,42 @@
                     app:layout_constraintEnd_toStartOf="@+id/txtDiscount"
                     app:layout_constraintTop_toTopOf="@+id/txtDiscount"
                     app:layout_constraintBottom_toBottomOf="@+id/txtDiscount"/>
+
+                <LinearLayout
+                    android:id="@+id/view_subtotalPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textView35"
+                    android:layout_marginBottom="8dp"
+                    tools:layout_editor_absoluteX="38dp">
+
+                    <TextView
+                        android:id="@+id/txtRoomNumbers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="italic"
+                        android:textSize="13sp"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="6dp"
+                        android:textSize="13sp"
+                        android:text="x" />
+
+                    <TextView
+                        android:id="@+id/txtNightNumbers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textStyle="italic"
+                        android:text="TextView" />
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

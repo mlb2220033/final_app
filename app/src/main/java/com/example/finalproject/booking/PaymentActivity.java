@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,28 +18,38 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalproject.R;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Discount;
 import com.example.finalproject.model.Hotel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class PaymentActivity extends AppCompatActivity {
     private DatabaseReference ref;
     private FirebaseDatabase db;
+    private FirebaseAuth auth;
     private Hotel hotel;
     private Float subTotal, vat, total, discount = (float) 0;
+    private Long date_numbers;
     private List<Discount> discounts;
     Button btnConfirm, btnApplyDiscount;
-    TextView txtSubtotal, txtDiscount, txtVAT, txtTotal;
-    EditText edtInputDiscount, edtFullNamePayment, edtPhonePayment, edtAddressPayment;
+    TextView txtSubtotal, txtDiscount, txtVAT, txtTotal, txtRoomNumbers, txtNightNumbers;
+    EditText edtInputDiscount, edtFullNamePayment, edtPhonePayment, edtAddressPayment,
+            edtCheckIn, edtCheckOut, edtTypeRoom;
+    ImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +64,12 @@ public class PaymentActivity extends AppCompatActivity {
         addView();
 
         db = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        getUserInfo();
         getListDiscount();
-        getDemoHotel();
+        getHotelSelected();
+        getRoomSelected();
 
         btnApplyDiscount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +83,7 @@ public class PaymentActivity extends AppCompatActivity {
                             if (element.getCode().contentEquals(edtInputDiscount.getText())) {
                                 Toast.makeText(PaymentActivity.this, "Apply discount code successfully", Toast.LENGTH_LONG).show();
                                 discount = element.getCost();
-                                totalCalculate(hotel);
+                                totalCalculate();
                                 break;
                             }
                         }
@@ -80,7 +95,7 @@ public class PaymentActivity extends AppCompatActivity {
                     btnApplyDiscount.setText("Apply");
                     edtInputDiscount.setText("");
                     discount = (float) 0;
-                    totalCalculate(hotel);
+                    totalCalculate();
                 }
             }
         });
@@ -108,26 +123,39 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void addView() {
         btnConfirm=findViewById(R.id.btnUpdate);
         btnApplyDiscount=findViewById(R.id.btnApplyDiscount);
+        btnBack=findViewById(R.id.btnBack);
         txtSubtotal=findViewById(R.id.txtSubtotal);
         txtDiscount=findViewById(R.id.txtDiscount);
         txtVAT=findViewById(R.id.txtVAT);
         txtTotal=findViewById(R.id.txtTotal);
+        txtNightNumbers=findViewById(R.id.txtNightNumbers);
+        txtRoomNumbers=findViewById(R.id.txtRoomNumbers);
         edtInputDiscount=findViewById(R.id.edtInputDiscount);
         edtFullNamePayment=findViewById(R.id.edtFullNamePayment);
         edtAddressPayment=findViewById(R.id.edtAddressPayment);
         edtPhonePayment=findViewById(R.id.edtPhonePayment);
+        edtCheckIn=findViewById(R.id.edtCheckIn);
+        edtCheckOut=findViewById(R.id.edtCheckOut);
+        edtTypeRoom=findViewById(R.id.edtTypeRoom);
 
         discounts = new ArrayList<>();
     }
 
-    private void getDemoHotel() {
+    private void getHotelSelected() {
         ref = db.getReference("Hotels");
-        ref.child("hotel1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        ref.child(DataHolder.hotel_id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -135,12 +163,42 @@ public class PaymentActivity extends AppCompatActivity {
                 }
                 else {
                     hotel = task.getResult().getValue(Hotel.class);
-                    if (hotel != null) {
-                        totalCalculate(hotel);
-                    }
                 }
             }
         });
+    }
+
+    private void getRoomSelected() {
+        edtCheckIn.setText(convertDateFromTimeStamp(DataHolder.check_in));
+        edtCheckOut.setText(convertDateFromTimeStamp(DataHolder.check_out));
+        edtTypeRoom.setText(DataHolder.type_room);
+        totalCalculate();
+    }
+
+    private void getUserInfo() {
+        ref = db.getReference("Users");
+        String uid = auth.getUid();
+        if (!uid.isEmpty()) {
+            ref.child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("full name").getValue(String.class);
+                        String phoneNumber = snapshot.child("phone number").getValue(String.class);
+
+                        edtFullNamePayment.setText(name);
+                        edtPhonePayment.setText(phoneNumber);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        edtAddressPayment.setText(DataHolder.hotel_address);
     }
 
     private void getListDiscount() {
@@ -161,8 +219,11 @@ public class PaymentActivity extends AppCompatActivity {
         });
     }
 
-    private void totalCalculate(Hotel hotel) {
-        subTotal = hotel.getPricePerNight();
+    private void totalCalculate() {
+        Float price_per_night = DataHolder.room_price;
+        date_numbers = (DataHolder.check_out - DataHolder.check_in) / 1000 / 60 / 60 / 24;
+        Float date_count = date_numbers.floatValue();
+        subTotal = date_count * price_per_night * DataHolder.room_numbers;
         vat = (float) (0.1 * subTotal);
 
         total = subTotal - discount + vat;
@@ -171,5 +232,14 @@ public class PaymentActivity extends AppCompatActivity {
         txtDiscount.setText(String.format("%,.0f", discount));
         txtVAT.setText(String.format("%,.0f", vat));
         txtTotal.setText(String.format("%,.0f", total));
+        txtRoomNumbers.setText(DataHolder.room_numbers + " rooms");
+        txtNightNumbers.setText(String.format("%.0f", date_count) + " nights");
+    }
+
+    private String convertDateFromTimeStamp(Long time) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(time);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return dateFormat.format(calendar.getTime());
     }
 }

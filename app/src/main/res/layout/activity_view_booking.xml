@@ -166,7 +166,6 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/demoimg"
                 android:layout_marginEnd="15dp"/>
 
             <LinearLayout
@@ -241,7 +240,7 @@
                     android:id="@+id/txtCheckInBKDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="27 May, Tue"
+                    android:text="Date"
                     android:textSize="16sp"
                     android:textColor="@color/Neutral_900"
                     android:textStyle="bold"/>
@@ -264,7 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="1 Sun, Sat"
+                    android:text="Date"
                     android:textSize="16sp"
                     android:textColor="@color/Neutral_900"
                     android:textStyle="bold"/>
@@ -287,7 +286,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
-                    android:text="2 Guests"
+                    android:text="Guests"
                     android:textSize="16sp"
                     android:textColor="@color/Neutral_900"
                     android:textStyle="bold"/>

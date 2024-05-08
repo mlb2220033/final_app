@@ -31,6 +31,7 @@ import com.example.finalproject.adapter.HotelAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesItemAdapter;
 import com.example.finalproject.adapter.HotelPoliciesAdapter;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.HotelFacilities;
 import com.example.finalproject.model.HotelPolicies;
@@ -193,7 +194,8 @@ public class HotelDetailActivity extends AppCompatActivity {
         txtPricePerNight.setText(String.format("%,.2f", getIntent().getFloatExtra("txtPricePerNight", 0.00f)) + " VNĐ");
         txtStarRating.setText(String.valueOf(getIntent().getFloatExtra("txtStarRating", 0.0f)));
 
-
+        DataHolder.hotel_id = hotelID;
+        DataHolder.hotel_address = txtHotelAddress.getText().toString();
     }
 
     private void addEvents() {
