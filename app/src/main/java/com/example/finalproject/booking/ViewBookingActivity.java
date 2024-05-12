@@ -43,7 +43,7 @@ public class ViewBookingActivity extends AppCompatActivity {
     TextView txtHotelNameBKDetail, txtHotelAddressBKDetail, txtPriceBKDetail,
             txtVATBKDetail, txtTotalPriceBKDetail, txtAfterApplyDiscount,
             txtDiscountBKDetail, txtFullNameBKDetail, txtAddressBKDetail, txtPhoneBKDetail,
-            txtCheckInBKDetail, txtCheckOutBKDetail, txtGuestNumbBKDetail;
+            txtCheckInBKDetail, txtCheckOutBKDetail, txtGuestNumbBKDetail, txtRoomTypeBKDetail;
     Hotel hotel;
 
     @Override
@@ -108,6 +108,7 @@ public class ViewBookingActivity extends AppCompatActivity {
         txtCheckInBKDetail = findViewById(R.id.txtCheckInBKDetail);
         txtCheckOutBKDetail = findViewById(R.id.txtCheckOutBKDetail);
         txtGuestNumbBKDetail = findViewById(R.id.txtGuestNumbBKDetail);
+        txtRoomTypeBKDetail = findViewById(R.id.txtRoomTypeBKDetail);
     }
 
     private void setupUIWithDataPassing() {
@@ -144,6 +145,7 @@ public class ViewBookingActivity extends AppCompatActivity {
         txtCheckInBKDetail.setText(convertDateFromTimeStamp(DataHolder.check_in));
         txtCheckOutBKDetail.setText(convertDateFromTimeStamp(DataHolder.check_out));
         txtGuestNumbBKDetail.setText(DataHolder.guests + " Guests");
+        txtRoomTypeBKDetail.setText(DataHolder.type_room);
     }
 
     private String convertDateFromTimeStamp(Long time) {

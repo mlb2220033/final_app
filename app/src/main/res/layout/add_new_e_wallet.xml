@@ -19,12 +19,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtTitleAddCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="16sp"
+            android:text="The current application only supports momo e-wallet"
             android:textColor="@color/Primary_500"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginVertical="8dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_momo"/>
 
         <TextView
             android:id="@+id/textView11120"
@@ -33,13 +40,13 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="13dp"
-            android:text="Card Name"
+            android:text="Wallet owner name"
             android:textColor="@color/Primary_700"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtCardName"
+            android:id="@+id/edtWalletOwner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/edt_background"
@@ -57,47 +64,25 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="13dp"
-            android:text="Card Number"
+            android:text="Phone number"
             android:textColor="@color/Primary_700"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtCardNumber"
+            android:id="@+id/edtNumberWallet"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/edt_background"
             android:drawablePadding="8dp"
             android:ems="10"
-            android:maxLength="16"
+            android:maxLength="10"
             android:hint="Enter Your Card Number"
             android:inputType="number"
             android:padding="8dp"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="13dp"
-            android:text="CVV"
-            android:textColor="@color/Primary_700"
-            android:textSize="18sp"
-            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edtCVV"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edt_background"
-            android:drawablePadding="8dp"
-            android:ems="10"
-            android:hint="Enter CVV"
-            android:inputType="datetime|date"
-            android:padding="8dp"
-            android:textSize="16sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,7 +92,7 @@
         tools:layout_editor_absoluteY="598dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnAddIn4Card"
+            android:id="@+id/btnAddIn4Wallet"
             style="@android:style/Widget.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

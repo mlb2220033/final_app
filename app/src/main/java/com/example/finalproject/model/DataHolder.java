@@ -9,5 +9,7 @@ public class DataHolder {
     public static String type_room;
     public static Float room_price;
     public static Integer room_numbers;
-
+    public static Float day_numbers;
+    public static Float total_cost;
+    public static PaymentMethod paymentMethod;
 }

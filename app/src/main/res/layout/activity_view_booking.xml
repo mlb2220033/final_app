@@ -194,7 +194,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/txtRoomTypeBKDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Place detail"

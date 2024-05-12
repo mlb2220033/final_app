@@ -223,10 +223,12 @@ public class PaymentActivity extends AppCompatActivity {
         Float price_per_night = DataHolder.room_price;
         date_numbers = (DataHolder.check_out - DataHolder.check_in) / 1000 / 60 / 60 / 24;
         Float date_count = date_numbers.floatValue();
+        DataHolder.day_numbers = date_count;
         subTotal = date_count * price_per_night * DataHolder.room_numbers;
         vat = (float) (0.1 * subTotal);
 
         total = subTotal - discount + vat;
+        DataHolder.total_cost = total;
 
         txtSubtotal.setText(String.format("%,.0f", subTotal));
         txtDiscount.setText(String.format("%,.0f", discount));

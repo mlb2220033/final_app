@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/DialogSuccessPayment"
+        android:id="@+id/DialogFailPayment"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edt_background"
@@ -52,14 +52,14 @@
             android:layout_marginBottom="8dp"
             android:gravity="center_horizontal"
             android:text="Sorry, your booking could not be completed because the payment for this transaction has failed."
-            app:layout_constraintBottom_toTopOf="@+id/SuccessDone"
+            app:layout_constraintBottom_toTopOf="@+id/CloseDialog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Success" />
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/SuccessDone"
+            android:id="@+id/CloseDialog"
             style="@android:style/Widget.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

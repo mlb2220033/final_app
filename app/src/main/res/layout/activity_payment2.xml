@@ -150,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="33dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_payment" />
+                            android:src="@drawable/ic_payment_sc" />
 
                         <TextView
                             android:id="@+id/textView9"
@@ -384,12 +384,17 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/lvCard"
+                    <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp" />
+                        android:layout_height="280dp">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/lvCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="280dp"
+                            android:layout_margin="10dp" />
+
+                    </RadioGroup>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -417,6 +422,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
