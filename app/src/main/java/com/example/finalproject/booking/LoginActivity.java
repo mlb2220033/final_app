@@ -39,9 +39,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -297,16 +301,13 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Log.d(TAG_E, "onSuccess: Logged in...");
-                        progressDialog.dismiss();
-
+                        checkUser();
                         // Save checkbox state in SharedPreferences
                         saveCheckboxState(binding.chkSaveLoginInfo.isChecked());
                         if (binding.chkSaveLoginInfo.isChecked()) {
                             // Save email and password in SharedPreferences
                             saveLoginCredentials(txtEmail, txtPwd);
                         }
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -317,6 +318,41 @@ public class LoginActivity extends AppCompatActivity {
                         MyUtils.toast(LoginActivity.this, "Failed due to" + e.getMessage());
                     }
                 });
+    }
+
+    private void checkUser() {
+        progressDialog.setMessage("Checking User...");
+        // check if admin or user
+        FirebaseUser firebaseUser =firebaseAuth.getCurrentUser();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseUser.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        progressDialog.dismiss();
+                        String userType = ""+snapshot.child("userType").getValue();
+                        //check user type
+                        if (userType.equals("Google")){
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
+                        } else if(userType.equals("Email")){
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
+                        } else if(userType.equals("Phone")){
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
+                        } else if(userType.equals("admin")){
+                            startActivity(new Intent(LoginActivity.this, DashboardAdminActivity.class));
+                            finish();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
 

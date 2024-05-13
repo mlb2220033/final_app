@@ -1,0 +1,6 @@
+<!-- res/drawable/shape_toolbar.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/Primary_200"/> <!-- Màu nền của toolbar -->
+    <corners android:radius="35dp"/> <!-- Độ cong của góc -->
+</shape>

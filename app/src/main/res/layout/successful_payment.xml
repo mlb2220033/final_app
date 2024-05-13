@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/Success"
+            app:layout_constraintBottom_toTopOf="@+id/Delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
 
 
         <TextView
-            android:id="@+id/Success"
+            android:id="@+id/Delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/txtSuccessDesc"
+            android:id="@+id/txtDeleteDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -58,7 +58,7 @@
             app:layout_constraintBottom_toTopOf="@+id/txtLinkDesc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Success" />
+            app:layout_constraintTop_toBottomOf="@+id/Delete" />
 
         <LinearLayout
             android:id="@+id/txtLinkDesc"
@@ -72,7 +72,7 @@
             app:layout_constraintBottom_toTopOf="@+id/SuccessDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtSuccessDesc">
+            app:layout_constraintTop_toBottomOf="@+id/txtDeleteDesc">
 
             <TextView
                 android:id="@+id/txtDescL"

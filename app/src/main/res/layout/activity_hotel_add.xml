@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".booking.HotelAddActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="-25dp"
+        android:id="@+id/zoneInfo"
+        android:layout_width="match_parent"
+        android:layout_height="257dp"
+        android:background="@drawable/shape_toolbar">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="82dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/ic_back" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_logo_nbg" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-15dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Add a new Hotel"
+            android:textColor="@color/Neutral_900"
+            android:textSize="24sp" />
+
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/edtHotelNameAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-30dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_hotel_add"
+        android:drawablePadding="10dp"
+        android:hint="Enter Name"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+
+        android:id="@+id/edtHotelAddressAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_location_add"
+        android:drawablePadding="10dp"
+        android:hint="Enter Address"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtHotelDescriptionAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_hotel_add"
+        android:drawablePadding="10dp"
+        android:hint="Enter Description"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtHotelPhoneAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="165dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_contact_phone"
+        android:drawablePadding="10dp"
+        android:hint="Enter Phone"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtHotelEmailAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="10dp"
+        android:hint="Enter Gmail"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtHotelPricePerNightAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="295dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_money"
+        android:drawablePadding="10dp"
+        android:hint="Enter PricePerNight"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/edtHotelImageAdded"
+        android:layout_width="350dp"
+        android:layout_height="55dp"
+        android:layout_below="@+id/zoneInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="360dp"
+        android:background="@drawable/edt_background"
+        android:drawableStart="@drawable/ic_imageurls"
+        android:drawablePadding="10dp"
+        android:hint="Enter Image main"
+        android:inputType="textPersonName|textCapWords"
+        android:padding="10dp" />
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmitAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:text="Submit"
+        android:layout_below="@+id/edtHotelImageAdded"
+        android:background="@drawable/button_hover_click"
+        android:textColor="@color/Primary_100">
+
+    </androidx.appcompat.widget.AppCompatButton>
+
+
+</RelativeLayout>

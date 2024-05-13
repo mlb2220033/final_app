@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".booking.DashboardAdminActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:background="@drawable/shape_toolbar">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Dashboard Admin"
+            android:textColor="@color/Neutral_900"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitle"
+            android:layout_centerHorizontal="true"
+            android:text="abc@example.com"
+            android:textColor="@color/Neutral_900"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/btnLogoutAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_logout" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hotelsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/row_hotel_admin"
+        android:layout_below="@id/toolbarRl"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_above="@id/bottomLt"/>
+
+    <LinearLayout
+        android:id="@+id/bottomLt"
+        android:layout_width="319dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        tools:ignore="ExtraText">
+
+        <!--// Add hotel-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddHotelAdmin"
+            android:layout_width="305dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_hover_click"
+            android:minHeight="50dp"
+            android:text="+ Add Hotel"
+            android:textColor="@color/Primary_100">
+        </androidx.appcompat.widget.AppCompatButton>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

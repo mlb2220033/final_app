@@ -3,14 +3,15 @@ package com.example.finalproject.model;
 import java.io.Serializable;
 
 public class Hotel implements Serializable {
-    String hotelID, hotelName, hotelImage, hotelAddress, hotelDescription, hotelPhone, hotelGmail;
+    String hotelID, hotelName, hotelImage, hotelAddress, hotelDescription, hotelPhone, hotelGmail, adminID;
     Float PricePerNight, StarRating;
     boolean Liked;
+    long timestamp;
 
     public Hotel() {
     }
 
-    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, String hotelDescription, String hotelPhone, String hotelGmail, Float pricePerNight, Float starRating, boolean liked) {
+    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, String hotelDescription, String hotelPhone, String hotelGmail, String adminID, Float pricePerNight, long timestamp, Float starRating, boolean liked) {
         this.hotelID = hotelID;
         this.hotelName = hotelName;
         this.hotelImage = hotelImage;
@@ -18,9 +19,19 @@ public class Hotel implements Serializable {
         this.hotelDescription = hotelDescription;
         this.hotelPhone = hotelPhone;
         this.hotelGmail = hotelGmail;
+        this.adminID = adminID;
+        this.timestamp = timestamp;
         PricePerNight = pricePerNight;
         StarRating = starRating;
         Liked = liked;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getHotelID() {
@@ -101,5 +112,13 @@ public class Hotel implements Serializable {
 
     public void setHotelGmail(String hotelGmail) {
         this.hotelGmail = hotelGmail;
+    }
+
+    public String getAdminID() {
+        return adminID;
+    }
+
+    public void setAdminID(String adminID) {
+        this.adminID = adminID;
     }
 }
