@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="My Bookings"
+                android:text="My Booking"
                 android:textColor="@color/Primary_700"
                 android:textStyle="italic" />
         </LinearLayout>

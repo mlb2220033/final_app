@@ -45,7 +45,7 @@ public class ProfileMainActivity extends FireBaseActivity {
 
     private ImageView btnBack, imgVHome;
 
-    RelativeLayout relaProfile, relaLogout,relaShare,relaChangePwd;
+    RelativeLayout relaProfile, relaLogout,relaShare,relaChangePwd,relaMyBooking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +124,7 @@ public class ProfileMainActivity extends FireBaseActivity {
         relaLogout = findViewById(R.id.relaLogout);
         relaShare = findViewById(R.id.relaShare);
         relaChangePwd = findViewById(R.id.relaChangePwd);
+        relaMyBooking = findViewById(R.id.relaMyBooking);
         imgVHome = findViewById(R.id.imgVHome);
     }
 
@@ -148,6 +149,15 @@ public class ProfileMainActivity extends FireBaseActivity {
 
         }
 
+        });
+
+        relaMyBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                relaMyBooking.setBackgroundResource(R.drawable.pro_occlick);
+                Intent intent = new Intent(ProfileMainActivity.this, MyBookingActivity.class);
+                startActivity(intent);
+            }
         });
         relaChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override

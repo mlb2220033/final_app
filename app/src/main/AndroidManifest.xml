@@ -18,12 +18,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".booking.MyBookingActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.DashboardAdminActivity"
             android:exported="false" />
         <activity
             android:name=".booking.HotelAddActivity"
             android:exported="false" />
-
         <activity
             android:name=".booking.ViewImageGalleryActivity"
             android:exported="false" />
@@ -83,7 +85,6 @@
             android:exported="false" />
         <activity
             android:name=".booking.SearchActivity"
-
             android:exported="false" />
         <activity
             android:name=".booking.FireBaseActivity"
@@ -93,7 +94,6 @@
             android:exported="false" />
         <activity
             android:name=".booking.SplashActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
