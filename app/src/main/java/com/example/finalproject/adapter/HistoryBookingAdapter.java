@@ -54,6 +54,12 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
         holder.tvDate.setText(dateString);
         holder.tvType.setText(roomCount + ", " + roomType);
         holder.tvCost.setText(String.format("VND %,.0f", price));
+        if (status.equals("Cancelled")){
+            holder.tvStatus.setBackgroundResource(R.drawable.shape_cancelled);
+        } else if (status.equals("Completed")){
+            holder.tvStatus.setBackgroundResource(R.drawable.shape_completed);
+        }
+
     }
 
     @Override

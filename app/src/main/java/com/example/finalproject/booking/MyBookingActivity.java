@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ public class MyBookingActivity extends FireBaseActivity {
     private static final String TAG ="MY_BOOKING_TAG";
 
     private TextView tabActive, tabHistory;
+    private ImageView btnBack;
 
     private RelativeLayout activeRL, historyRL;
     private RecyclerView rvActive,rvHistory;
@@ -170,9 +173,18 @@ public class MyBookingActivity extends FireBaseActivity {
         historyRL = findViewById(R.id.historyRL);
         rvActive = findViewById(R.id.rvActive);
         rvHistory = findViewById(R.id.rvHistory);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void addEvents() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyBookingActivity.this, ProfileMainActivity.class);
+                startActivity(intent);
+
+            }
+        });
         tabActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
