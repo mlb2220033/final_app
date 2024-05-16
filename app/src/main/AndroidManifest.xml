@@ -10,18 +10,18 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
-            android:name=".booking.ViewDetailsActivity"
+            android:name=".booking.SearchHotelActivity"
             android:exported="false" />
         <activity
-            android:name=".booking.MyBookingActivity"
+            android:name=".booking.HotelMapActivity"
             android:exported="false" />
         <activity
             android:name=".booking.DashboardAdminActivity"
@@ -108,6 +108,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/my_map_api_key" />
     </application>
 
 </manifest>

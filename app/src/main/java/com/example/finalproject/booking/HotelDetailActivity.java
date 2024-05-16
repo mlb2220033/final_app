@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.Spannable;
@@ -35,11 +37,21 @@ import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.HotelFacilities;
 import com.example.finalproject.model.HotelPolicies;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
@@ -47,13 +59,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HotelDetailActivity extends AppCompatActivity {
+public class HotelDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     ImageSlider imgSlider;
 
     TextView txtHotelName, txtHotelAddress, txtHotelDescription, txtPricePerNight, txtStarRating,
             txtViewRoom, txtContactHotel, txtHotelPhone, txtHotelGmail,
-            txtAllDescription, txtAllFacilities, txtAllPolicies;
+            txtAllDescription, txtAllFacilities, txtAllPolicies, txtMap;
     String hotelID, hotelName;
     AppBarLayout appBarLayout;
     RecyclerView rvFac;
@@ -66,6 +78,7 @@ public class HotelDetailActivity extends AppCompatActivity {
     HotelPoliciesAdapter hotelPoliciesAdapter;
     MaterialToolbar toolbar;
     private boolean isDescriptionExpanded = false;
+    GoogleMap myMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +86,12 @@ public class HotelDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hotel_detail);
 
         addViews();
-        addEvents();
         getDataFromPreviousActivity();
         setupImageSlider();
         getFactilities();
         getPolicies();
         setupToolBar();
+        addEvents();
 
 
     }
@@ -198,6 +211,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         DataHolder.hotel_address = txtHotelAddress.getText().toString();
     }
 
+
     private void addEvents() {
         txtAllDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,8 +243,15 @@ public class HotelDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
+        txtMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HotelMapActivity.class);
+                intent.putExtra("hotelID", hotelID);
+                intent.putExtra("hotelName", hotelName);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addViews() {
@@ -248,6 +269,7 @@ public class HotelDetailActivity extends AppCompatActivity {
         txtAllDescription = findViewById(R.id.txtAllDescription);
         txtAllFacilities = findViewById(R.id.txtAllFacilities);
         txtAllPolicies = findViewById(R.id.txtAllPolicies);
+        txtMap = findViewById(R.id.txtMap);
 
         hotelName = getIntent().getStringExtra("txtHotelName");
         txtContactHotel.setText(txtContactHotel.getText().toString() + hotelName + "?");
@@ -274,6 +296,9 @@ public class HotelDetailActivity extends AppCompatActivity {
         hotelPoliciesAdapter = new HotelPoliciesAdapter(hotelPoliciesList);
         rvPol.setAdapter(hotelPoliciesAdapter);
 
+//        Map
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     private void setupImageSlider() {
@@ -302,6 +327,36 @@ public class HotelDetailActivity extends AppCompatActivity {
     public void openViewRoom(View view) {
         Intent intent = new Intent(getApplicationContext(), ViewRoomActivity.class);
         intent.putExtra("hotelID", hotelID);
+        intent.putExtra("hotelName", hotelName);
         startActivity(intent);
     }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        myMap = googleMap;
+        FirebaseDatabase.getInstance().getReference().child("Hotels").child(hotelID).child("hotelMarkers")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            double latitude = snapshot.child("latitude").getValue(Double.class);
+                            double longitude = snapshot.child("longitude").getValue(Double.class);
+                            LatLng hotelLocation = new LatLng(latitude, longitude);
+                            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
+                            MarkerOptions markerOptions = new MarkerOptions().position(hotelLocation).title(hotelName).icon(icon);
+                            myMap.addMarker(markerOptions);
+
+                            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hotelLocation, 15));
+                        } else {
+                            Toast.makeText(HotelDetailActivity.this, "Hotel location data not available", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+    }
+
+
 }

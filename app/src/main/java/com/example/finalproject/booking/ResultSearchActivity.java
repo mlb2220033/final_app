@@ -66,6 +66,7 @@ public class ResultSearchActivity extends AppCompatActivity {
         addEvents();
         getDataFromPrevious();
         getDataHotelSearch();
+
     }
 
     private void getDataFromPrevious() {

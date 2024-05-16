@@ -21,7 +21,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 public class SearchActivity extends AppCompatActivity {
 
     TextView txtLocation, txtPeriod, txtGuestRoom, txtSearch, txtMessage;
-    ImageView imgBack;
+    ImageView imgBack, imgNear;
     int REQUEST_LOCATION = 1;
     int REQUEST_GUEST_ROOM = 2;
     int roomCount = 0;
@@ -40,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     private void dateRangePicker() {
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
         builder.setTheme(R.style.ThemeOverlay_App_MaterialCalendar);
-        builder.setSelection(Pair.create(MaterialDatePicker.thisMonthInUtcMilliseconds(), MaterialDatePicker.todayInUtcMilliseconds()));
+        builder.setTitleText("Select your range");
         MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
         txtPeriod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +55,7 @@ public class SearchActivity extends AppCompatActivity {
                 txtPeriod.setText(materialDatePicker.getHeaderText());
                 DataHolder.check_in = selection.first;
                 DataHolder.check_out = selection.second;
+                DataHolder.duration = txtPeriod.getText().toString();
             }
         });
     }
@@ -98,8 +99,7 @@ public class SearchActivity extends AppCompatActivity {
                     intent.putExtra("roomCount", roomCount);
                     intent.putExtra("guestsCount", guestsCount);
                     intent.putExtra("txtPeriod", period);
-                    DataHolder.guests = guestsCount;
-                    DataHolder.room_numbers = roomCount;
+
                     startActivity(intent);
                 } else {
                     txtMessage.setVisibility(View.VISIBLE);
@@ -108,6 +108,12 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        imgNear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtLocation.setText("Hotel Nearby me");
+            }
+        });
     }
 
     @Override
@@ -139,6 +145,7 @@ public class SearchActivity extends AppCompatActivity {
         txtSearch = findViewById(R.id.txtSearch);
         txtMessage = findViewById(R.id.txtMessage);
         imgBack = findViewById(R.id.imgBack);
+        imgNear = findViewById(R.id.imgNear);
     }
 }
 

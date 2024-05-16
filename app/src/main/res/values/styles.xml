@@ -11,4 +11,10 @@
         <item name="colorPrimary">@color/Primary_500</item>
     </style>
 
+    <style name="RoundedCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+
 </resources>

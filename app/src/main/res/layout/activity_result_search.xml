@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
@@ -26,13 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/imgBack"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="0dp"
                     android:src="@drawable/ic_back"
                     android:tint="@color/Primary_500" />
                 <LinearLayout
@@ -40,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="3dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="5dp">
 
@@ -76,25 +77,18 @@
                             android:gravity="right"
                             android:orientation="horizontal"
                             android:layout_margin="3dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/ic_room" />
+
                             <TextView
                                 android:id="@+id/txtRoom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="0" />
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:src="@drawable/ic_room"
-                                android:layout_marginStart="10dp" />
-
-                            <TextView
-                                android:id="@+id/txtGuest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="5dp"
                                 android:text="0" />
 
                             <ImageView
@@ -103,6 +97,13 @@
                                 android:layout_height="23dp"
                                 android:layout_marginStart="5dp"
                                 android:src="@drawable/ic_person" />
+                            <TextView
+                                android:id="@+id/txtGuest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginHorizontal="3dp"
+                                android:text="0" />
                         </LinearLayout>
 
                     </LinearLayout>

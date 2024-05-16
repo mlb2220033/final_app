@@ -101,20 +101,26 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:orientation="horizontal">
-
-                <EditText
+                <LinearLayout
                     android:id="@+id/edtSearch"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/edt_background"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="8dp"
-                    android:ems="10"
-                    android:hint="Search..."
-                    android:inputType="text"
-                    android:padding="8dp" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_search" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Search..." />
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="50dp"
@@ -122,7 +128,7 @@
                     android:background="@drawable/blue_background">
 
                     <ImageView
-                        android:id="@+id/imageView4"
+                        android:id="@+id/imgSearchAdvanced"
                         android:layout_width="31dp"
                         android:layout_height="30dp"
                         android:src="@drawable/ic_settings"

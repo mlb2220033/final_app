@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -38,7 +39,8 @@ import java.util.ArrayList;
 public class HomeActivity extends FireBaseActivity {
     private ActivityHomeBinding binding;
     LinearLayout Profile, Favorite, Chat;
-    EditText edtSearch;
+    LinearLayout edtSearch;
+    ImageView imgSearchAdvanced;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class HomeActivity extends FireBaseActivity {
     private void addViews() {
         Profile = findViewById(R.id.Profile);
         edtSearch = findViewById(R.id.edtSearch);
+        imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
 
 
     }
@@ -73,11 +76,17 @@ public class HomeActivity extends FireBaseActivity {
         edtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SearchHotelActivity.class);
+                startActivity(intent);
+            }
+        });
+        imgSearchAdvanced.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
-
 
     }
 

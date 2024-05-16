@@ -55,12 +55,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHodel>{
         holder.btnReserver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context activityContext = v.getContext();
-                Intent intent = new Intent(activityContext, PaymentActivity.class);
-                DataHolder.type_room = room.getRoomName();
-                DataHolder.room_price = room.getRoomPrice();
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activityContext.startActivity(intent);
+                if (DataHolder.room_numbers != null && DataHolder.guests != null && DataHolder.duration != null) {
+                    Context activityContext = v.getContext();
+                    Intent intent = new Intent(activityContext, PaymentActivity.class);
+                    DataHolder.type_room = room.getRoomName();
+                    DataHolder.room_price = room.getRoomPrice();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activityContext.startActivity(intent);
+                } else {
+                    Toast.makeText(v.getContext(), "Please select room, guests and duration.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

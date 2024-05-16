@@ -11,18 +11,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalproject.R;
+import com.example.finalproject.model.DataHolder;
 
 public class GuestAndRoomActivity extends AppCompatActivity {
     TextView txtRoom, txtAdults, txtChildren, txtConfirm, txtMessage;
     ImageView imgBack, imgChildrenPlus, imgChildrenMinus, imgAdultsMinus, imgAdultsPlus, imgRoomPlus, imgRoomMinus;
+    int roomCount;
+    int adultsCount;
+    int childrenCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_and_room);
+
         addViews();
+        restoreData();
         addEvents();
 
+    }
+
+    private void restoreData() {
+        if (DataHolder.room_numbers != null && DataHolder.guests != null) {
+            txtRoom.setText(String.valueOf(DataHolder.room_numbers));
+            txtAdults.setText(String.valueOf(DataHolder.adults));
+            txtChildren.setText(String.valueOf(DataHolder.children));
+        }
     }
 
     private void addEvents() {
@@ -36,10 +50,10 @@ public class GuestAndRoomActivity extends AppCompatActivity {
         txtConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int roomCount = Integer.parseInt(txtRoom.getText().toString());
-                int adultsCount = Integer.parseInt(txtAdults.getText().toString());
-                int childrenCount = Integer.parseInt(txtChildren.getText().toString());
-
+                roomCount = Integer.parseInt(txtRoom.getText().toString());
+                adultsCount = Integer.parseInt(txtAdults.getText().toString());
+                childrenCount = Integer.parseInt(txtChildren.getText().toString());
+                int guestsCount = adultsCount + childrenCount;
                 if (roomCount == 0) {
                     showMessage("Invalid room count");
                 } else if (adultsCount == 0) {
@@ -52,6 +66,10 @@ public class GuestAndRoomActivity extends AppCompatActivity {
                     intent.putExtra("adultsCount", adultsCount);
                     intent.putExtra("childrenCount", childrenCount);
 
+                    DataHolder.adults = adultsCount;
+                    DataHolder.children = childrenCount;
+                    DataHolder.guests = guestsCount;
+                    DataHolder.room_numbers = roomCount;
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
@@ -129,10 +147,13 @@ public class GuestAndRoomActivity extends AppCompatActivity {
         txtAdults = findViewById(R.id.txtAdults);
         txtChildren = findViewById(R.id.txtChildren);
         txtRoom = findViewById(R.id.txtRoom);
+
         imgChildrenPlus = findViewById(R.id.imgChildrenPlus);
         imgChildrenMinus = findViewById(R.id.imgChildrenMinus);
+
         imgAdultsMinus = findViewById(R.id.imgAdultsMinus);
         imgAdultsPlus = findViewById(R.id.imgAdultsPlus);
+
         imgRoomPlus = findViewById(R.id.imgRoomPlus);
         imgRoomMinus = findViewById(R.id.imgRoomMinus);
 
