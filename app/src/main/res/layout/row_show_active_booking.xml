@@ -77,6 +77,13 @@
             android:textColor="@color/Neutral_900"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/tvType"
+            android:layout_marginTop="5dp"
+            android:background="@color/Neutral_500" />
+
         <LinearLayout
             android:id="@+id/linearLayout7"
             android:layout_width="match_parent"
@@ -87,7 +94,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tabActive"
+                android:id="@+id/tvViewDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -98,12 +105,12 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tabManager"
+                android:id="@+id/tvCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|right"
-                android:text="Manage Booking"
+                android:text="Cancel "
                 android:textColor="@color/Primary_700"
                 android:textSize="16sp"
                 android:textStyle="bold" />

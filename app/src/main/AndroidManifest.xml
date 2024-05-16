@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".booking.ViewDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".booking.MyBookingActivity"
             android:exported="false" />
         <activity

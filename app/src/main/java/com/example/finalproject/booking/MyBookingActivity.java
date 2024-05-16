@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -167,7 +166,7 @@ public class MyBookingActivity extends FireBaseActivity {
 
 
     private void addViews() {
-        tabActive = findViewById(R.id.tabActive);
+        tabActive = findViewById(R.id.tvViewDetail);
         tabHistory = findViewById(R.id.tabHistory);
         activeRL = findViewById(R.id.activeRL);
         historyRL = findViewById(R.id.historyRL);

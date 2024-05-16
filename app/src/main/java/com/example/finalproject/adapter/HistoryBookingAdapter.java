@@ -11,6 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.model.BookingHistory;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +49,8 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
         int roomCount = bookingHistory.getRoom_count();
         String roomType = bookingHistory.getType_room();
 
+        loadHotelInfo(bookingHistory,holder);
+
         // Convert timestamp to a human-readable date string
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         String dateString = sdf.format(new Date(timestamp));
@@ -61,6 +68,25 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
         }
 
     }
+    private void loadHotelInfo(BookingHistory bookingHistory, HistoryBookingAdapter.HolderHistoryBooking holder) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Hotels");
+        ref.child(bookingHistory.getHotel_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String hotelName = dataSnapshot.child("hotelName").getValue(String.class);
+                            holder.tvName.setText(hotelName);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Handle error
+                    }
+                });
+    }
+
 
     @Override
     public int getItemCount() {
@@ -70,12 +96,13 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
     // View holder
     class HolderHistoryBooking extends RecyclerView.ViewHolder {
         // Views of layout
-        private TextView tvBooking, tvCost, tvDate, tvStatus, tvType;
+        private TextView tvBooking, tvCost, tvDate, tvStatus, tvType,tvName;
 
         public HolderHistoryBooking(@NonNull View itemView) {
             super(itemView);
 
             // Initialize views of layout
+            tvName = itemView.findViewById(R.id.tvName);
             tvBooking = itemView.findViewById(R.id.tvBooking);
             tvCost = itemView.findViewById(R.id.tvCost);
             tvDate = itemView.findViewById(R.id.tvDate);
