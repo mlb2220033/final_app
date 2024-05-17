@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.Manifest;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,12 @@ public class SearchActivity extends AppCompatActivity {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                long currentTime = System.currentTimeMillis();
+                if (selection.first < currentTime || selection.second < currentTime) {
+                    Toast.makeText(getApplicationContext(), "Please select dates in the future", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 txtPeriod.setText(materialDatePicker.getHeaderText());
                 DataHolder.check_in = selection.first;
                 DataHolder.check_out = selection.second;

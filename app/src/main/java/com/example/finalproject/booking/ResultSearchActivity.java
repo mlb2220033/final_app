@@ -87,7 +87,8 @@ public class ResultSearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    if (DataHolder.latitude != null && DataHolder.longitude != null) {
+                    String location = txtLocation.getText().toString().trim();
+                    if (location.equals("Hotel Nearby")) {
                         DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
                         if (hotelMarkersSnapshot.exists()) {
                             double hotelLatitude = hotelMarkersSnapshot.child("latitude").getValue(Double.class);
@@ -315,13 +316,45 @@ public class ResultSearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
-                    boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
+                    String location = txtLocation.getText().toString().trim();
 
-                    if (isNameMatched || isStarMatched) {
-                        recycleList.add(hotel);
-                    } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
-                        recycleList.add(hotel);
+                    if (location.equals("Hotel Nearby")) {
+                        DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
+                        if (hotelMarkersSnapshot.exists()) {
+                            double hotelLatitude = hotelMarkersSnapshot.child("latitude").getValue(Double.class);
+                            double hotelLongitude = hotelMarkersSnapshot.child("longitude").getValue(Double.class);
+
+                            double distance = calculateDistance(DataHolder.latitude, DataHolder.longitude, hotelLatitude, hotelLongitude);
+                            hotel.setDistance(distance);
+
+                            boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
+                            boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
+
+                            if (distance < 15) {
+                                if (isNameMatched && isStarMatched) {
+                                    recycleList.add(hotel);
+                                } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
+                                    recycleList.add(hotel);
+                                } else if (isNameMatched && hotelStar.isEmpty()) {
+                                    recycleList.add(hotel);
+                                } else if (isStarMatched && hotelName.isEmpty()) {
+                                    recycleList.add(hotel);
+                                }
+                            }
+                        }
+                    } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
+                        boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
+                        boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
+
+                        if (isNameMatched && isStarMatched) {
+                            recycleList.add(hotel);
+                        } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
+                            recycleList.add(hotel);
+                        } else if (isNameMatched && hotelStar.isEmpty()) {
+                            recycleList.add(hotel);
+                        } else if (isStarMatched && hotelName.isEmpty()) {
+                            recycleList.add(hotel);
+                        }
                     }
                 }
 
@@ -337,6 +370,13 @@ public class ResultSearchActivity extends AppCompatActivity {
                         @Override
                         public int compare(Hotel hotel1, Hotel hotel2) {
                             return Float.compare(hotel1.getPricePerNight(), hotel2.getPricePerNight());
+                        }
+                    });
+                } else {
+                    Collections.sort(recycleList, new Comparator<Hotel>() {
+                        @Override
+                        public int compare(Hotel hotel1, Hotel hotel2) {
+                            return Double.compare(hotel1.getDistance(), hotel2.getDistance());
                         }
                     });
                 }

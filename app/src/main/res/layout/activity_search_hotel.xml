@@ -28,7 +28,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
-            android:text="Search"
+            android:text="Search Hotel"
             android:textColor="@color/Neutral_900"
             android:textSize="20sp"
             android:textStyle="bold" />

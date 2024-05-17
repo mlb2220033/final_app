@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelAdapter;
@@ -72,6 +73,11 @@ public class ViewRoomActivity extends AppCompatActivity {
         materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
+                long currentTime = System.currentTimeMillis();
+                if (selection.first < currentTime || selection.second < currentTime) {
+                    Toast.makeText(getApplicationContext(), "Please select dates in the future", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 txtPeriod.setText(materialDatePicker.getHeaderText());
                 DataHolder.check_in = selection.first;
                 DataHolder.check_out = selection.second;
