@@ -10,6 +10,7 @@ public class Hotel implements Serializable {
     boolean Liked;
     long timestamp;
     double distance;
+    float averageRating; // Add this line
 
     public Hotel() {
     }
@@ -27,6 +28,14 @@ public class Hotel implements Serializable {
         PricePerNight = pricePerNight;
         StarRating = starRating;
         Liked = liked;
+    }
+
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
     }
 
     public long getTimestamp() {

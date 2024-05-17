@@ -19,9 +19,17 @@
         android:theme="@style/Theme.FinalProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
+
         <activity
             android:name=".booking.ReviewHotelActivity"
             android:exported="false" />
+        <activity
+            android:name=".booking.MyBookingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.ViewDetailsActivity"
+            android:exported="false" />
+
         <activity
             android:name=".booking.RatingHotelActivity"
             android:exported="false" />

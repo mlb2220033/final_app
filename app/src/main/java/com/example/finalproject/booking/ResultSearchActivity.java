@@ -25,10 +25,13 @@ import android.widget.TextView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelAdapter;
+import com.example.finalproject.adapter.ReviewHotelAdapter;
 import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
+import com.example.finalproject.model.Rating;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -44,7 +47,7 @@ public class ResultSearchActivity extends AppCompatActivity {
     HotelAdapter hotelAdapter;
     ArrayList<Hotel> recycleList;
     FirebaseDatabase firebaseDatabase;
-    String Location, hotelName;
+    String Location, hotelName, hotelID;
     List<Float> hotelStar;
     List<Float> selectedStar;
     boolean isHighToLowChecked = false;
@@ -60,9 +63,12 @@ public class ResultSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_search);
 
+        // Khởi tạo Firebase
+        firebaseDatabase = FirebaseDatabase.getInstance();
         addViews();
         addEvents();
         getDataFromPrevious();
+        loadAverageRating();
         getDataHotelSearch();
 
     }
@@ -77,6 +83,55 @@ public class ResultSearchActivity extends AppCompatActivity {
         txtRoom.setText(String.valueOf(intent.getIntExtra("roomCount", 0)));
         txtGuest.setText(String.valueOf(intent.getIntExtra("guestsCount", 0)));
 
+    }
+    private void loadAverageRating() {
+        DatabaseReference reference = firebaseDatabase.getReference("Hotels");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot hotelSnapshot : snapshot.getChildren()) {
+                    String hotelID = hotelSnapshot.getKey();
+                    DatabaseReference ratingRef = firebaseDatabase.getReference("Hotels").child(hotelID).child("Ratings");
+
+                    ratingRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot ratingSnapshot) {
+                            float totalStars = 0;
+                            int totalRatings = 0;
+                            for (DataSnapshot rating : ratingSnapshot.getChildren()) {
+                                Rating ratingObj = rating.getValue(Rating.class);
+                                if (ratingObj != null) {
+                                    totalStars += ratingObj.getStarRating();
+                                    totalRatings++;
+                                }
+                            }
+
+                            float averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
+                            // Update the hotel object
+                            for (Hotel hotel : recycleList) {
+                                if (hotel.getHotelID().equals(hotelID)) {
+                                    hotel.setAverageRating(averageRating);
+                                    break;
+                                }
+                            }
+
+                            // Notify adapter to refresh data
+                            hotelAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("Firebase", "Error loading ratings: " + error.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error loading hotels: " + error.getMessage());
+            }
+        });
     }
 
     private void getDataHotelSearch() {
