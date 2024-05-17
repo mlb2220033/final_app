@@ -33,10 +33,12 @@ import com.example.finalproject.adapter.HotelAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesItemAdapter;
 import com.example.finalproject.adapter.HotelPoliciesAdapter;
+import com.example.finalproject.adapter.ReviewHotelAdapter;
 import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.HotelFacilities;
 import com.example.finalproject.model.HotelPolicies;
+import com.example.finalproject.model.Rating;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -65,7 +67,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
 
     TextView txtHotelName, txtHotelAddress, txtHotelDescription, txtPricePerNight, txtStarRating,
             txtViewRoom, txtContactHotel, txtHotelPhone, txtHotelGmail,
-            txtAllDescription, txtAllFacilities, txtAllPolicies, txtMap;
+            txtAllDescription, txtAllFacilities, txtAllRvHotelDetail, txtAddReview, txtAllPolicies, txtMap;
     String hotelID, hotelName;
     AppBarLayout appBarLayout;
     RecyclerView rvFac;
@@ -78,6 +80,12 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
     HotelPoliciesAdapter hotelPoliciesAdapter;
     MaterialToolbar toolbar;
     private boolean isDescriptionExpanded = false;
+    private ArrayList<Rating> ratingArrayRvList;
+    private ArrayList<Rating> ratingArrayList;
+    private ReviewHotelAdapter reviewHotelAdapter;
+    private float averageRating = 0.0f;
+    RecyclerView rvReviewHotelDetail;
+
     GoogleMap myMap;
 
     @Override
@@ -91,10 +99,80 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         getFactilities();
         getPolicies();
         setupToolBar();
+        fetchComments();
+        loadAverageRating();
         addEvents();
+
+        ratingArrayList = new ArrayList<>();
+
+        rvReviewHotelDetail.setLayoutManager(new LinearLayoutManager(this));
+        ratingArrayRvList = new ArrayList<>();
+        reviewHotelAdapter = new ReviewHotelAdapter(this, ratingArrayRvList);
+        rvReviewHotelDetail.setAdapter(reviewHotelAdapter);
 
 
     }
+
+    private void fetchComments() {
+        DatabaseReference reference = firebaseDatabase.getReference("Hotels").child(hotelID).child("Ratings");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ratingArrayRvList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Rating rating = dataSnapshot.getValue(Rating.class);
+                    if (rating != null) {
+                        ratingArrayRvList.add(rating);
+                    }
+                }
+                reviewHotelAdapter = new ReviewHotelAdapter(HotelDetailActivity.this, ratingArrayRvList);
+                rvReviewHotelDetail.setAdapter(reviewHotelAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error loading ratings: " + error.getMessage());
+            }
+        });
+
+    }
+
+    private void loadAverageRating() {
+        DatabaseReference reference = firebaseDatabase.getReference("Hotels").child(hotelID).child("Ratings");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ratingArrayList.clear();
+                float totalStars = 0;
+                int totalRatings = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Rating rating = dataSnapshot.getValue(Rating.class);
+                    if (rating != null) {
+                        ratingArrayList.add(rating);
+                        totalStars += rating.getStarRating();
+                        totalRatings++;
+                    }
+                }
+                if (reviewHotelAdapter == null) {
+                    reviewHotelAdapter = new ReviewHotelAdapter(HotelDetailActivity.this, ratingArrayList);
+                    rvReviewHotelDetail.setAdapter(reviewHotelAdapter);
+                } else {
+                    reviewHotelAdapter.notifyDataSetChanged();
+                }
+
+                // Calculate average star rating
+                float averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
+                // Update txtStarRating
+                txtStarRating.setText(String.format("%.1f", averageRating));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error loading ratings: " + error.getMessage());
+            }
+        });
+    }
+
 
 
     public void setupToolBar() {
@@ -235,6 +313,24 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
                 startActivity(intent);
             }
         });
+
+        txtAddReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HotelDetailActivity.this, RatingHotelActivity.class);
+                intent.putExtra("hotelID", hotelID);
+                startActivity(intent);
+            }
+        });
+        txtAllRvHotelDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HotelDetailActivity.this, ReviewHotelActivity.class);
+                intent.putExtra("hotelID", hotelID);
+                startActivity(intent);
+            }
+        });
+
         txtAllPolicies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,6 +365,9 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         txtAllDescription = findViewById(R.id.txtAllDescription);
         txtAllFacilities = findViewById(R.id.txtAllFacilities);
         txtAllPolicies = findViewById(R.id.txtAllPolicies);
+        txtAddReview = findViewById(R.id.txtAddReview);
+        txtAllRvHotelDetail = findViewById(R.id.txtAllRvHotelDetail);
+        rvReviewHotelDetail = findViewById(R.id.rvReviewHotelDetail);
         txtMap = findViewById(R.id.txtMap);
 
         hotelName = getIntent().getStringExtra("txtHotelName");

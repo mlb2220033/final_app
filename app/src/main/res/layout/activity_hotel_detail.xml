@@ -255,6 +255,7 @@
                         android:src="@drawable/edt_background"/>
 
                     <TextView
+                        android:id="@+id/tx"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
@@ -264,12 +265,38 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/txtAddReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="29dp"
+                        android:gravity="center"
+                        android:text="Add Rating"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#2196F3"
+                        android:textStyle="bold"
+                        tools:ignore="RtlCompat" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvReviewHotelDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_rating" />
+                    <TextView
+                        android:id="@+id/txtAllRvHotelDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginTop="10dp"
+                        android:onClick="openRvHotelDetail"
+                        android:text="See All Reviews"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="@color/Primary_500"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
