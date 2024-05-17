@@ -46,7 +46,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
         holder.txtHotelName.setText(hotel.getHotelName());
         holder.txtHotelAddress.setText(hotel.getHotelAddress());
         holder.txtPricePerNight.setText(String.format("%,.2f", hotel.getPricePerNight()) + " VNĐ");
-        holder.txtStarRating.setText(String.valueOf(hotel.getAverageRating()));
+        holder.txtStarRating.setText(String.valueOf(hotel.getStarRating()));
 
         if (hotel.getDistance() != 0.00) {
             holder.txtDistance.setText(String.format("%.2f km", hotel.getDistance()));

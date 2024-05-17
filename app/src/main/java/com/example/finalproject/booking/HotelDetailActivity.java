@@ -103,12 +103,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         loadAverageRating();
         addEvents();
 
-        ratingArrayList = new ArrayList<>();
 
-        rvReviewHotelDetail.setLayoutManager(new LinearLayoutManager(this));
-        ratingArrayRvList = new ArrayList<>();
-        reviewHotelAdapter = new ReviewHotelAdapter(this, ratingArrayRvList);
-        rvReviewHotelDetail.setAdapter(reviewHotelAdapter);
 
 
     }
@@ -398,6 +393,14 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
 //        Map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+//        Rating
+        ratingArrayList = new ArrayList<>();
+
+        rvReviewHotelDetail.setLayoutManager(new LinearLayoutManager(this));
+        ratingArrayRvList = new ArrayList<>();
+        reviewHotelAdapter = new ReviewHotelAdapter(this, ratingArrayRvList);
+        rvReviewHotelDetail.setAdapter(reviewHotelAdapter);
     }
 
     private void setupImageSlider() {
