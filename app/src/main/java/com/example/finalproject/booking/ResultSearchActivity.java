@@ -8,12 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.HotelAdapter;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +53,7 @@ public class ResultSearchActivity extends AppCompatActivity {
     Button btnApply, btnReset;
     RadioButton radioHigh2Low, radioLow2High;
     LinearLayout txt5star, txt4star, txt3star, txt2star, txt1star;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +87,30 @@ public class ResultSearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
+                    if (DataHolder.latitude != null && DataHolder.longitude != null) {
+                        DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
+                        if (hotelMarkersSnapshot.exists()) {
+                            double hotelLatitude = hotelMarkersSnapshot.child("latitude").getValue(Double.class);
+                            double hotelLongitude = hotelMarkersSnapshot.child("longitude").getValue(Double.class);
+
+                            double distance = calculateDistance(DataHolder.latitude, DataHolder.longitude, hotelLatitude, hotelLongitude);
+                            hotel.setDistance(distance);
+
+                            if (distance < 15) {
+                                recycleList.add(hotel);
+                            }
+                        }
+                    } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
+                        hotel.setDistance(0.00);
                         recycleList.add(hotel);
                     }
+
+                    Collections.sort(recycleList, new Comparator<Hotel>() {
+                        @Override
+                        public int compare(Hotel hotel1, Hotel hotel2) {
+                            return Double.compare(hotel1.getDistance(), hotel2.getDistance());
+                        }
+                    });
                 }
                 hotelAdapter.notifyDataSetChanged();
             }
@@ -102,6 +121,20 @@ public class ResultSearchActivity extends AppCompatActivity {
             }
         });
     }
+
+    private double calculateDistance(String lat1, String lon1, double lat2, double lon2) {
+        double theta = Math.toRadians(Double.parseDouble(lon1)) - Math.toRadians(lon2);
+        double dist = Math.sin(Math.toRadians(Double.parseDouble(lat1))) * Math.sin(Math.toRadians(lat2)) +
+                Math.cos(Math.toRadians(Double.parseDouble(lat1))) * Math.cos(Math.toRadians(lat2)) *
+                        Math.cos(Math.toRadians(theta));
+        dist = Math.acos(dist);
+        dist = Math.toDegrees(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.60934;
+
+        return dist;
+    }
+
 
     private void addEvents() {
         imgFilter.setOnClickListener(new View.OnClickListener() {

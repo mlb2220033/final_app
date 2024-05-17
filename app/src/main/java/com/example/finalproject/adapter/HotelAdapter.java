@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.booking.HotelDetailActivity;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
@@ -45,6 +47,13 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
         holder.txtHotelAddress.setText(hotel.getHotelAddress());
         holder.txtPricePerNight.setText(String.format("%,.2f", hotel.getPricePerNight()) + " VNĐ");
         holder.txtStarRating.setText(String.format("%.1f", hotel.getStarRating()));
+
+        if (hotel.getDistance() != 0.00) {
+            holder.txtDistance.setText(String.format("%.2f km", hotel.getDistance()));
+            holder.txtDistance.setVisibility(View.VISIBLE);
+        } else {
+            holder.txtDistance.setVisibility(View.GONE);
+        }
 
 
         Picasso.get().load(hotel.getHotelImage()).into(holder.imgHotel);
@@ -100,7 +109,8 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
 
     public class ViewHodel extends RecyclerView.ViewHolder {
         ImageView imgHotel, imgLike, imgDisLike;
-        TextView txtHotelName, txtHotelAddress, txtPricePerNight,txtStarRating;
+        TextView txtHotelName, txtHotelAddress, txtPricePerNight, txtStarRating, txtDistance;
+
         public ViewHodel(@NonNull View itemView) {
             super(itemView);
 
@@ -108,6 +118,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             txtHotelAddress = itemView.findViewById(R.id.txtHotelAddress);
             txtPricePerNight = itemView.findViewById(R.id.txtPricePerNight);
             txtStarRating = itemView.findViewById(R.id.txtStarRating);
+            txtDistance = itemView.findViewById(R.id.txtDistance);
 
             imgHotel = itemView.findViewById(R.id.imgHotel);
             imgLike = itemView.findViewById(R.id.imgLike);

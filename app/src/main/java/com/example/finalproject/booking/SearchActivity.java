@@ -1,36 +1,50 @@
 package com.example.finalproject.booking;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.Manifest;
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+
 
 import com.example.finalproject.R;
 import com.example.finalproject.model.DataHolder;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 public class SearchActivity extends AppCompatActivity {
 
-    TextView txtLocation, txtPeriod, txtGuestRoom, txtSearch, txtMessage;
+    TextView txtLocation, txtPeriod, txtGuestRoom, txtSearch, txtMessage, txtNear;
     ImageView imgBack, imgNear;
     int REQUEST_LOCATION = 1;
     int REQUEST_GUEST_ROOM = 2;
     int roomCount = 0;
     int guestsCount = 0;
+    FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         addViews();
         addEvents();
@@ -72,6 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         txtLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtNear.setVisibility(View.GONE);
                 Intent intent = new Intent(SearchActivity.this, SearchLocationActivity.class);
                 startActivityForResult(intent, REQUEST_LOCATION);
             }
@@ -108,12 +123,48 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+
         imgNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtLocation.setText("Hotel Nearby me");
+                txtLocation.setText("Hotel Nearby");
+                txtNear.setVisibility(View.VISIBLE);
+                txtNear.setText("Hotels will be found according to your location");
+                if (ContextCompat.checkSelfPermission(SearchActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(SearchActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                } else {
+                    getLastLocation();
+                }
             }
         });
+    }
+
+    private void getLastLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                Location location = task.getResult();
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+
+                                DataHolder.longitude = String.valueOf(longitude);
+                                DataHolder.latitude = String.valueOf(latitude);
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLastLocation();
+        }
     }
 
     @Override
@@ -144,6 +195,7 @@ public class SearchActivity extends AppCompatActivity {
         txtGuestRoom = findViewById(R.id.txtGuestRoom);
         txtSearch = findViewById(R.id.txtSearch);
         txtMessage = findViewById(R.id.txtMessage);
+        txtNear = findViewById(R.id.txtNear);
         imgBack = findViewById(R.id.imgBack);
         imgNear = findViewById(R.id.imgNear);
     }

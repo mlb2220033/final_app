@@ -1,5 +1,7 @@
 package com.example.finalproject.model;
 
+import com.google.android.gms.maps.model.Marker;
+
 import java.io.Serializable;
 
 public class Hotel implements Serializable {
@@ -7,6 +9,7 @@ public class Hotel implements Serializable {
     Float PricePerNight, StarRating;
     boolean Liked;
     long timestamp;
+    double distance;
 
     public Hotel() {
     }
@@ -120,5 +123,13 @@ public class Hotel implements Serializable {
 
     public void setAdminID(String adminID) {
         this.adminID = adminID;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

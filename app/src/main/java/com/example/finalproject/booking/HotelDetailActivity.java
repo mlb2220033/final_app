@@ -339,12 +339,26 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
+
                             double latitude = snapshot.child("latitude").getValue(Double.class);
                             double longitude = snapshot.child("longitude").getValue(Double.class);
                             LatLng hotelLocation = new LatLng(latitude, longitude);
-                            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
-                            MarkerOptions markerOptions = new MarkerOptions().position(hotelLocation).title(hotelName).icon(icon);
-                            myMap.addMarker(markerOptions);
+
+                            BitmapDescriptor iconHotel = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
+                            MarkerOptions markerHotel = new MarkerOptions().position(hotelLocation).title(hotelName).icon(iconHotel);
+                            myMap.addMarker(markerHotel);
+
+
+                            if (DataHolder.latitude != null && DataHolder.longitude != null) {
+                                double cuslatitude = Double.parseDouble(DataHolder.latitude);
+                                double cuslongitude = Double.parseDouble(DataHolder.longitude);
+                                LatLng cusLocation = new LatLng(cuslatitude, cuslongitude);
+
+                                BitmapDescriptor iconCus = BitmapDescriptorFactory.fromResource(R.drawable.ic_star);
+                                MarkerOptions markerCus = new MarkerOptions().position(cusLocation).title("Me").icon(iconCus);
+                                myMap.addMarker(markerCus);
+                            }
+
 
                             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hotelLocation, 15));
                         } else {

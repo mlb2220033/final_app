@@ -3,6 +3,8 @@ package com.example.finalproject.model;
 public class DataHolder {
     public static String hotel_id;
     public static String hotel_address;
+    public static String latitude;
+    public static String longitude;
     public static Long check_in;
     public static Long check_out;
     public static String duration;

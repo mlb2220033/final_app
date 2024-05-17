@@ -65,6 +65,8 @@ dependencies {
     val mdcVersion = "1.0.0"
     implementation("com.google.android.material:material:$mdcVersion")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 
     implementation("com.hbb20:ccp:2.7.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")

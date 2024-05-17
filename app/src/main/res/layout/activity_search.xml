@@ -110,6 +110,16 @@
                         android:textSize="16sp"
                         android:visibility="gone" />
 
+                    <TextView
+                        android:id="@+id/txtNear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Message Error"
+                        android:textColor="@color/Neutral_500"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
