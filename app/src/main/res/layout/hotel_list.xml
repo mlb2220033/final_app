@@ -80,7 +80,7 @@
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_location"
-                    android:tint="@color/Neutral_500" />
+                    app:tint="@color/Neutral_500" />
 
                 <TextView
                     android:id="@+id/txtHotelAddress"

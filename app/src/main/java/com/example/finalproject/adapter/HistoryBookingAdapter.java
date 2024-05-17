@@ -1,6 +1,7 @@
 package com.example.finalproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
 import com.example.finalproject.model.BookingHistory;
+import com.example.finalproject.booking.ReviewHotelActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +51,7 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
         int roomCount = bookingHistory.getRoom_count();
         String roomType = bookingHistory.getType_room();
 
-        loadHotelInfo(bookingHistory,holder);
+        loadHotelInfo(bookingHistory, holder);
 
         // Convert timestamp to a human-readable date string
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
@@ -61,14 +63,23 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
         holder.tvDate.setText(dateString);
         holder.tvType.setText(roomCount + ", " + roomType);
         holder.tvCost.setText(String.format("VND %,.0f", price));
-        if (status.equals("Cancelled")){
+        if (status.equals("Cancelled")) {
             holder.tvStatus.setBackgroundResource(R.drawable.shape_cancelled);
-        } else if (status.equals("Completed")){
+        } else if (status.equals("Completed")) {
             holder.tvStatus.setBackgroundResource(R.drawable.shape_completed);
         }
 
+        holder.tabReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReviewHotelActivity.class);
+                intent.putExtra("hotelID", bookingHistory.getHotel_id());
+                context.startActivity(intent);
+            }
+        });
     }
-    private void loadHotelInfo(BookingHistory bookingHistory, HistoryBookingAdapter.HolderHistoryBooking holder) {
+
+    private void loadHotelInfo(BookingHistory bookingHistory, HolderHistoryBooking holder) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Hotels");
         ref.child(bookingHistory.getHotel_id())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,7 +98,6 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
                 });
     }
 
-
     @Override
     public int getItemCount() {
         return historyList.size();
@@ -96,7 +106,8 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
     // View holder
     class HolderHistoryBooking extends RecyclerView.ViewHolder {
         // Views of layout
-        private TextView tvBooking, tvCost, tvDate, tvStatus, tvType,tvName;
+        private TextView tvBooking, tvCost, tvDate, tvStatus, tvType, tvName;
+        private TextView tabReview;
 
         public HolderHistoryBooking(@NonNull View itemView) {
             super(itemView);
@@ -108,6 +119,7 @@ public class HistoryBookingAdapter extends RecyclerView.Adapter<HistoryBookingAd
             tvDate = itemView.findViewById(R.id.tvDate);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvType = itemView.findViewById(R.id.tvType);
+            tabReview = itemView.findViewById(R.id.tabReview);
         }
     }
 }
