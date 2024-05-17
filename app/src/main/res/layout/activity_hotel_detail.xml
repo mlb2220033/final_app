@@ -95,7 +95,7 @@
                                 android:layout_height="25dp"
                                 android:layout_marginEnd="5dp"
                                 android:src="@drawable/ic_location"
-                                android:tint="@color/Neutral_500" />
+                                app:tint="@color/Neutral_500" />
 
                             <TextView
                                 android:id="@+id/txtHotelAddress"
@@ -418,7 +418,7 @@
                             android:layout_height="20dp"
                             android:layout_marginEnd="20dp"
                             android:src="@drawable/ic_phone"
-                            android:tint="@color/Primary_200" />
+                            app:tint="@color/Primary_200" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -450,7 +450,7 @@
                             android:layout_height="20dp"
                             android:layout_marginEnd="20dp"
                             android:src="@drawable/ic_mail"
-                            android:tint="@color/Primary_200" />
+                            app:tint="@color/Primary_200" />
 
                         <TextView
                             android:layout_width="wrap_content"
