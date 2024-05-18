@@ -88,9 +88,13 @@ public class ReviewHotelActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Rating rating = dataSnapshot.getValue(Rating.class);
                     if (rating != null) {
+                        Log.d("Firebase", "Rating: " + rating.getStarRating() + ", Comment: " + rating.getComment());
                         ratingArrayList.add(rating);
+                    } else {
+                        Log.e("Firebase", "Null rating object encountered");
                     }
                 }
+
                 reviewHotelAdapter.notifyDataSetChanged();
             }
             @Override

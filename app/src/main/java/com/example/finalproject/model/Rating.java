@@ -6,11 +6,11 @@ public class Rating {
     private String comment;
     ;
     private float starRating;
-    private String timeRating;
+    private Long timeRating;
     public Rating() {
     }
 
-    public Rating(String uid, String userName, String comment, float starRating, String timeRating) {
+    public Rating(String uid, String userName, String comment, float starRating, Long timeRating) {
         this.uid = uid;
         this.userName = userName;
         this.comment = comment;
@@ -50,11 +50,11 @@ public class Rating {
         this.starRating = starRating;
     }
 
-    public String getTimeRating() {
+    public Long getTimeRating() {
         return timeRating;
     }
 
-    public void setTimeRating(String timeRating) {
+    public void setTimeRating(Long timeRating) {
         this.timeRating = timeRating;
     }
 }

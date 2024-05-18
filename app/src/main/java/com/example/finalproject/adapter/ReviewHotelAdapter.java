@@ -1,6 +1,7 @@
 package com.example.finalproject.adapter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalproject.R;
 import com.example.finalproject.model.Rating;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ReviewHotelAdapter extends RecyclerView.Adapter<ReviewHotelAdapter.ReviewHotelViewHolder> {
 
@@ -36,10 +40,16 @@ public class ReviewHotelAdapter extends RecyclerView.Adapter<ReviewHotelAdapter.
     public void onBindViewHolder(@NonNull ReviewHotelViewHolder holder, int position) {
         Rating rating = ratingArrayList.get(position);
         holder.txtUserName.setText(rating.getUserName());
-        holder.txtCommentRating.setText(rating.getComment()); // Ensure this line is present
+        holder.txtCommentRating.setText(rating.getComment());
         holder.txtRating.setRating(rating.getStarRating());
-        holder.txtTimeRating.setText(rating.getTimeRating()); // Ensure this line is present
+
+        // Convert timestamp to a human-readable date string
+        long timeInMillis = rating.getTimeRating();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        String dateString = sdf.format(new Date(timeInMillis));
+        holder.txtTimeRating.setText(dateString);
     }
+
 
     @Override
     public int getItemCount() {

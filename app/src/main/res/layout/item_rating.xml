@@ -14,29 +14,8 @@
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/txtUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="0.6"
-            android:gravity="fill_vertical"
-            android:paddingStart="10dp"
-            android:text="User Name"
-            android:textSize="12sp"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/txtspace"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="0"
-            android:gravity="left|center_vertical"
-            android:paddingStart="10dp"
-            android:text=" - "
-            android:textSize="12sp" />
-
-        <TextView
             android:id="@+id/txtTimeRating"
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="40dp"
             android:layout_weight="0.3"
             android:gravity="left|center_vertical"
@@ -68,9 +47,22 @@
         android:id="@+id/txtCommentRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:paddingStart="10dp"
+        android:paddingBottom="20dp"
         android:textColor="@color/Primary_700"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtUserName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0.6"
+        android:gravity="fill_vertical"
+        android:paddingStart="10dp"
+        android:paddingBottom="10dp"
+        android:text="User Name"
+        android:textSize="12sp"
+        android:textStyle="italic" />
 
 </LinearLayout>

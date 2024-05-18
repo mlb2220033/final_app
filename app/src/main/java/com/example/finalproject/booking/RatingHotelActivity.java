@@ -16,7 +16,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRatingBar;
 
 import com.example.finalproject.R;
-import com.example.finalproject.databinding.ActivityHotelAddBinding;
+
 import com.example.finalproject.databinding.ActivityRatingHotelBinding;
 import com.example.finalproject.model.MyUtils;
 import com.example.finalproject.model.Rating;
@@ -25,8 +25,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,7 +136,6 @@ public class RatingHotelActivity extends AppCompatActivity {
         progressDialog.show();
 
         mAuth = FirebaseAuth.getInstance();
-        // Lấy hotelID từ intent
         String hotelID = getIntent().getStringExtra("hotelID");
 
         if (hotelID == null) {
@@ -146,30 +149,43 @@ public class RatingHotelActivity extends AppCompatActivity {
         float rating = binding.ratingBarHotel.getRating();
         String userName = binding.edtUserName.getText().toString();
 
-        Map<String, Object> newRatingValues = new HashMap<>();
-        newRatingValues.put("comment", comment);
-        newRatingValues.put("starRating", rating);
-        newRatingValues.put("uid", userID);
-        newRatingValues.put("userName", userName);
+        DatabaseReference timeRef = FirebaseDatabase.getInstance().getReference(".info/serverTimeOffset");
+        timeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long offset = snapshot.getValue(Long.class);
+                long estimatedServerTimeMs = System.currentTimeMillis() + offset;
 
-        DatabaseReference ratingsRef = databaseReference.child(hotelID).child("Ratings").child(userID);
-        ratingsRef.setValue(newRatingValues)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-                        Toast.makeText(RatingHotelActivity.this, "Rating added successfully", Toast.LENGTH_SHORT).show();
-                        clearReview();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(RatingHotelActivity.this, "Failed to add rating: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                Map<String, Object> newRatingValues = new HashMap<>();
+                newRatingValues.put("comment", comment);
+                newRatingValues.put("starRating", rating);
+                newRatingValues.put("uid", userID);
+                newRatingValues.put("userName", userName);
+                newRatingValues.put("timeRating", estimatedServerTimeMs);
+
+                DatabaseReference ratingsRef = databaseReference.child(hotelID).child("Ratings").child(userID);
+                ratingsRef.setValue(newRatingValues)
+                        .addOnSuccessListener(aVoid -> {
+                            progressDialog.dismiss();
+                            Toast.makeText(RatingHotelActivity.this, "Rating added successfully", Toast.LENGTH_SHORT).show();
+                            clearReview();
+                        })
+                        .addOnFailureListener(e -> {
+                            progressDialog.dismiss();
+                            Toast.makeText(RatingHotelActivity.this, "Failed to add rating: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressDialog.dismiss();
+                Toast.makeText(RatingHotelActivity.this, "Failed to get server time: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
+
 
     private void clearReview() {
         // Clear input fields and reset rating bar
@@ -178,4 +194,5 @@ public class RatingHotelActivity extends AppCompatActivity {
         ((AppCompatRatingBar) findViewById(R.id.ratingBarHotel)).setRating(0);
         ((TextView) findViewById(R.id.txtRatingStar)).setText("");
     }
+
 }
