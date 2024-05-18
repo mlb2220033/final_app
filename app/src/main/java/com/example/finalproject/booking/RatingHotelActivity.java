@@ -115,7 +115,7 @@ public class RatingHotelActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your comment", Toast.LENGTH_SHORT).show();
             binding.edtComment.setError("Comment is required");
             binding.edtComment.requestFocus();
-        } else if (userName.length() < 2 || userName.length() > 10) {
+        } else if (userName.length() < 2 || userName.length() > 12) {
             Toast.makeText(this, "Name length should be between 2 and 10 characters", Toast.LENGTH_SHORT).show();
             binding.edtUserName.setError("Fill Available User Name");
             binding.edtUserName.requestFocus();
