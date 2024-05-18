@@ -2,40 +2,26 @@ package com.example.finalproject.booking;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Camera;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.finalproject.R;
-import com.example.finalproject.adapter.HotelAdapter;
 import com.example.finalproject.adapter.HotelFacilitiesAdapter;
-import com.example.finalproject.adapter.HotelFacilitiesItemAdapter;
 import com.example.finalproject.adapter.HotelPoliciesAdapter;
 import com.example.finalproject.adapter.ReviewHotelAdapter;
 import com.example.finalproject.model.DataHolder;
-import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.HotelFacilities;
 import com.example.finalproject.model.HotelPolicies;
 import com.example.finalproject.model.Rating;
@@ -46,17 +32,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +50,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
 
     TextView txtHotelName, txtHotelAddress, txtHotelDescription, txtPricePerNight, txtStarRating,
             txtViewRoom, txtContactHotel, txtHotelPhone, txtHotelGmail,
-            txtAllDescription, txtAllFacilities, txtAllRvHotelDetail, txtAddReview, txtAllPolicies, txtMap;
+            txtAllDescription, txtAllFacilities, txtAllRvHotelDetail, txtStarReview, txtAllPolicies, txtMap;
     String hotelID, hotelName;
     AppBarLayout appBarLayout;
     RecyclerView rvFac;
@@ -158,7 +141,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
                 // Calculate average star rating
                 float averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
                 // Update txtStarRating
-                txtStarRating.setText(String.format("%.1f", averageRating));
+                txtStarReview.setText(String.format("%.1f", averageRating));
             }
 
             @Override
@@ -278,7 +261,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         txtHotelGmail.setText(getIntent().getStringExtra("txtHotelGmail"));
 
         txtPricePerNight.setText(String.format("%,.2f", getIntent().getFloatExtra("txtPricePerNight", 0.00f)) + " VNĐ");
-        txtStarRating.setText(String.valueOf(getIntent().getFloatExtra("txtStarRating", 0.0f)));
+        txtStarReview.setText(String.valueOf(getIntent().getFloatExtra("txtStarReview", 0.0f)));
 
         DataHolder.hotel_id = hotelID;
         DataHolder.hotel_address = txtHotelAddress.getText().toString();
@@ -309,7 +292,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
-        txtAddReview.setOnClickListener(new View.OnClickListener() {
+        txtStarReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HotelDetailActivity.this, RatingHotelActivity.class);
@@ -360,7 +343,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         txtAllDescription = findViewById(R.id.txtAllDescription);
         txtAllFacilities = findViewById(R.id.txtAllFacilities);
         txtAllPolicies = findViewById(R.id.txtAllPolicies);
-        txtAddReview = findViewById(R.id.txtAddReview);
+        txtStarReview = findViewById(R.id.txtStarReview);
         txtAllRvHotelDetail = findViewById(R.id.txtAllRvHotelDetail);
         rvReviewHotelDetail = findViewById(R.id.rvReviewHotelDetail);
         txtMap = findViewById(R.id.txtMap);

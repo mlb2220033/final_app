@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".booking.HotelDetailActivity">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -56,10 +57,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -164,12 +165,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
-                        android:src="@drawable/edt_background"/>
+                        android:src="@drawable/edt_background" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -185,9 +187,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:lineSpacingExtra="3dp"
                         android:maxLines="3"
                         android:text="Hotel Description"
-                        android:lineSpacingExtra="3dp"
                         android:textColor="@color/Neutral_900" />
 
                     <TextView
@@ -207,6 +209,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -232,8 +235,8 @@
                     <TextView
                         android:id="@+id/txtAllFacilities"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:onClick="openFacilitiesDetail"
                         android:text="See All Facilities"
                         android:textAlignment="center"
@@ -247,12 +250,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:src="@drawable/edt_background"/>
+                        android:src="@drawable/edt_background" />
 
                     <TextView
                         android:id="@+id/tx"
@@ -264,16 +268,29 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtAddReview"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:gravity="center"
-                        android:text="Add Rating"
-                        android:textAlignment="viewEnd"
-                        android:textColor="#2196F3"
-                        android:textStyle="bold"
-                        tools:ignore="RtlCompat" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgStarReview"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_star" />
+
+                        <TextView
+                            android:id="@+id/txtStarReview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="0" />
+
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvReviewHotelDetail"
@@ -281,6 +298,7 @@
                         android:layout_height="120dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_rating" />
+
                     <TextView
                         android:id="@+id/txtAllRvHotelDetail"
                         android:layout_width="match_parent"
@@ -371,8 +389,8 @@
                     <TextView
                         android:id="@+id/txtAllPolicies"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
                         android:onClick="openPolicies"
                         android:text="See All Policies"
                         android:textAlignment="center"
@@ -400,9 +418,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="3dp"
                         android:layout_marginBottom="25dp"
+                        android:lineSpacingExtra="3dp"
                         android:text="Have a question for "
                         android:textColor="@color/Neutral_900"
-                        android:lineSpacingExtra="3dp"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 

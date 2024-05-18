@@ -56,5 +56,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
+    <string name="tvStatus">Completed</string>
+
+
 
 </resources>

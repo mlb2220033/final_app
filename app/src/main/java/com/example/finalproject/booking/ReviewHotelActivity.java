@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.finalproject.adapter.ReviewHotelAdapter;
 import com.example.finalproject.databinding.ActivityReviewHotelBinding;
+
 import com.example.finalproject.model.Rating;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,14 +19,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 public class ReviewHotelActivity extends AppCompatActivity {
+
     private ActivityReviewHotelBinding binding;
     private ArrayList<Rating> ratingArrayList;
     private ReviewHotelAdapter reviewHotelAdapter;
     private String hotelID;
     private FirebaseDatabase firebaseDatabase;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,14 @@ public class ReviewHotelActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+        }
+
         getDataFromPreviousActivity();
         loadRatings();
+        checkHotelStatus();
 
         binding.rvComments.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,6 +96,30 @@ public class ReviewHotelActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("Firebase", "Error loading ratings: " + error.getMessage());
+            }
+        });
+    }
+
+    private void checkHotelStatus() {
+        DatabaseReference userReference = firebaseDatabase.getReference("Users").child(userId).child("booking-history");
+        userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot bookingSnapshot : dataSnapshot.getChildren()) {
+                    String status = bookingSnapshot.child("status").getValue(String.class);
+                    String hotelId = bookingSnapshot.child("hotel_id").getValue(String.class);
+                    if ("Completed".equals(status) && hotelId != null && hotelId.equals(hotelID)) {
+                        binding.btnRating.setVisibility(View.VISIBLE);
+                        // Kiểm tra từng đặt phòng một và chỉ hiển thị khi có ít nhất một đặt phòng hoàn thành
+                        break;
+                    } else {
+                        binding.btnRating.setVisibility(View.GONE);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error loading status: " + databaseError.getMessage());
             }
         });
     }

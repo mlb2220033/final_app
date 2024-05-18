@@ -68,7 +68,6 @@ public class ResultSearchActivity extends AppCompatActivity {
         addViews();
         addEvents();
         getDataFromPrevious();
-        loadAverageRating();
         getDataHotelSearch();
 
     }
@@ -84,7 +83,7 @@ public class ResultSearchActivity extends AppCompatActivity {
         txtGuest.setText(String.valueOf(intent.getIntExtra("guestsCount", 0)));
 
     }
-    private void loadAverageRating() {
+    /*private void loadAverageRating() {
         DatabaseReference reference = firebaseDatabase.getReference("Hotels");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -132,7 +131,7 @@ public class ResultSearchActivity extends AppCompatActivity {
                 Log.e("Firebase", "Error loading hotels: " + error.getMessage());
             }
         });
-    }
+    }*/
 
     private void getDataHotelSearch() {
 
