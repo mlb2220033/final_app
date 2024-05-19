@@ -4,43 +4,67 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/edt_background">
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:weightSum="1">
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgUser"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_avatar"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView1" />
 
         <TextView
-            android:id="@+id/txtTimeRating"
-            android:layout_width="175dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.3"
-            android:gravity="left|center_vertical"
-            android:paddingStart="10dp"
-            android:text="TextView"
-            android:textSize="12sp" />
+            android:id="@+id/txtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="15dp"
+            android:gravity="fill_vertical"
+            android:text="User Name"
+            android:textColor="@color/Neutral_900"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-82dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="-10dp"
+        android:orientation="horizontal">
 
         <RatingBar
             android:id="@+id/txtRating"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="0.1"
             android:isIndicator="true"
             android:max="5"
             android:min="1"
             android:numStars="5"
-            android:paddingStart="0dp"
             android:progressTint="@color/Semantic_500"
             android:rating="0"
             android:scaleX="0.3"
             android:scaleY="0.3"
             android:stepSize="1" />
 
+        <TextView
+            android:id="@+id/txtTimeRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:paddingStart="10dp"
+            android:text="Time"
+            android:textColor="@color/Neutral_500"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
@@ -48,21 +72,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left|center_vertical"
-        android:paddingStart="10dp"
-        android:paddingBottom="20dp"
-        android:textColor="@color/Primary_700"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/txtUserName"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="0.6"
-        android:gravity="fill_vertical"
-        android:paddingStart="10dp"
-        android:paddingBottom="10dp"
-        android:text="User Name"
-        android:textSize="12sp"
-        android:textStyle="italic" />
-
+        android:lineSpacingExtra="3dp"
+        android:text="Comment"
+        android:textColor="@color/Neutral_900"
+        android:textSize="14sp" />
 </LinearLayout>

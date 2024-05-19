@@ -42,7 +42,7 @@ import java.util.List;
 
 public class ResultSearchActivity extends AppCompatActivity {
     ImageView imgFilter, imgBack, imgCancel;
-    TextView txtLocation, txtPeriod, txtGuest, txtRoom;
+    TextView txtLocation, txtPeriod, txtGuest, txtRoom, txtNoResult;
     RecyclerView rvHotel;
     HotelAdapter hotelAdapter;
     ArrayList<Hotel> recycleList;
@@ -52,10 +52,12 @@ public class ResultSearchActivity extends AppCompatActivity {
     List<Float> selectedStar;
     boolean isHighToLowChecked = false;
     boolean isLowToHighChecked = false;
+    boolean cusLocation = false;
+    boolean isNearby;
     EditText edtHotelName;
     Button btnApply, btnReset;
     RadioButton radioHigh2Low, radioLow2High;
-    LinearLayout txt5star, txt4star, txt3star, txt2star, txt1star;
+    LinearLayout txt5star, txt4star, txt3star, txt2star, txt1star, llNoResult;
 
 
     @Override
@@ -63,7 +65,7 @@ public class ResultSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_search);
 
-        // Khởi tạo Firebase
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         addViews();
         addEvents();
@@ -76,6 +78,7 @@ public class ResultSearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         Location = getIntent().getStringExtra("txtLocation");
+        isNearby = Location.trim().equalsIgnoreCase("Hotel Nearby");
 
         txtLocation.setText(getIntent().getStringExtra("txtLocation"));
         txtPeriod.setText(getIntent().getStringExtra("txtPeriod"));
@@ -83,55 +86,6 @@ public class ResultSearchActivity extends AppCompatActivity {
         txtGuest.setText(String.valueOf(intent.getIntExtra("guestsCount", 0)));
 
     }
-    /*private void loadAverageRating() {
-        DatabaseReference reference = firebaseDatabase.getReference("Hotels");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot hotelSnapshot : snapshot.getChildren()) {
-                    String hotelID = hotelSnapshot.getKey();
-                    DatabaseReference ratingRef = firebaseDatabase.getReference("Hotels").child(hotelID).child("Ratings");
-
-                    ratingRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot ratingSnapshot) {
-                            float totalStars = 0;
-                            int totalRatings = 0;
-                            for (DataSnapshot rating : ratingSnapshot.getChildren()) {
-                                Rating ratingObj = rating.getValue(Rating.class);
-                                if (ratingObj != null) {
-                                    totalStars += ratingObj.getStarRating();
-                                    totalRatings++;
-                                }
-                            }
-
-                            float averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
-                            // Update the hotel object
-                            for (Hotel hotel : recycleList) {
-                                if (hotel.getHotelID().equals(hotelID)) {
-                                    hotel.setAverageRating(averageRating);
-                                    break;
-                                }
-                            }
-
-                            // Notify adapter to refresh data
-                            hotelAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("Firebase", "Error loading ratings: " + error.getMessage());
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error loading hotels: " + error.getMessage());
-            }
-        });
-    }*/
 
     private void getDataHotelSearch() {
 
@@ -140,32 +94,45 @@ public class ResultSearchActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    String location = txtLocation.getText().toString().trim();
-                    if (location.equals("Hotel Nearby")) {
-                        DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
-                        if (hotelMarkersSnapshot.exists()) {
+
+                    DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
+                    if (hotelMarkersSnapshot.exists()) {
+                        if (DataHolder.latitude == null && DataHolder.longitude == null) {
+                            cusLocation = true;
+                            hotel.setDistance(0.00);
+                        } else {
                             double hotelLatitude = hotelMarkersSnapshot.child("latitude").getValue(Double.class);
                             double hotelLongitude = hotelMarkersSnapshot.child("longitude").getValue(Double.class);
-
                             double distance = calculateDistance(DataHolder.latitude, DataHolder.longitude, hotelLatitude, hotelLongitude);
                             hotel.setDistance(distance);
+                        }
 
-                            if (distance < 15) {
+                        if (isNearby) {
+                            if (cusLocation) {
+                                txtNoResult.setText("Please grant location access so Toogo can help you find nearby hotels.");
+                                llNoResult.setVisibility(View.VISIBLE);
+                                break;
+                            } else if (hotel.getDistance() < 191.50) {
                                 recycleList.add(hotel);
                             }
+                        } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
+                            recycleList.add(hotel);
                         }
-                    } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
-                        hotel.setDistance(0.00);
-                        recycleList.add(hotel);
                     }
 
-                    Collections.sort(recycleList, new Comparator<Hotel>() {
-                        @Override
-                        public int compare(Hotel hotel1, Hotel hotel2) {
-                            return Double.compare(hotel1.getDistance(), hotel2.getDistance());
-                        }
-                    });
+                    if (recycleList.isEmpty()) {
+                        llNoResult.setVisibility(View.VISIBLE);
+                    } else {
+                        llNoResult.setVisibility(View.GONE);
+                        Collections.sort(recycleList, new Comparator<Hotel>() {
+                            @Override
+                            public int compare(Hotel hotel1, Hotel hotel2) {
+                                return Double.compare(hotel1.getDistance(), hotel2.getDistance());
+                            }
+                        });
+                    }
                 }
                 hotelAdapter.notifyDataSetChanged();
             }
@@ -370,21 +337,27 @@ public class ResultSearchActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                    String location = txtLocation.getText().toString().trim();
+                    DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
 
-                    if (location.equals("Hotel Nearby")) {
-                        DataSnapshot hotelMarkersSnapshot = dataSnapshot.child("hotelMarkers");
-                        if (hotelMarkersSnapshot.exists()) {
+                    if (hotelMarkersSnapshot.exists()) {
+                        if (DataHolder.latitude == null && DataHolder.longitude == null) {
+                            cusLocation = true;
+                            hotel.setDistance(0.00);
+                        } else {
                             double hotelLatitude = hotelMarkersSnapshot.child("latitude").getValue(Double.class);
                             double hotelLongitude = hotelMarkersSnapshot.child("longitude").getValue(Double.class);
-
                             double distance = calculateDistance(DataHolder.latitude, DataHolder.longitude, hotelLatitude, hotelLongitude);
                             hotel.setDistance(distance);
+                        }
 
-                            boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
-                            boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
-
-                            if (distance < 15) {
+                        if (isNearby) {
+                            if (cusLocation) {
+                                txtNoResult.setText("Please grant location access so Toogo can help you find nearby hotels.");
+                                llNoResult.setVisibility(View.VISIBLE);
+                                break;
+                            } else if (hotel.getDistance() < 191.50) {
+                                boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
+                                boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
                                 if (isNameMatched && isStarMatched) {
                                     recycleList.add(hotel);
                                 } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
@@ -395,21 +368,29 @@ public class ResultSearchActivity extends AppCompatActivity {
                                     recycleList.add(hotel);
                                 }
                             }
-                        }
-                    } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
-                        boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
-                        boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
+                        } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
+                            boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
+                            boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
 
-                        if (isNameMatched && isStarMatched) {
-                            recycleList.add(hotel);
-                        } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
-                            recycleList.add(hotel);
-                        } else if (isNameMatched && hotelStar.isEmpty()) {
-                            recycleList.add(hotel);
-                        } else if (isStarMatched && hotelName.isEmpty()) {
-                            recycleList.add(hotel);
+                            if (isNameMatched && isStarMatched) {
+                                recycleList.add(hotel);
+                            } else if (hotelName.isEmpty() && hotelStar.isEmpty()) {
+                                recycleList.add(hotel);
+                            } else if (isNameMatched && hotelStar.isEmpty()) {
+                                recycleList.add(hotel);
+                            } else if (isStarMatched && hotelName.isEmpty()) {
+                                recycleList.add(hotel);
+                            }
                         }
                     }
+                }
+
+                //Show Image No Result
+                if (recycleList.isEmpty()) {
+                    txtNoResult.setText("Sorry, there is no data hotels that match your conditions. Let's try another case.");
+                    llNoResult.setVisibility(View.VISIBLE);
+                } else {
+                    llNoResult.setVisibility(View.GONE);
                 }
 
                 if (radioHigh2Low.isChecked()) {
@@ -451,17 +432,38 @@ public class ResultSearchActivity extends AppCompatActivity {
         txtPeriod = findViewById(R.id.txtPeriod);
         txtGuest = findViewById(R.id.txtGuest);
         txtRoom = findViewById(R.id.txtRoom);
+        txtNoResult = findViewById(R.id.txtNoResult);
         rvHotel = findViewById(R.id.rvHotel);
 
+        llNoResult = findViewById(R.id.llNoResult);
+
         recycleList = new ArrayList<>();
-        hotelAdapter = new HotelAdapter(recycleList, getApplicationContext());
+        hotelAdapter = new HotelAdapter(recycleList, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvHotel.setLayoutManager(linearLayoutManager);
-        rvHotel.addItemDecoration(new DividerItemDecoration(rvHotel.getContext(), DividerItemDecoration.VERTICAL));
         rvHotel.setNestedScrollingEnabled(false);
         rvHotel.setAdapter(hotelAdapter);
 
         hotelStar = new ArrayList<>();
         selectedStar = new ArrayList<>();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            String hotelID = data.getStringExtra("hotelID");
+            boolean isFavorite = data.getBooleanExtra("isFavorite", false);
+
+            for (Hotel hotel : recycleList) {
+                if (hotel.getHotelID().equals(hotelID)) {
+                    hotel.setLiked(isFavorite);
+                    break;
+                }
+            }
+            hotelAdapter.notifyDataSetChanged();
+        }
+    }
+
+
 }

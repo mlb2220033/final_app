@@ -117,6 +117,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_content"
             android:layout_gravity="center">
+
             <ImageView
                 android:id="@+id/imgFilter"
                 android:layout_width="20dp"
@@ -126,8 +127,36 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llNoResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_no_result"
+            android:tint="@color/Neutral_500" />
+
+        <TextView
+            android:id="@+id/txtNoResult"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dp"
+            android:text="Sorry, there is no data available for hotels in this area. Let's search another location again."
+            android:textAlignment="center"
+            android:textColor="@color/Neutral_500"
+            android:textSize="16dp" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHotel"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>

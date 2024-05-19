@@ -15,7 +15,7 @@ public class Hotel implements Serializable {
     public Hotel() {
     }
 
-    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, String hotelDescription, String hotelPhone, String hotelGmail, String adminID, Float pricePerNight, long timestamp, Float starRating, boolean liked) {
+    public Hotel(String hotelID, String hotelName, String hotelImage, String hotelAddress, String hotelDescription, String hotelPhone, String hotelGmail, String adminID, Float pricePerNight, long timestamp, Float starRating) {
         this.hotelID = hotelID;
         this.hotelName = hotelName;
         this.hotelImage = hotelImage;
@@ -27,7 +27,6 @@ public class Hotel implements Serializable {
         this.timestamp = timestamp;
         PricePerNight = pricePerNight;
         StarRating = starRating;
-        Liked = liked;
     }
 
     public float getAverageRating() {
@@ -102,14 +101,6 @@ public class Hotel implements Serializable {
         StarRating = starRating;
     }
 
-    public boolean isLiked() {
-        return Liked;
-    }
-
-    public void setLiked(boolean liked) {
-        Liked = liked;
-    }
-
     public String getHotelPhone() {
         return hotelPhone;
     }
@@ -140,5 +131,13 @@ public class Hotel implements Serializable {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public boolean isLiked() {
+        return Liked;
+    }
+
+    public void setLiked(boolean liked) {
+        Liked = liked;
     }
 }

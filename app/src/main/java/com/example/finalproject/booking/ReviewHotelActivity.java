@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.finalproject.R;
 import com.example.finalproject.adapter.ReviewHotelAdapter;
 import com.example.finalproject.databinding.ActivityReviewHotelBinding;
 
@@ -32,6 +34,7 @@ public class ReviewHotelActivity extends AppCompatActivity {
     private String hotelID;
     private FirebaseDatabase firebaseDatabase;
     private String userId;
+    TextView txtStarReview, txtRatingNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class ReviewHotelActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        txtRatingNumber = findViewById(R.id.txtRatingNumber);
+        txtStarReview = findViewById(R.id.txtStarReview);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -72,11 +77,15 @@ public class ReviewHotelActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     private void getDataFromPreviousActivity() {
         Intent intent = getIntent();
         hotelID = intent.getStringExtra("hotelID");
+        txtStarReview.setText(intent.getStringExtra("txtStarReview"));
+
+
     }
 
     private void loadRatings() {
@@ -84,7 +93,6 @@ public class ReviewHotelActivity extends AppCompatActivity {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ratingArrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Rating rating = dataSnapshot.getValue(Rating.class);
                     if (rating != null) {
@@ -94,6 +102,9 @@ public class ReviewHotelActivity extends AppCompatActivity {
                         Log.e("Firebase", "Null rating object encountered");
                     }
                 }
+
+                int size = ratingArrayList.size();
+                txtRatingNumber.setText("Out of " + size + " ratings");
 
                 reviewHotelAdapter.notifyDataSetChanged();
             }
@@ -123,7 +134,6 @@ public class ReviewHotelActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase", "Error loading status: " + databaseError.getMessage());
             }
         });
     }

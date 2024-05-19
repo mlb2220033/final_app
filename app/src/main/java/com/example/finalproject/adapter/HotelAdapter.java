@@ -1,5 +1,6 @@
 package com.example.finalproject.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -17,6 +18,13 @@ import com.example.finalproject.R;
 import com.example.finalproject.booking.HotelDetailActivity;
 import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -24,17 +32,18 @@ import java.util.ArrayList;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
     ArrayList<Hotel> hotelList;
-    Context context;
+    Activity activity;
 
-    public HotelAdapter(ArrayList<Hotel> listHotet, Context context) {
-        this.hotelList = listHotet;
-        this.context = context;
+
+    public HotelAdapter(ArrayList<Hotel> listHotel, Activity activity) {
+        this.hotelList = listHotel;
+        this.activity = activity;
     }
 
     @NonNull
     @Override
     public HotelAdapter.ViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.hotel_list,parent,false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.hotel_list, parent, false);
         return new ViewHodel(view);
     }
 
@@ -55,11 +64,30 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             holder.txtDistance.setVisibility(View.GONE);
         }
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(user.getUid()).child("favorites");
+            favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean isFavorite = snapshot.hasChild(hotel.getHotelID());
+
+                    holder.imgLike.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
+                    holder.imgDisLike.setVisibility(isFavorite ? View.GONE : View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } else {
+            holder.imgLike.setVisibility(View.GONE);
+            holder.imgDisLike.setVisibility(View.VISIBLE);
+        }
 
         Picasso.get().load(hotel.getHotelImage()).into(holder.imgHotel);
-
-        holder.imgLike.setVisibility(hotel.isLiked() ? View.VISIBLE : View.GONE);
-        holder.imgDisLike.setVisibility(hotel.isLiked() ? View.GONE : View.VISIBLE);
 
         holder.imgLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +95,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
                 holder.imgLike.setVisibility(View.GONE);
                 holder.imgDisLike.setVisibility(View.VISIBLE);
                 Toast.makeText(v.getContext(), "Remove from favorites list", Toast.LENGTH_SHORT).show();
+                removeFromFavorites(hotel.getHotelID());
             }
         });
 
@@ -76,12 +105,15 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
                 holder.imgDisLike.setVisibility(View.GONE);
                 holder.imgLike.setVisibility(View.VISIBLE);
                 Toast.makeText(v.getContext(), "Add to favorites list", Toast.LENGTH_SHORT).show();
+                addToFavorites(hotel.getHotelID());
             }
         });
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, HotelDetailActivity.class);
+                Intent intent = new Intent(activity, HotelDetailActivity.class);
 
                 intent.putExtra("hotelID", hotel.getHotelID());
 
@@ -94,8 +126,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
                 intent.putExtra("txtHotelPhone", hotel.getHotelPhone());
                 intent.putExtra("txtHotelGmail", hotel.getHotelGmail());
 
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                activity.startActivityForResult(intent, 1);
 
             }
         });
@@ -125,4 +156,21 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHodel> {
             imgDisLike = itemView.findViewById(R.id.imgDisLike);
         }
     }
+
+    private void addToFavorites(String hotelID) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+            databaseReference.child(hotelID).setValue(true);
+        }
+    }
+
+    private void removeFromFavorites(String hotelID) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+            databaseReference.child(hotelID).removeValue();
+        }
+    }
+
 }

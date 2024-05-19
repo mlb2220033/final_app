@@ -94,7 +94,6 @@ public class HotelMapActivity extends AppCompatActivity implements OnMapReadyCal
                                 myMap.addMarker(markerCus);
                             }
 
-
                             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hotelLocation, 15));
                         } else {
                             Toast.makeText(HotelMapActivity.this, "Hotel location data not available", Toast.LENGTH_SHORT).show();

@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
 
         addViews();
         addEvents();
@@ -149,7 +149,7 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 txtLocation.setText("Hotel Nearby");
                 txtNear.setVisibility(View.VISIBLE);
-                txtNear.setText("Hotels will be found according to your location");
+                txtNear.setText("Hotels will be found around 15km according to your location");
                 if (ContextCompat.checkSelfPermission(SearchActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(SearchActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -218,6 +218,8 @@ public class SearchActivity extends AppCompatActivity {
         txtNear = findViewById(R.id.txtNear);
         imgBack = findViewById(R.id.imgBack);
         imgNear = findViewById(R.id.imgNear);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 }
 

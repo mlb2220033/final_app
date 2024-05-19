@@ -35,6 +35,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,10 +87,6 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         fetchComments();
         loadAverageRating();
         addEvents();
-
-
-
-
     }
 
     private void fetchComments() {
@@ -187,22 +185,74 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.hotel_detail_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.menu_favour);
+        checkIfFavorite(hotelID, menuItem);
         return true;
     }
+
+    private void checkIfFavorite(String hotelID, MenuItem item) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+            databaseReference.child(hotelID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        item.setIcon(R.drawable.ic_like);
+                    } else {
+                        item.setIcon(R.drawable.ic_dislike);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_favour) {
-            if (item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_dislike).getConstantState())) {
-                item.setIcon(getResources().getDrawable(R.drawable.ic_like));
-                Toast.makeText(this, "Added to favorite list", Toast.LENGTH_SHORT).show();
-            } else {
-                item.setIcon(getResources().getDrawable(R.drawable.ic_dislike));
-                Toast.makeText(this, "Removed from favorite list", Toast.LENGTH_SHORT).show();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+                databaseReference.child(hotelID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            databaseReference.child(hotelID).removeValue();
+                            item.setIcon(R.drawable.ic_dislike);
+                            Toast.makeText(HotelDetailActivity.this, "Removed from favorite list", Toast.LENGTH_SHORT).show();
+                            updateFavoriteStatus(false);
+                        } else {
+                            databaseReference.child(hotelID).setValue(true);
+                            item.setIcon(R.drawable.ic_like);
+                            Toast.makeText(HotelDetailActivity.this, "Added to favorite list", Toast.LENGTH_SHORT).show();
+                            updateFavoriteStatus(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(HotelDetailActivity.this, "Failed to update favorite status", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void updateFavoriteStatus(boolean isFavorite) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("hotelID", hotelID);
+        resultIntent.putExtra("isFavorite", isFavorite);
+        setResult(RESULT_OK, resultIntent);
     }
 
     private void getPolicies() {
@@ -261,6 +311,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
         txtHotelGmail.setText(getIntent().getStringExtra("txtHotelGmail"));
 
         txtPricePerNight.setText(String.format("%,.2f", getIntent().getFloatExtra("txtPricePerNight", 0.00f)) + " VNĐ");
+        txtStarRating.setText(String.valueOf(getIntent().getFloatExtra("txtStarRating", 0.0f)));
         txtStarReview.setText(String.valueOf(getIntent().getFloatExtra("txtStarReview", 0.0f)));
 
         DataHolder.hotel_id = hotelID;
@@ -305,6 +356,7 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
             public void onClick(View v) {
                 Intent intent = new Intent(HotelDetailActivity.this, ReviewHotelActivity.class);
                 intent.putExtra("hotelID", hotelID);
+                intent.putExtra("txtStarReview", txtStarReview.getText().toString());
                 startActivity(intent);
             }
         });

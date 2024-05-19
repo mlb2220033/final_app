@@ -1,7 +1,10 @@
 package com.example.finalproject.booking;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.LinearLayout;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,10 +31,14 @@ import com.example.finalproject.adapter.PopularAdapter;
 import com.example.finalproject.adapter.RecomAdapter;
 import com.example.finalproject.adapter.SliderAdapter;
 import com.example.finalproject.databinding.ActivityHomeBinding;
+import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.ItemsModel;
 import com.example.finalproject.model.RecomModel;
 import com.example.finalproject.model.SliderBanner;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,9 +48,11 @@ import java.util.ArrayList;
 
 public class HomeActivity extends FireBaseActivity {
     private ActivityHomeBinding binding;
-    LinearLayout Profile, Favorite, Chat,Home;
+    LinearLayout Profile, Favorite, Chat, Home;
     LinearLayout edtSearch;
     ImageView imgSearchAdvanced;
+    int REQUEST_LOCATION = 1;
+    FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +66,52 @@ public class HomeActivity extends FireBaseActivity {
         intitRecom();
         addViews();
         addEvents();
+        getUserLocation();
+
+    }
+
+
+    private void getUserLocation() {
+        if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        } else {
+            getLastLocation();
+        }
+    }
+
+    private void getLastLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                Location location = task.getResult();
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+
+                                DataHolder.longitude = String.valueOf(longitude);
+                                DataHolder.latitude = String.valueOf(latitude);
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLastLocation();
+        }
     }
 
     private void addViews() {
         Home = findViewById(R.id.Home);
         Profile = findViewById(R.id.Profile);
+        Favorite = findViewById(R.id.Favorite);
+
         edtSearch = findViewById(R.id.edtSearch);
         imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
 
@@ -79,6 +131,13 @@ public class HomeActivity extends FireBaseActivity {
             @Override
             public void onClick(View v) {
                 recreate();
+            }
+        });
+        Favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, FavoriteListActivity.class);
+                startActivity(intent);
             }
         });
 
