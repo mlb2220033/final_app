@@ -42,7 +42,7 @@ public class ViewBookingActivity extends AppCompatActivity {
     ImageView imgHotelBKDetail;
     TextView txtHotelNameBKDetail, txtHotelAddressBKDetail, txtPriceBKDetail,
             txtVATBKDetail, txtTotalPriceBKDetail, txtAfterApplyDiscount,
-            txtDiscountBKDetail, txtFullNameBKDetail, txtAddressBKDetail, txtPhoneBKDetail,
+            txtDiscountBKDetail, txtFullNameBKDetail, txtPhoneBKDetail,
             txtCheckInBKDetail, txtCheckOutBKDetail, txtGuestNumbBKDetail, txtRoomTypeBKDetail;
     Hotel hotel;
 
@@ -98,7 +98,6 @@ public class ViewBookingActivity extends AppCompatActivity {
         txtHotelNameBKDetail = findViewById(R.id.txtHotelNameBKDetail);
         txtHotelAddressBKDetail = findViewById(R.id.txtHotelAddressBKDetail);
         txtFullNameBKDetail = findViewById(R.id.txtFullNameBKDetail);
-        txtAddressBKDetail = findViewById(R.id.txtAddressBKDetail);
         txtPhoneBKDetail = findViewById(R.id.txtPhoneBKDetail);
         txtPriceBKDetail = findViewById(R.id.txtPriceBKDetail);
         txtVATBKDetail = findViewById(R.id.txtVATBKDetail);
@@ -137,7 +136,6 @@ public class ViewBookingActivity extends AppCompatActivity {
         }
         txtFullNameBKDetail.setText(fullname);
         txtPhoneBKDetail.setText(phone);
-        txtAddressBKDetail.setText(address);
         txtVATBKDetail.setText(String.format("VND %,.0f", vat));
         txtTotalPriceBKDetail.setText(String.format("VND %,.0f", total));
         txtAfterApplyDiscount.setText(String.format("VND %,.0f", afterApplyDiscount));

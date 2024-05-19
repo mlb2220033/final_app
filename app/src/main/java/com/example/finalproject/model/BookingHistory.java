@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class BookingHistory implements Serializable {
 
+    public String id;
     public String hotel_id;
     public String type_room;
     public Float cost; //Giá này là giá của phòng
@@ -17,7 +18,8 @@ public class BookingHistory implements Serializable {
     public BookingHistory() {
     }
 
-    public BookingHistory(String hotel_id,
+    public BookingHistory(String id,
+                          String hotel_id,
                           String type_room,
                           Float cost,
                           Long time_stamp,
@@ -26,6 +28,7 @@ public class BookingHistory implements Serializable {
                           Integer room_count,
                           Float day_count,
                           String status) {
+        this.id = id;
         this.hotel_id = hotel_id;
         this.type_room = type_room;
         this.cost = cost;
@@ -35,6 +38,14 @@ public class BookingHistory implements Serializable {
         this.room_count = room_count;
         this.day_count = day_count;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getHotel_id() {

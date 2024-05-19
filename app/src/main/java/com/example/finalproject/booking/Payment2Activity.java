@@ -363,7 +363,8 @@ public class Payment2Activity extends AppCompatActivity {
                         ref = db.getReference("Users");
                         String uid = auth.getUid();
                         Long currentTime = Calendar.getInstance().getTimeInMillis();
-                        BookingHistory history = new BookingHistory(DataHolder.hotel_id,
+                        String id = currentTime.toString();
+                        BookingHistory history = new BookingHistory(id, DataHolder.hotel_id,
                                 DataHolder.type_room,
                                 DataHolder.total_cost,
                                 currentTime,
@@ -372,7 +373,7 @@ public class Payment2Activity extends AppCompatActivity {
                                 DataHolder.room_numbers,
                                 DataHolder.day_numbers,
                                 "Paid");
-                        ref.child(uid).child("booking-history").push().setValue(history);
+                        ref.child(uid).child("booking-history").child(id).setValue(history);
                         showSuccessDialog();
                     } catch (Exception e) {
                         showFailDialog();

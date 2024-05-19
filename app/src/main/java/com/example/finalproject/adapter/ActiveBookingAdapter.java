@@ -1,5 +1,6 @@
 package com.example.finalproject.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import com.example.finalproject.booking.ViewDetailsActivity;
 import com.example.finalproject.model.BookingHistory;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,9 +50,11 @@ public class ActiveBookingAdapter extends RecyclerView.Adapter<ActiveBookingAdap
         return new HolderActiveBooking(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull HolderActiveBooking holder, int position) {
         BookingHistory bookingHistory = activeBookingList.get(position);
+        String id = bookingHistory.getId();
         String hotelID = bookingHistory.getHotel_id();
         Float Price = bookingHistory.getCost();
         String Status = bookingHistory.getStatus();
@@ -74,6 +78,8 @@ public class ActiveBookingAdapter extends RecyclerView.Adapter<ActiveBookingAdap
             holder.tvStatus.setBackgroundResource(R.drawable.shape_confirmed);
         } else if (Status.equals("Cancelled")) {
             holder.tvStatus.setBackgroundResource(R.drawable.shape_cancelled);
+            holder.tvCancel.setEnabled(false);
+            holder.tvCancel.setTextColor(R.color.Neutral_500);
         } else if (Status.equals("Completed")) {
             holder.tvStatus.setBackgroundResource(R.drawable.shape_completed);
         }
@@ -97,17 +103,17 @@ public class ActiveBookingAdapter extends RecyclerView.Adapter<ActiveBookingAdap
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int currentPosition = holder.getAdapterPosition();
+                        int currentPosition = holder.getBindingAdapterPosition();
                         if (currentPosition != RecyclerView.NO_POSITION) {
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("status", "Cancelled");
-                            DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("booking-history")
-                                    .child(String.valueOf(activeBookingList.get(currentPosition).getTime_stamp()));
+                            DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getUid()).child("booking-history").child(id);
                             bookingRef.updateChildren(hashMap)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            activeBookingList.get(currentPosition).setStatus("Cancelled");
+//                                            activeBookingList.get(currentPosition).setStatus("Cancelled");
                                             notifyItemChanged(currentPosition);
                                         }
                                     })

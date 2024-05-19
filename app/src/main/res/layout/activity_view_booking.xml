@@ -339,22 +339,6 @@
                     android:text="Phone numbers"
                     android:textColor="@color/Neutral_900"
                     android:textSize="13sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textSize="13sp"
-                    android:textColor="@color/Neutral_900"
-                    android:layout_marginEnd="4dp"/>
-                <TextView
-                    android:id="@+id/txtAddressBKDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Addres"
-                    android:textColor="@color/Neutral_900"
-                    android:textSize="13sp"
-                    android:lines="1" />
             </LinearLayout>
         </LinearLayout>
 
@@ -474,7 +458,7 @@
                 android:text="Lowest Price Guaranteed"
                 android:textSize="14sp"
                 android:textAlignment="textEnd"
-                android:textColor="@color/teal_500"
+                android:textColor="@color/Primary_500"
                 android:textStyle="bold"/>
         </LinearLayout>
 
@@ -497,7 +481,7 @@
                 android:drawableLeft="@drawable/baseline_monetization_on_24"
                 android:text=" Saving on this booking"
                 android:textSize="16sp"
-                android:textColor="@color/teal_500"
+                android:textColor="@color/Primary_500"
                 android:textStyle="bold"/>
 
             <TextView
@@ -508,7 +492,7 @@
                 android:text="VND 0"
                 android:textSize="16sp"
                 android:textAlignment="textEnd"
-                android:textColor="@color/teal_500"
+                android:textColor="@color/Primary_500"
                 android:textStyle="bold"/>
 
         </LinearLayout>
