@@ -114,7 +114,7 @@ public class ResultSearchActivity extends AppCompatActivity {
                                 txtNoResult.setText("Please grant location access so Toogo can help you find nearby hotels.");
                                 llNoResult.setVisibility(View.VISIBLE);
                                 break;
-                            } else if (hotel.getDistance() < 191.50) {
+                            } else if (hotel.getDistance() < 15) {
                                 recycleList.add(hotel);
                             }
                         } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {
@@ -355,7 +355,7 @@ public class ResultSearchActivity extends AppCompatActivity {
                                 txtNoResult.setText("Please grant location access so Toogo can help you find nearby hotels.");
                                 llNoResult.setVisibility(View.VISIBLE);
                                 break;
-                            } else if (hotel.getDistance() < 191.50) {
+                            } else if (hotel.getDistance() < 15) {
                                 boolean isNameMatched = !hotelName.isEmpty() && hotel.getHotelName().toLowerCase().contains(hotelName.toLowerCase());
                                 boolean isStarMatched = hotelStar.contains(hotel.getStarRating());
                                 if (isNameMatched && isStarMatched) {
