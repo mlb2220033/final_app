@@ -69,7 +69,7 @@
         android:paddingEnd="25dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtReviewPopular"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:hint="Enter your full name"

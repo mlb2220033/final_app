@@ -26,6 +26,7 @@ import com.example.finalproject.adapter.PopularAdapter;
 import com.example.finalproject.adapter.RecomAdapter;
 import com.example.finalproject.adapter.SliderAdapter;
 import com.example.finalproject.databinding.ActivityHomeBinding;
+import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.ItemsModel;
 import com.example.finalproject.model.RecomModel;
 import com.example.finalproject.model.SliderBanner;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends FireBaseActivity {
     private ActivityHomeBinding binding;
-    LinearLayout Profile, Favorite, Chat;
+    LinearLayout Profile, Favorite, Chat,Home;
     LinearLayout edtSearch;
     ImageView imgSearchAdvanced;
 
@@ -57,6 +58,7 @@ public class HomeActivity extends FireBaseActivity {
     }
 
     private void addViews() {
+        Home = findViewById(R.id.Home);
         Profile = findViewById(R.id.Profile);
         edtSearch = findViewById(R.id.edtSearch);
         imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
@@ -70,6 +72,13 @@ public class HomeActivity extends FireBaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ProfileMainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
             }
         });
 
@@ -89,24 +98,77 @@ public class HomeActivity extends FireBaseActivity {
         });
 
     }
-
     private void intitRecom() {
+        DatabaseReference recomRef = database.getReference("Recommends");
+        DatabaseReference hotelsRef = database.getReference("Hotels");
+        binding.progressBarItem.setVisibility(View.VISIBLE);
+        ArrayList<Hotel> hotelRecommendList = new ArrayList<>();
+
+        recomRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot recomSnapshot) {
+                if (recomSnapshot.exists()) {
+                    for (DataSnapshot recomHotel : recomSnapshot.getChildren()) {
+                        String hotelID = recomHotel.getKey();
+                        boolean isRecom = recomHotel.child("recom").getValue(Boolean.class);
+
+                        if (isRecom) {
+                            hotelsRef.child(hotelID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot hotelSnapshot) {
+                                    if (hotelSnapshot.exists()) {
+                                        Hotel hotel = hotelSnapshot.getValue(Hotel.class);
+                                        hotelRecommendList.add(hotel);
+                                        updateRecomHotelsList(hotelRecommendList);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
+            }
+        });
+    }
+
+    private void updateRecomHotelsList(ArrayList<Hotel> hotelRecommendList) {
+        if (!hotelRecommendList.isEmpty()) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
+            layoutManager.setOrientation(RecyclerView.VERTICAL);
+            binding.rvRecom.setLayoutManager(layoutManager);
+            binding.rvRecom.setAdapter(new RecomAdapter(hotelRecommendList));
+        }
+        binding.progressBarItem.setVisibility(View.INVISIBLE);
+    }
+
+
+
+    /*private void intitRecom() {
         DatabaseReference myRef= database.getReference("Recom");
         binding.progressBarItem.setVisibility(View.VISIBLE);
-        ArrayList<RecomModel> items = new ArrayList<>();
+        ArrayList<Hotel> hotelrec = new ArrayList<>();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     for(DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(RecomModel.class));
+                        hotelrec.add(issue.getValue(Hotel.class));
                     }
-                    if(!items.isEmpty()){
+                    if(!hotelrec.isEmpty()){
                         LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
                         layoutManager.setOrientation(RecyclerView.VERTICAL);
                         binding.recycleViewRecom.setLayoutManager(layoutManager);
-                        binding.recycleViewRecom.setAdapter(new RecomAdapter(items));
+                        binding.recycleViewRecom.setAdapter(new RecomAdapter(hotelrec));
                     }
                     binding.progressBarItem.setVisibility(View.INVISIBLE);
                 }
@@ -117,27 +179,68 @@ public class HomeActivity extends FireBaseActivity {
 
             }
         });
-    }
+    }*/
 
-    private void initPopular() {
+    /*private void initPopular() {
         DatabaseReference myReference= database.getReference("Items");
         binding.progressBarPopular.setVisibility(View.VISIBLE);
-        ArrayList<ItemsModel> items = new ArrayList<>();
+        ArrayList<Hotel> hotelPopularList = new ArrayList<>();
 
         myReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     for(DataSnapshot issue:snapshot.getChildren()){
-                        items.add(issue.getValue(ItemsModel.class));
+                        hotelPopularList.add(issue.getValue(Hotel.class));
                     }
-                    if(!items.isEmpty()){
+                    if(!hotelPopularList.isEmpty()){
                         LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
                         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                        binding.recycleViewPopular.setLayoutManager(layoutManager);
-                        binding.recycleViewPopular.setAdapter(new PopularAdapter(items));
+                        binding.rvPopular.setLayoutManager(layoutManager);
+                        binding.rvPopular.setAdapter(new PopularAdapter(hotelPopularList));
                     }
                     binding.progressBarPopular.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
+            }
+        });
+    }*/
+
+    private void initPopular() {
+        DatabaseReference popularRef = database.getReference("Populars");
+        DatabaseReference hotelsRef = database.getReference("Hotels");
+        binding.progressBarPopular.setVisibility(View.VISIBLE);
+        ArrayList<Hotel> hotelPopularList = new ArrayList<>();
+
+        popularRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot popularSnapshot) {
+                if (popularSnapshot.exists()) {
+                    for (DataSnapshot popularHotel : popularSnapshot.getChildren()) {
+                        String hotelID = popularHotel.getKey();
+                        boolean isPopular = popularHotel.child("popular").getValue(Boolean.class);
+
+                        if (isPopular) {
+                            hotelsRef.child(hotelID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot hotelSnapshot) {
+                                    if (hotelSnapshot.exists()) {
+                                        Hotel hotel = hotelSnapshot.getValue(Hotel.class);
+                                        hotelPopularList.add(hotel);
+                                        updatePopularHotelsList(hotelPopularList);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
+                                }
+                            });
+                        }
+                    }
                 }
             }
 
@@ -146,8 +249,16 @@ public class HomeActivity extends FireBaseActivity {
                 Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
             }
         });
+    }
 
-
+    private void updatePopularHotelsList(ArrayList<Hotel> hotelPopularList) {
+        if (!hotelPopularList.isEmpty()) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
+            layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            binding.rvPopular.setLayoutManager(layoutManager);
+            binding.rvPopular.setAdapter(new PopularAdapter(hotelPopularList));
+        }
+        binding.progressBarPopular.setVisibility(View.INVISIBLE);
     }
 
     private void initBanner() {

@@ -1,137 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@drawable/edt_background"
-    android:elevation="3dp">
+    android:elevation="3dp"
+    android:orientation="horizontal">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgPic"
-        android:layout_width="130dp"
-        android:layout_height="85dp"
+        android:layout_width="105dp"
+        android:layout_height="170dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:scaleType="centerCrop"
         android:src="@drawable/h_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="28dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/imgPic"
-        app:layout_constraintTop_toTopOf="@+id/imgPic"
-        app:srcCompat="@drawable/favorite" />
-
-    <TextView
-        android:id="@+id/txtType"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/light_blue_background"
-        android:gravity="center"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="TextView"
-        android:textColor="@color/Primary_700"
-        android:textSize="12dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imgPic"
-        app:layout_constraintTop_toTopOf="@+id/imgPic" />
-
-    <TextView
-        android:id="@+id/txtRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="5"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/txtType"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txtType" />
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="false"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:rating="3"
-        android:stepSize="0.1"
-        android:progressTint="@color/Semantic_500"
-        style="@android:style/Widget.DeviceDefault.RatingBar.Small"
-        app:layout_constraintBottom_toBottomOf="@+id/txtRating"
-        app:layout_constraintEnd_toStartOf="@+id/txtRating"
-        app:layout_constraintTop_toTopOf="@+id/txtRating" />
-
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="title"
-        android:textColor="@color/Neutral_900"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtType"
-        app:layout_constraintTop_toBottomOf="@+id/txtType" />
-
-    <ImageView
-        android:id="@+id/imageView17"
-        android:layout_width="29dp"
-        android:layout_height="27dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_location"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
-        app:tint="#534C4C" />
-
-    <TextView
-        android:id="@+id/txtAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="address"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView17"
-        app:layout_constraintStart_toEndOf="@id/imageView17"
-        app:layout_constraintTop_toTopOf="@id/imageView17" />
-
-    <TextView
-        android:id="@+id/txtPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="$0"
-        android:textColor="@color/Primary_500"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView21"
-        app:layout_constraintEnd_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="/ Day"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/txtAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtAddress" />
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtHotelName"
+                android:layout_width="201dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="Hotel Name"
+                android:textColor="@color/Neutral_900"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageStarRating"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/txtStarRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_location"
+                app:tint="@color/Neutral_500" />
+
+            <TextView
+                android:id="@+id/txtHotelAddress"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:lineSpacingExtra="3dp"
+                android:text="Hotel Address"
+                android:textColor="@color/Neutral_900"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="0.00"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/Neutral_900" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtPricePerNight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price per night"
+                android:textColor="@color/Primary_500"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text=" / Day"
+                android:textColor="@color/Neutral_900"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

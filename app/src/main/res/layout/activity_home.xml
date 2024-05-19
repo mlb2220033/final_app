@@ -390,7 +390,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleViewPopular"
+                    android:id="@+id/rvPopular"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
@@ -450,7 +450,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleViewRecom"
+                    android:id="@+id/rvRecom"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"

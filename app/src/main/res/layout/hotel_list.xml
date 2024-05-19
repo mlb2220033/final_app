@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="13dp"
-    android:background="@drawable/selector_background"
+    android:background="@drawable/edt_background"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -90,7 +90,7 @@
                     android:lineSpacingExtra="3dp"
                     android:text="Hotel Address"
                     android:textColor="@color/Neutral_900"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:text="Price per night"
             android:textColor="@color/Primary_500"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -142,7 +142,7 @@
             android:layout_marginEnd="10dp"
             android:text=" / Day"
             android:textColor="@color/Neutral_900"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/txtDistance"
