@@ -116,19 +116,19 @@ public class RatingHotelActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your comment", Toast.LENGTH_SHORT).show();
             binding.edtComment.setError("Comment is required");
             binding.edtComment.requestFocus();
-        } else if (userName.length() < 2 || userName.length() > 12) {
-            Toast.makeText(this, "Name length should be between 2 and 10 characters", Toast.LENGTH_SHORT).show();
+        } else if (userName.length() < 5) {
+            Toast.makeText(this, "Name length should be at least 5 characters", Toast.LENGTH_SHORT).show();
             binding.edtUserName.setError("Fill Available User Name");
             binding.edtUserName.requestFocus();
-        } else if (comment.length() < 2 || comment.length() > 25) {
-            Toast.makeText(this, "Evaluation length should be between 2 and 25 characters", Toast.LENGTH_SHORT).show();
+        } else if (comment.length() < 5) {
+            Toast.makeText(this, "Evaluation length should be at least 5 characters", Toast.LENGTH_SHORT).show();
             binding.edtComment.setError("Fill Available Comment");
             binding.edtComment.requestFocus();
         } else if (rating == 0) {
             Toast.makeText(this, "Please select a rating", Toast.LENGTH_SHORT).show();
         } else {
             addRatingToDatabase();
-            startActivity(new Intent(RatingHotelActivity.this, ReviewHotelActivity.class ));
+            startActivity(new Intent(RatingHotelActivity.this, ReviewHotelActivity.class));
         }
     }
 

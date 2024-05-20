@@ -95,10 +95,16 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ratingArrayRvList = new ArrayList<>();
+                int count = 0;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Rating rating = dataSnapshot.getValue(Rating.class);
-                    if (rating != null) {
-                        ratingArrayRvList.add(rating);
+                    if (count < 2) {
+                        Rating rating = dataSnapshot.getValue(Rating.class);
+                        if (rating != null) {
+                            ratingArrayRvList.add(rating);
+                            count++;
+                        }
+                    } else {
+                        break;
                     }
                 }
                 reviewHotelAdapter = new ReviewHotelAdapter(HotelDetailActivity.this, ratingArrayRvList);
@@ -110,8 +116,8 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
                 Log.e("Firebase", "Error loading ratings: " + error.getMessage());
             }
         });
-
     }
+
 
     private void loadAverageRating() {
         DatabaseReference reference = firebaseDatabase.getReference("Hotels").child(hotelID).child("Ratings");
@@ -136,15 +142,12 @@ public class HotelDetailActivity extends AppCompatActivity implements OnMapReady
                     reviewHotelAdapter.notifyDataSetChanged();
                 }
 
-                // Calculate average star rating
                 float averageRating = totalRatings > 0 ? totalStars / totalRatings : 0;
-                // Update txtStarRating
                 txtStarReview.setText(String.format("%.1f", averageRating));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error loading ratings: " + error.getMessage());
             }
         });
     }
