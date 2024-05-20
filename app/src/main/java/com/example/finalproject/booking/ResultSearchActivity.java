@@ -114,7 +114,7 @@ public class ResultSearchActivity extends AppCompatActivity {
                                 txtNoResult.setText("Please grant location access so Toogo can help you find nearby hotels.");
                                 llNoResult.setVisibility(View.VISIBLE);
                                 break;
-                            } else if (hotel.getDistance() < 15) {
+                            } else if (hotel.getDistance() < 200) {
                                 recycleList.add(hotel);
                             }
                         } else if (hotel.getHotelAddress().toLowerCase().contains(Location.toLowerCase())) {

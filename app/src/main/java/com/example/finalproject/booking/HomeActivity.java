@@ -37,6 +37,7 @@ import com.example.finalproject.model.ItemsModel;
 import com.example.finalproject.model.RecomModel;
 import com.example.finalproject.model.SliderBanner;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -114,6 +115,7 @@ public class HomeActivity extends FireBaseActivity {
 
         edtSearch = findViewById(R.id.edtSearch);
         imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
     }
