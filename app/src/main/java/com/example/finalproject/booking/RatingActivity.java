@@ -2,6 +2,7 @@ package com.example.finalproject.booking;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,13 +17,6 @@ import com.example.finalproject.R;
 
 public class RatingActivity extends Dialog {
 
-/*        // Chừng sau khi tới phần ai làm cần đánh giá thì thêm void RatingBarDialog() vào cái trang Main mình cần dùng nha
-    private void RatingBarDialog() {
-        RatingActivity ratingActivity=new RatingActivity(MainActivity.this);
-        ratingActivity.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-        ratingActivity.setCancelable(false);
-        ratingActivity.show();
-    }*/
     private float userRate = 0;
 
     public RatingActivity(@NonNull Context context) {
@@ -43,9 +37,12 @@ public class RatingActivity extends Dialog {
         btnRateNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Xử lý khi người dùng ấn Rate Now
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                getContext().startActivity(intent);
+                dismiss();
             }
         });
+
         btnLater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

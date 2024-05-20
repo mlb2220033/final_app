@@ -1,6 +1,9 @@
 package com.example.finalproject.booking;
 
+import static com.example.finalproject.model.DataHolder.hotel_id;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,13 +27,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.PaymentMethodAdapter;
-import com.example.finalproject.adapter.PopularAdapter;
 import com.example.finalproject.model.BankingBrand;
 import com.example.finalproject.model.BookingHistory;
+import com.example.finalproject.model.Constants;
 import com.example.finalproject.model.DataHolder;
-import com.example.finalproject.model.ImageGalleryItem;
 import com.example.finalproject.model.PaymentMethod;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,9 +47,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Payment2Activity extends AppCompatActivity {
     CardView cardvCard, cardvEwallet, cardvBank;
@@ -60,6 +70,7 @@ public class Payment2Activity extends AppCompatActivity {
 
     // Biến để lưu trữ CardView được chọn hiện tại
     CardView selectedCardView;
+    private String bookingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +102,10 @@ public class Payment2Activity extends AppCompatActivity {
         txtCardCre = findViewById(R.id.txtCardCre);
         txtEwallet = findViewById(R.id.txtEwallet);
         txtBank = findViewById(R.id.txtBank);
+
+
+
+
 
         // Credit/Debit
         cardvCard.setOnClickListener(new View.OnClickListener() {
@@ -355,7 +370,7 @@ public class Payment2Activity extends AppCompatActivity {
         Button btnConfirm = findViewById(R.id.btnUpdate);
 
         // Set click listener for btnConfirm
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
+        /*btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (DataHolder.paymentMethod != null) {
@@ -382,8 +397,45 @@ public class Payment2Activity extends AppCompatActivity {
                     Toast.makeText(Payment2Activity.this, "You need to choose a payment method", Toast.LENGTH_SHORT).show();
                 }
             }
+        });*/
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DataHolder.paymentMethod != null) {
+                    try {
+                        ref = db.getReference("Users");
+                        String uid = auth.getUid();
+                        Long currentTime = Calendar.getInstance().getTimeInMillis();
+                        String id = currentTime.toString();
+                        BookingHistory history = new BookingHistory(id, DataHolder.hotel_id,
+                                DataHolder.type_room,
+                                DataHolder.total_cost,
+                                currentTime,
+                                DataHolder.check_in,
+                                DataHolder.check_out,
+                                DataHolder.room_numbers,
+                                DataHolder.day_numbers,
+                                "Paid");
+                        ref.child(uid).child("booking-history").child(id).setValue(history);
+
+                        // Call prepareNotificationMessage to send FCM notification
+
+
+                        showSuccessDialog();
+                    } catch (Exception e) {
+                        showFailDialog();
+                    }
+                } else {
+                    Toast.makeText(Payment2Activity.this, "You need to choose a payment method", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
+
     }
+
+
+
 
     // Phương thức để thiết lập lại trạng thái của các CardView khi có một CardView mới được chọn
     private void resetCardView() {
@@ -405,30 +457,70 @@ public class Payment2Activity extends AppCompatActivity {
         }
     }
 
+    private void RatingBarDialog() {
+        RatingActivity ratingActivity=new RatingActivity(Payment2Activity.this);
+        ratingActivity.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        ratingActivity.setCancelable(false);
+        ratingActivity.show();
+    }
+
+    private static final String PREFS_NAME = "prefs";
+    private static final String KEY_HAS_SHOWN_RATING_DIALOG = "has_shown_rating_dialog";
+
+    private boolean hasShownRatingDialog() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return preferences.getBoolean(KEY_HAS_SHOWN_RATING_DIALOG, false);
+    }
+
+    private void setHasShownRatingDialog() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(KEY_HAS_SHOWN_RATING_DIALOG, true);
+        editor.apply();
+    }
+
+
     private void showSuccessDialog() {
 
-        ConstraintLayout DialogSuccessPayment= findViewById(R.id.DialogSuccessPayment);
+        ConstraintLayout DialogSuccessPayment = findViewById(R.id.DialogSuccessPayment);
         View view  = LayoutInflater.from(Payment2Activity.this).inflate(R.layout.successful_payment, DialogSuccessPayment);
         Button successDone = view.findViewById(R.id.SuccessDone);
+        TextView linkMyBooking = view.findViewById(R.id.LinkMyBooking);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Payment2Activity.this);
         builder.setView(view);
-        final  AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
+
+        linkMyBooking.findViewById(R.id.LinkMyBooking).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(Payment2Activity.this, MyBookingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         successDone.findViewById(R.id.SuccessDone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(Payment2Activity.this, HomeActivity.class);
-                startActivity(intent);
+                if (!hasShownRatingDialog()) {
+                    RatingBarDialog();
+                    setHasShownRatingDialog();
+                }
+                else {
+                    Intent intent = new Intent(Payment2Activity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
-        if(alertDialog != null){
+        if (alertDialog != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
         }
         alertDialog.show();
     }
+
 
     private void showFailDialog() {
         ConstraintLayout DialogFailPayment = findViewById(R.id.DialogFailPayment);

@@ -19,6 +19,7 @@
         android:theme="@style/Theme.FinalProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
+
         <activity
             android:name=".booking.FavoriteListActivity"
             android:exported="false" />
@@ -128,6 +129,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/my_map_api_key" />
+
+        <service
+            android:name=".booking.MyFirebaseMessaging"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

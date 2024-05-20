@@ -3,31 +3,40 @@ package com.example.finalproject.booking;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 import com.bumptech.glide.Glide;
 import com.example.finalproject.R;
 import com.example.finalproject.databinding.ActivityHomeBinding;
 import com.example.finalproject.databinding.ActivityProfileMainBinding;
+import com.example.finalproject.model.Constants;
 import com.example.finalproject.model.MyUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +53,16 @@ public class ProfileMainActivity extends FireBaseActivity {
     private ProgressDialog progressDialog;
 
     private ImageView btnBack, imgVHome;
+    private TextView tvNotificationStatus;
+    private SwitchCompat fcmSwitch;
+    private static final String enabledMessage = "Notifications are enabled";
+    private static final String disabledMessage = "Notifications are disabled";
 
+
+    private FirebaseAuth firebaseAuth;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
+    private boolean isChecked = false;
     RelativeLayout relaProfile, relaLogout,relaShare,relaChangePwd,relaMyBooking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +70,92 @@ public class ProfileMainActivity extends FireBaseActivity {
         binding=ActivityProfileMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
+        tvNotificationStatus = findViewById(R.id.tvNotificationStatus);
+        fcmSwitch = findViewById(R.id.fcmSwitch);
+        
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //init shared preferences
+        sp = getSharedPreferences( "SETTINGS_SP", MODE_PRIVATE) ;
+
+        //check last selected option; true/false
+        isChecked = sp.getBoolean( "FCM_ENABLED",false);
+        fcmSwitch.setChecked(isChecked);
+        if (isChecked){
+            //was enable
+            tvNotificationStatus.setText(enabledMessage);
+        } else {
+            //was disable
+            tvNotificationStatus.setText(disabledMessage);
+        }
+
+        //add switch check change listener to enable disable notifications
+        fcmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    //checked, enable notifications
+                    subscribeToTopic();
+                } else {
+                    //unchecked, disable notifications
+                    unSubscribeToTopic();
+                }
+            }
+        });
+
         addViews();
         addEvents();
         loadMyInfo();
+    }
+
+    private void subscribeToTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //subscribed successfully
+                        //save setting ins shared preferences
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED",true);
+                        spEditor.apply();
+
+                        Toast.makeText( ProfileMainActivity.this, ""+enabledMessage, Toast.LENGTH_SHORT).show();
+                        tvNotificationStatus.setText(enabledMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //failed subscribing
+                        Toast.makeText(ProfileMainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void unSubscribeToTopic() {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.FCM_TOPIC)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //unsubscribed
+                        spEditor = sp.edit();
+                        spEditor.putBoolean("FCM_ENABLED",false);
+                        spEditor.apply();
+
+                        Toast.makeText( ProfileMainActivity.this, ""+disabledMessage, Toast.LENGTH_SHORT).show();
+                        tvNotificationStatus.setText(disabledMessage);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //failed unsubscribing
+                        Toast.makeText(ProfileMainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loadMyInfo() {

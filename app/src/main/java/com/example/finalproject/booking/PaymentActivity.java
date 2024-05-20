@@ -153,7 +153,7 @@ public class PaymentActivity extends AppCompatActivity {
         discounts = new ArrayList<>();
     }
 
-    private void getHotelSelected() {
+    /*private void getHotelSelected() {
         ref = db.getReference("Hotels");
         ref.child(DataHolder.hotel_id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -166,7 +166,29 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             }
         });
+    }*/
+    private void getHotelSelected() {
+        if (DataHolder.hotel_id != null) {
+            ref = db.getReference("Hotels");
+            ref.child(DataHolder.hotel_id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        hotel = task.getResult().getValue(Hotel.class);
+                        // Move the code depending on the hotel object inside this block
+                        getRoomSelected(); // Call getRoomSelected after hotel is retrieved
+                    }
+                }
+            });
+        } else {
+            Log.e("Firebase", "Hotel ID is null");
+        }
     }
+
+
 
     private void getRoomSelected() {
         edtCheckIn.setText(convertDateFromTimeStamp(DataHolder.check_in));
@@ -238,10 +260,21 @@ public class PaymentActivity extends AppCompatActivity {
         txtNightNumbers.setText(String.format("%.0f", date_count) + " nights");
     }
 
-    private String convertDateFromTimeStamp(Long time) {
+    /*private String convertDateFromTimeStamp(Long time) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(time);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return dateFormat.format(calendar.getTime());
+    }*/
+    private String convertDateFromTimeStamp(Long time) {
+        if (time != null) {
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            calendar.setTimeInMillis(time);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            return dateFormat.format(calendar.getTime());
+        } else {
+            return "Invalid Date";
+        }
     }
+
 }

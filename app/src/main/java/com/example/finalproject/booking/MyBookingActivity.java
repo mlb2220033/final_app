@@ -9,17 +9,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.ActiveBookingAdapter;
 import com.example.finalproject.adapter.HistoryBookingAdapter;
 import com.example.finalproject.databinding.ActivityMyBookingBinding;
 import com.example.finalproject.model.BookingHistory;
 import com.example.finalproject.model.BookingHistoryComparator;
+import com.example.finalproject.model.Constants;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,11 +32,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MyBookingActivity extends FireBaseActivity {
-    /*private ActivityMyBookingBinding binding;
+    private ActivityMyBookingBinding binding;
     private static final String TAG ="MY_BOOKING_TAG";
 
     private TextView tabActive, tabHistory;
@@ -56,6 +63,8 @@ public class MyBookingActivity extends FireBaseActivity {
         showActiveBooking();
         addEvents();
     }
+
+    
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -223,151 +232,6 @@ public class MyBookingActivity extends FireBaseActivity {
         tabHistory.setTextColor(getResources().getColor(R.color.Neutral_100));
         tabHistory.setBackgroundColor(Color.parseColor("#25FFFFFF"));
     }
-}*/
-
-    private ActivityMyBookingBinding binding;
-    private static final String TAG = "MY_BOOKING_TAG";
-
-    private TextView tabActive, tabHistory;
-    private ImageView btnBack;
-
-    private RelativeLayout activeRL, historyRL;
-    private RecyclerView rvActive, rvHistory;
-
-    private ArrayList<BookingHistory> bookingList = new ArrayList<>();
-    private ArrayList<BookingHistory> historyList = new ArrayList<>();
-
-    private ActiveBookingAdapter activeBookingAdapter;
-    private HistoryBookingAdapter historyBookingAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityMyBookingBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        addViews();
-        checkUser();
-        showActiveBooking();
-        addEvents();
-
-    }
-
-    private void checkUser() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) {
-            startActivity(new Intent(MyBookingActivity.this, LoginActivity.class));
-            finish();
-        } else {
-            loadMyInfo();
-        }
-    }
-
-    private void loadMyInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            loadBookings();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e(TAG, "Failed to load user info: " + error.getMessage());
-                    }
-                });
-    }
-
-    private void loadBookings() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
-                .child(firebaseAuth.getUid()).child("booking-history");
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bookingList.clear();
-                historyList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    BookingHistory bookingHistory = ds.getValue(BookingHistory.class);
-                    if (bookingHistory != null) {
-                        if (bookingHistory.getStatus().equals("Completed")) {
-                            historyList.add(bookingHistory);
-                        } else if (bookingHistory.getStatus().equals("Paid") ||
-                                bookingHistory.getStatus().equals("Confirmed") ||
-                                bookingHistory.getStatus().equals("Cancelled")) {
-                            bookingList.add(bookingHistory);
-                        }
-                    }
-                }
-                Collections.sort(bookingList, new BookingHistoryComparator());
-                Collections.sort(historyList, new BookingHistoryComparator());
-
-                setupActiveRecyclerView();
-                setupHistoryRecyclerView();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Failed to load bookings: " + error.getMessage());
-            }
-        });
-    }
-
-    private void setupActiveRecyclerView() {
-        activeBookingAdapter = new ActiveBookingAdapter(MyBookingActivity.this, bookingList);
-        rvActive.setAdapter(activeBookingAdapter);
-        rvActive.setLayoutManager(new LinearLayoutManager(MyBookingActivity.this));
-    }
-
-    private void setupHistoryRecyclerView() {
-        historyBookingAdapter = new HistoryBookingAdapter(MyBookingActivity.this, historyList);
-        rvHistory.setAdapter(historyBookingAdapter);
-        rvHistory.setLayoutManager(new LinearLayoutManager(MyBookingActivity.this));
-    }
-
-    private void addViews() {
-        tabActive = findViewById(R.id.tvViewDetail);
-        tabHistory = findViewById(R.id.tabHistory);
-        activeRL = findViewById(R.id.activeRL);
-        historyRL = findViewById(R.id.historyRL);
-        rvActive = findViewById(R.id.rvActive);
-        rvHistory = findViewById(R.id.rvHistory);
-        btnBack = findViewById(R.id.btnBack);
-    }
-
-    private void addEvents() {
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(MyBookingActivity.this, ProfileMainActivity.class);
-            startActivity(intent);
-        });
-
-        tabActive.setOnClickListener(v -> showActiveBooking());
-
-        tabHistory.setOnClickListener(v -> showHistoryBooking());
-    }
-
-    private void showHistoryBooking() {
-        historyRL.setVisibility(View.VISIBLE);
-        activeRL.setVisibility(View.GONE);
-
-        tabHistory.setTextColor(getResources().getColor(R.color.black));
-        tabHistory.setBackgroundResource(R.drawable.shape_mybooking1);
-
-        tabActive.setTextColor(getResources().getColor(R.color.Neutral_100));
-        tabActive.setBackgroundColor(Color.parseColor("#25FFFFFF"));
-    }
-
-    private void showActiveBooking() {
-        activeRL.setVisibility(View.VISIBLE);
-        historyRL.setVisibility(View.GONE);
-
-        tabActive.setTextColor(getResources().getColor(R.color.black));
-        tabActive.setBackgroundResource(R.drawable.shape_mybooking1);
-
-        tabHistory.setTextColor(getResources().getColor(R.color.Neutral_100));
-        tabHistory.setBackgroundColor(Color.parseColor("#25FFFFFF"));
-    }
 }
+
+

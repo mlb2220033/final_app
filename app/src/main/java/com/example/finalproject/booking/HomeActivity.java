@@ -1,30 +1,24 @@
 package com.example.finalproject.booking;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
-
 
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.PopularAdapter;
@@ -33,8 +27,6 @@ import com.example.finalproject.adapter.SliderAdapter;
 import com.example.finalproject.databinding.ActivityHomeBinding;
 import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
-import com.example.finalproject.model.ItemsModel;
-import com.example.finalproject.model.RecomModel;
 import com.example.finalproject.model.SliderBanner;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,17 +35,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends FireBaseActivity {
+public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     LinearLayout Profile, Favorite, Chat, Home;
     LinearLayout edtSearch;
     ImageView imgSearchAdvanced;
     int REQUEST_LOCATION = 1;
     FusedLocationProviderClient fusedLocationClient;
+    FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +55,19 @@ public class HomeActivity extends FireBaseActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Initialize Firebase database
+        database = FirebaseDatabase.getInstance();
+
+        // Initialize FusedLocationProviderClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         initBanner();
         initPopular();
-        intitRecom();
+        initRecom();
         addViews();
         addEvents();
         getUserLocation();
-
     }
-
 
     private void getUserLocation() {
         if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -94,6 +91,8 @@ public class HomeActivity extends FireBaseActivity {
 
                                 DataHolder.longitude = String.valueOf(longitude);
                                 DataHolder.latitude = String.valueOf(latitude);
+                            } else {
+                                Toast.makeText(HomeActivity.this, "Unable to get last location", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -105,6 +104,8 @@ public class HomeActivity extends FireBaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             getLastLocation();
+        } else {
+            Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -115,9 +116,6 @@ public class HomeActivity extends FireBaseActivity {
 
         edtSearch = findViewById(R.id.edtSearch);
         imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
     }
 
     private void addEvents() {
@@ -135,6 +133,7 @@ public class HomeActivity extends FireBaseActivity {
                 recreate();
             }
         });
+
         Favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +149,7 @@ public class HomeActivity extends FireBaseActivity {
                 startActivity(intent);
             }
         });
+
         imgSearchAdvanced.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,9 +157,9 @@ public class HomeActivity extends FireBaseActivity {
                 startActivity(intent);
             }
         });
-
     }
-    private void intitRecom() {
+
+    private void initRecom() {
         DatabaseReference recomRef = database.getReference("Recommends");
         DatabaseReference hotelsRef = database.getReference("Hotels");
         binding.progressBarItem.setVisibility(View.VISIBLE);
@@ -210,65 +210,6 @@ public class HomeActivity extends FireBaseActivity {
         }
         binding.progressBarItem.setVisibility(View.INVISIBLE);
     }
-
-
-
-    /*private void intitRecom() {
-        DatabaseReference myRef= database.getReference("Recom");
-        binding.progressBarItem.setVisibility(View.VISIBLE);
-        ArrayList<Hotel> hotelrec = new ArrayList<>();
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot issue:snapshot.getChildren()){
-                        hotelrec.add(issue.getValue(Hotel.class));
-                    }
-                    if(!hotelrec.isEmpty()){
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
-                        layoutManager.setOrientation(RecyclerView.VERTICAL);
-                        binding.recycleViewRecom.setLayoutManager(layoutManager);
-                        binding.recycleViewRecom.setAdapter(new RecomAdapter(hotelrec));
-                    }
-                    binding.progressBarItem.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
-
-    /*private void initPopular() {
-        DatabaseReference myReference= database.getReference("Items");
-        binding.progressBarPopular.setVisibility(View.VISIBLE);
-        ArrayList<Hotel> hotelPopularList = new ArrayList<>();
-
-        myReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot issue:snapshot.getChildren()){
-                        hotelPopularList.add(issue.getValue(Hotel.class));
-                    }
-                    if(!hotelPopularList.isEmpty()){
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(HomeActivity.this);
-                        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                        binding.rvPopular.setLayoutManager(layoutManager);
-                        binding.rvPopular.setAdapter(new PopularAdapter(hotelPopularList));
-                    }
-                    binding.progressBarPopular.setVisibility(View.INVISIBLE);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
-            }
-        });
-    }*/
 
     private void initPopular() {
         DatabaseReference popularRef = database.getReference("Populars");
@@ -323,18 +264,18 @@ public class HomeActivity extends FireBaseActivity {
     }
 
     private void initBanner() {
-        DatabaseReference myReference= database.getReference("Banner");
+        DatabaseReference myReference = database.getReference("Banner");
         binding.progressBarBanner.setVisibility(View.VISIBLE);
         ArrayList<SliderBanner> items = new ArrayList<>();
         myReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot issue:snapshot.getChildren()){
+                if (snapshot.exists()) {
+                    for (DataSnapshot issue : snapshot.getChildren()) {
                         items.add(issue.getValue(SliderBanner.class));
                     }
                     banners(items);
-                    binding.progressBarBanner.setVisibility(View.VISIBLE);
+                    binding.progressBarBanner.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -343,21 +284,18 @@ public class HomeActivity extends FireBaseActivity {
                 Log.e("Firebase", "Data retrieval cancelled: " + error.getMessage());
             }
         });
-
-
     }
-    private void banners(ArrayList<SliderBanner> items){
-        binding.viewpagerSlider.setAdapter(new SliderAdapter(items,binding.viewpagerSlider));
+
+    private void banners(ArrayList<SliderBanner> items) {
+        binding.viewpagerSlider.setAdapter(new SliderAdapter(items, binding.viewpagerSlider));
         binding.viewpagerSlider.setClipToPadding(false);
         binding.viewpagerSlider.setClipChildren(false);
         binding.viewpagerSlider.setOffscreenPageLimit(5);
         binding.viewpagerSlider.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
-        CompositePageTransformer compositePageTransformer=new CompositePageTransformer();
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(40));
 
         binding.viewpagerSlider.setPageTransformer(compositePageTransformer);
-
-
     }
 }

@@ -66,7 +66,7 @@
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
-                        android:layout_width="235dp"
+                        android:layout_width="211dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:layout_marginStart="16dp"
@@ -424,6 +424,7 @@
                             android:src="@drawable/ic_bell_pro" />
 
                         <TextView
+                            android:id="@+id/tvNotificationStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -434,6 +435,7 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/fcmSwitch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
