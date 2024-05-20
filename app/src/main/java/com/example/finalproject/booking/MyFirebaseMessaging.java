@@ -15,12 +15,22 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.finalproject.R;
+import com.example.finalproject.model.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService {
@@ -137,112 +147,112 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
 
 
-    /*private void prepareNotificationMessage(String id, String message) {
-        // Prepare data for notification
-        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
-        String NOTIFICATION_TITLE = "Your Booking: " + id;
-        String NOTIFICATION_MESSAGE = message;
-        String NOTIFICATION_TYPE = "BookingStatusChanged";
-
-        // Prepare JSON (what and where to send)
-        JSONObject notificationJo = new JSONObject();
-        JSONObject notificationBodyJo = new JSONObject();
-        try {
-            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
-            notificationBodyJo.put("sellerUid", firebaseAuth.getUid());
-            notificationBodyJo.put("orderId", id);
-            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
-            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
-
-            notificationJo.put("to", NOTIFICATION_TOPIC);
-            notificationJo.put("data", notificationBodyJo);
-        } catch (Exception e) {
-            Toast.makeText(this, "Failed to prepare notification: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        sendFcmNotification(notificationJo);
-    }
-
-    private void sendFcmNotification(JSONObject notificationJo) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
-                response -> {
-                    // Notification sent
-                },
-                error -> {
-                    // Notification failed
-                    Toast.makeText(DashboardAdminActivity.this, "Failed to send notification: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-
-        Volley.newRequestQueue(this).add(jsonObjectRequest);
-    }
-
-
-
-    private void prepareNotificationMessage(String id){
-        // when change status Paid, Cancelled, Completed, send notification to user
-
-        //Prepare data for notification
-        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
-        String NOTIFICATION_TITLE = "New Booking: " + hotel_id;
-        String NOTIFICATION_MESSAGE = "Congratulation...! You have new Booking.";
-        String NOTIFICATION_TYPE = "NewBooking";
-
-
-        //prepare json (what and where send)
-        JSONObject notificationJo = new JSONObject();
-        JSONObject notificationBodyJo = new JSONObject();
-        try {
-            //What
-
-            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
-            notificationBodyJo.put("buyerUid", auth.getUid());
-            notificationBodyJo.put("sellerUid", hotel_id);
-            notificationBodyJo.put("orderId",id);
-            notificationBodyJo.put("notificationTitle",NOTIFICATION_TITLE);
-            notificationBodyJo.put("notificationMessage",NOTIFICATION_MESSAGE);
-
-            //where
-            notificationJo.put("to", NOTIFICATION_TOPIC); // to all who sub to this topic
-            notificationJo.put("data", notificationBodyJo);
-        } catch (Exception e){
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        sendFcmNoNotification(notificationJo, id);
-    }
-
-    private void sendFcmNoNotification(JSONObject notificationJo, String id) {
-        //send volley request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                // after sending fcm start MyBookingActivity
-                Intent intent = new Intent(Payment2Activity.this, MyBookingActivity.class);
-                intent.putExtra("bookingTo", hotel_id);
-                intent.putExtra("bookingId", id);
-                intent.putExtra("bookingBy", auth.getUid());
-                startActivity(intent);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                //if failed sending fcm, still start payment2activity
-                Intent intent = new Intent(Payment2Activity.this, MyBookingActivity.class);
-                intent.putExtra("bookingTo", hotel_id);
-                intent.putExtra("bookingId", id);
-                startActivity(intent);
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                // put required headers
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "key="+Constants.FCM_KEY);
-                return headers;
-            }
-        };
-        // enque the volley request
-        Volley.newRequestQueue(this).add(jsonObjectRequest);
-    }*/
+//    private void prepareNotificationMessage(String id, String message) {
+//        // Prepare data for notification
+//        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
+//        String NOTIFICATION_TITLE = "Your Booking: " + id;
+//        String NOTIFICATION_MESSAGE = message;
+//        String NOTIFICATION_TYPE = "BookingStatusChanged";
+//
+//        // Prepare JSON (what and where to send)
+//        JSONObject notificationJo = new JSONObject();
+//        JSONObject notificationBodyJo = new JSONObject();
+//        try {
+//            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+//            notificationBodyJo.put("sellerUid", firebaseAuth.getUid());
+//            notificationBodyJo.put("orderId", id);
+//            notificationBodyJo.put("notificationTitle", NOTIFICATION_TITLE);
+//            notificationBodyJo.put("notificationMessage", NOTIFICATION_MESSAGE);
+//
+//            notificationJo.put("to", NOTIFICATION_TOPIC);
+//            notificationJo.put("data", notificationBodyJo);
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Failed to prepare notification: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//        sendFcmNotification(notificationJo);
+//    }
+//
+//    private void sendFcmNotification(JSONObject notificationJo) {
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo,
+//                response -> {
+//                    // Notification sent
+//                },
+//                error -> {
+//                    // Notification failed
+//                    Toast.makeText(DashboardAdminActivity.this, "Failed to send notification: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                });
+//
+//        Volley.newRequestQueue(this).add(jsonObjectRequest);
+//    }
+//
+//
+//
+//    private void prepareNotificationMessage(String id){
+//        // when change status Paid, Cancelled, Completed, send notification to user
+//
+//        //Prepare data for notification
+//        String NOTIFICATION_TOPIC = "/topics/" + Constants.FCM_TOPIC;
+//        String NOTIFICATION_TITLE = "New Booking: " + hotel_id;
+//        String NOTIFICATION_MESSAGE = "Congratulation...! You have new Booking.";
+//        String NOTIFICATION_TYPE = "NewBooking";
+//
+//
+//        //prepare json (what and where send)
+//        JSONObject notificationJo = new JSONObject();
+//        JSONObject notificationBodyJo = new JSONObject();
+//        try {
+//            //What
+//
+//            notificationBodyJo.put("notificationType", NOTIFICATION_TYPE);
+//            notificationBodyJo.put("buyerUid", auth.getUid());
+//            notificationBodyJo.put("sellerUid", hotel_id);
+//            notificationBodyJo.put("orderId",id);
+//            notificationBodyJo.put("notificationTitle",NOTIFICATION_TITLE);
+//            notificationBodyJo.put("notificationMessage",NOTIFICATION_MESSAGE);
+//
+//            //where
+//            notificationJo.put("to", NOTIFICATION_TOPIC); // to all who sub to this topic
+//            notificationJo.put("data", notificationBodyJo);
+//        } catch (Exception e){
+//            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//        sendFcmNoNotification(notificationJo, id);
+//    }
+//
+//    private void sendFcmNoNotification(JSONObject notificationJo, String id) {
+//        //send volley request
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJo, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                // after sending fcm start MyBookingActivity
+////                Intent intent = new Intent(Payment2Activity.this, MyBookingActivity.class);
+//                intent.putExtra("bookingTo", hotel_id);
+//                intent.putExtra("bookingId", id);
+//                intent.putExtra("bookingBy", auth.getUid());
+//                startActivity(intent);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                //if failed sending fcm, still start payment2activity
+////                Intent intent = new Intent(Payment2Activity.this, MyBookingActivity.class);
+//                intent.putExtra("bookingTo", hotel_id);
+//                intent.putExtra("bookingId", id);
+//                startActivity(intent);
+//            }
+//        }){
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                // put required headers
+//                Map<String, String> headers = new HashMap<>();
+//                headers.put("Content-Type", "application/json");
+//                headers.put("Authorization", "key="+ Constants.FCM_KEY);
+//                return headers;
+//            }
+//        };
+//        // enque the volley request
+//        Volley.newRequestQueue(this).add(jsonObjectRequest);
+//    }
 }
 
 
