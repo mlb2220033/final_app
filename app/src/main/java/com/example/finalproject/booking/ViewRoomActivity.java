@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ViewRoomActivity extends AppCompatActivity {
     RecyclerView rvRoom;
@@ -74,8 +75,10 @@ public class ViewRoomActivity extends AppCompatActivity {
             @Override
             public void onPositiveButtonClick(Pair<Long, Long> selection) {
                 long currentTime = System.currentTimeMillis();
-                if (selection.first < currentTime || selection.second < currentTime) {
-                    Toast.makeText(getApplicationContext(), "Please select dates in the future", Toast.LENGTH_SHORT).show();
+                long startOfToday = getStartOfTodayInMillis();
+
+                if (selection.first < startOfToday || selection.second < startOfToday) {
+                    Toast.makeText(getApplicationContext(), "Please select dates today or in the future", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 txtPeriod.setText(materialDatePicker.getHeaderText());
@@ -84,6 +87,15 @@ public class ViewRoomActivity extends AppCompatActivity {
                 DataHolder.duration = txtPeriod.getText().toString();
             }
         });
+    }
+
+    private long getStartOfTodayInMillis() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
     }
 
     private void addEvents() {
