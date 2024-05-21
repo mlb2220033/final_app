@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:text="Price per night"
             android:textColor="@color/Primary_500"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -144,7 +144,7 @@
             android:layout_marginEnd="10dp"
             android:text=" / Day"
             android:textColor="@color/Neutral_900"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/txtDistance"

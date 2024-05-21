@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@drawable/edt_background"
+    android:background="@drawable/selector_background"
     android:elevation="3dp"
     android:orientation="horizontal">
 
