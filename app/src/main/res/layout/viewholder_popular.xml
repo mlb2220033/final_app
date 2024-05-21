@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="225dp"
-    android:layout_height="260dp"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="@drawable/edt_background"
     android:elevation="3dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgPic"
+        android:id="@+id/imgHotel"
         android:layout_width="0dp"
         android:layout_height="124dp"
         android:layout_marginStart="8dp"
@@ -23,12 +23,23 @@
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.circleImageView" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imgLike"
         android:layout_width="40dp"
         android:layout_height="37dp"
         android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/imgPic"
-        app:layout_constraintTop_toTopOf="@+id/imgPic"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/imgHotel"
+        app:layout_constraintTop_toTopOf="@+id/imgHotel"
+        app:srcCompat="@drawable/ic_fav" />
+
+    <ImageView
+        android:id="@+id/imgDisLike"
+        android:layout_width="40dp"
+        android:layout_height="37dp"
+        android:layout_margin="5dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/imgHotel"
+        app:layout_constraintTop_toTopOf="@+id/imgHotel"
         app:srcCompat="@drawable/favorite" />
 
     <TextView
@@ -40,52 +51,52 @@
         android:gravity="center"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:text="TextView"
+        android:text="Hotel"
         android:textColor="@color/Primary_700"
         android:textSize="12dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imgPic"
-        app:layout_constraintTop_toBottomOf="@+id/imgPic" />
+        app:layout_constraintStart_toStartOf="@+id/imgHotel"
+        app:layout_constraintTop_toBottomOf="@+id/imgHotel" />
 
     <TextView
-        android:id="@+id/txtRating"
+        android:id="@+id/txtStarRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="5"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/txtType"
-        app:layout_constraintTop_toTopOf="@id/txtType"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txtType" />
 
     <RatingBar
         android:id="@+id/ratingBar"
+        style="@android:style/Widget.DeviceDefault.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:indeterminate="false"
         android:isIndicator="true"
         android:numStars="5"
+        android:progressTint="@color/Semantic_500"
         android:rating="3"
         android:stepSize="0.1"
-        android:progressTint="@color/Semantic_500"
-        style="@android:style/Widget.DeviceDefault.RatingBar.Small"
         app:layout_constraintBottom_toBottomOf="@+id/txtType"
-        app:layout_constraintEnd_toStartOf="@id/txtRating"
+        app:layout_constraintEnd_toStartOf="@id/txtStarRating"
         app:layout_constraintTop_toTopOf="@id/txtType" />
 
 
     <TextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/txtHotelName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="title"
+        android:textColor="@color/Neutral_900"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/Neutral_900"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtType"
         app:layout_constraintTop_toBottomOf="@+id/txtType" />
@@ -96,34 +107,34 @@
         android:layout_height="27dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_location"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        app:layout_constraintStart_toStartOf="@+id/txtHotelName"
+        app:layout_constraintTop_toBottomOf="@+id/txtHotelName"
         app:tint="#534C4C" />
 
     <TextView
-        android:id="@+id/txtAddress"
+        android:id="@+id/txtHotelAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="address"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:text="address"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/imageView17"
-        app:layout_constraintStart_toEndOf="@id/imageView17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageView17"/>
+        app:layout_constraintStart_toEndOf="@id/imageView17"
+        app:layout_constraintTop_toTopOf="@id/imageView17" />
 
     <TextView
-        android:id="@+id/txtPrice"
+        android:id="@+id/txtPricePerNight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$0"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:textColor="@color/Primary_500"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/imageView17"
-        app:layout_constraintTop_toBottomOf="@id/imageView17"/>
+        app:layout_constraintTop_toBottomOf="@id/imageView17" />
 
     <TextView
         android:id="@+id/textView21"
@@ -132,12 +143,12 @@
         android:layout_marginStart="8dp"
         android:text="/ Day"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/txtPrice"
-        app:layout_constraintStart_toEndOf="@id/txtPrice"
-        app:layout_constraintTop_toTopOf="@id/txtPrice" />
+        app:layout_constraintBottom_toBottomOf="@id/txtPricePerNight"
+        app:layout_constraintStart_toEndOf="@id/txtPricePerNight"
+        app:layout_constraintTop_toTopOf="@id/txtPricePerNight" />
 
     <TextView
-        android:id="@+id/txtReview"
+        android:id="@+id/txtDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingEnd="3dp"
@@ -152,13 +163,14 @@
         android:id="@+id/txtReviewPopular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:text="reviews"
-        android:textStyle="italic"
+        android:layout_marginBottom="2dp"
         android:textSize="12sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView17" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPricePerNight" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.Viewhold
     @Override
     public PopularAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.hotel_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_popular, parent, false);
         return new Viewholder(view);
     }
 
