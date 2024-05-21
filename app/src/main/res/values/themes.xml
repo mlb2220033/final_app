@@ -4,6 +4,15 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/Primary_500</item>
+        <item name="colorPrimaryDark">@color/Primary_700</item>
+        <item name="colorAccent">@color/Semantic_500</item>
+    </style>
+
+
 
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />
 
