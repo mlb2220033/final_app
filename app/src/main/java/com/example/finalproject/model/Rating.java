@@ -4,7 +4,6 @@ public class Rating {
     private String uid;
     private String userName;
     private String comment;
-    ;
     private float starRating;
     private Long timeRating;
     public Rating() {

@@ -16,6 +16,8 @@ import com.example.finalproject.R;
 import com.example.finalproject.booking.HotelDetailActivity;
 import com.example.finalproject.model.Hotel;
 import com.example.finalproject.model.DataHolder;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,19 +61,47 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.Viewhold
 
         Picasso.get().load(hotel.getHotelImage()).into(holder.imgHotel);
 
-        holder.imgLike.setVisibility(hotel.isLiked() ? View.VISIBLE : View.GONE);
-        holder.imgDisLike.setVisibility(hotel.isLiked() ? View.GONE : View.VISIBLE);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(user.getUid()).child("favorites");
+            favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean isFavorite = snapshot.hasChild(hotel.getHotelID());
 
-        holder.imgLike.setOnClickListener(v -> {
+                    holder.imgLike.setVisibility(isFavorite ? View.VISIBLE : View.GONE);
+                    holder.imgDisLike.setVisibility(isFavorite ? View.GONE : View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } else {
             holder.imgLike.setVisibility(View.GONE);
             holder.imgDisLike.setVisibility(View.VISIBLE);
-            Toast.makeText(v.getContext(), "Remove from favorites list", Toast.LENGTH_SHORT).show();
+        }
+
+        holder.imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.imgLike.setVisibility(View.GONE);
+                holder.imgDisLike.setVisibility(View.VISIBLE);
+                Toast.makeText(v.getContext(), "Remove from favorites list", Toast.LENGTH_SHORT).show();
+                removeFromFavorites(hotel.getHotelID());
+            }
         });
 
-        holder.imgDisLike.setOnClickListener(v -> {
-            holder.imgDisLike.setVisibility(View.GONE);
-            holder.imgLike.setVisibility(View.VISIBLE);
-            Toast.makeText(v.getContext(), "Add to favorites list", Toast.LENGTH_SHORT).show();
+        holder.imgDisLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.imgDisLike.setVisibility(View.GONE);
+                holder.imgLike.setVisibility(View.VISIBLE);
+                Toast.makeText(v.getContext(), "Add to favorites list", Toast.LENGTH_SHORT).show();
+                addToFavorites(hotel.getHotelID());
+            }
         });
 
         holder.itemView.setOnClickListener(v -> {
@@ -88,7 +118,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.Viewhold
             context.startActivity(intent);
         });
 
-        // Calculate distance
+
         DatabaseReference hotelMarkersRef = FirebaseDatabase.getInstance().getReference("Hotels")
                 .child(hotel.getHotelID()).child("hotelMarkers");
         hotelMarkersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -148,7 +178,23 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.Viewhold
         dist = Math.acos(dist);
         dist = Math.toDegrees(dist);
         dist = dist * 60 * 1.1515;
-        dist = dist * 1.60934;  // convert miles to kilometers
+        dist = dist * 1.60934;
         return dist;
+    }
+
+    private void addToFavorites(String hotelID) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+            databaseReference.child(hotelID).setValue(true);
+        }
+    }
+
+    private void removeFromFavorites(String hotelID) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("favorites");
+            databaseReference.child(hotelID).removeValue();
+        }
     }
 }

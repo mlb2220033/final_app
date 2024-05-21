@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="30dp"
+    android:paddingTop="20dp"
     tools:context=".booking.HomeActivity">
 
     <ScrollView
@@ -27,13 +27,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="24dp">
 
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Location"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
 
                 <ImageView
                     android:id="@+id/imgNotification"
@@ -46,25 +40,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.529" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="30dp"
-                    android:layout_height="31dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_location"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                <Spinner
-                    android:id="@+id/spinnerLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/imageView3"
-                    app:layout_constraintTop_toTopOf="@id/imageView3" />
 
                 <ImageView
                     android:id="@+id/imageView15"
@@ -90,6 +65,16 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView15"
                     app:layout_constraintStart_toStartOf="@+id/imageView15"
                     app:layout_constraintTop_toTopOf="@+id/imageView15" />
+
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="25dp"
+                    android:text="Hi, UserName !"
+                    android:textColor="@color/Neutral_900"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -360,6 +345,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Popular"
+                    android:layout_marginVertical="10dp"
                     android:textColor="@color/Neutral_900"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -369,6 +355,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See all"
+                    android:layout_marginVertical="10dp"
                     android:textColor="@color/Primary_700"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -417,6 +404,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Recommended Property"
+                    android:layout_marginVertical="10dp"
                     android:textColor="@color/Neutral_900"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -426,6 +414,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See all"
+                    android:layout_marginVertical="10dp"
                     android:textColor="@color/Primary_700"
                     android:textSize="14sp" />
 
@@ -522,6 +511,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/Explore"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 

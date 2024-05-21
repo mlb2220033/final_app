@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 
+import com.bumptech.glide.Glide;
 import com.example.finalproject.R;
 import com.example.finalproject.adapter.PopularAdapter;
 import com.example.finalproject.adapter.RecomAdapter;
@@ -27,11 +29,13 @@ import com.example.finalproject.adapter.SliderAdapter;
 import com.example.finalproject.databinding.ActivityHomeBinding;
 import com.example.finalproject.model.DataHolder;
 import com.example.finalproject.model.Hotel;
+import com.example.finalproject.model.MyUtils;
 import com.example.finalproject.model.SliderBanner;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,12 +46,14 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
-    LinearLayout Profile, Favorite, Chat, Home;
+    LinearLayout Profile, Favorite, Chat, Home, Explore;
     LinearLayout edtSearch;
     ImageView imgSearchAdvanced;
     int REQUEST_LOCATION = 1;
     FusedLocationProviderClient fusedLocationClient;
     FirebaseDatabase database;
+    TextView txtUserName;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,31 @@ public class HomeActivity extends AppCompatActivity {
         addViews();
         addEvents();
         getUserLocation();
+        loadMyInfo();
+    }
+
+    private void loadMyInfo() {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        myRef.child("" + firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String name = "" + snapshot.child("full name").getValue();
+
+
+                    binding.txtUserName.setText("Hi, " + name + "!");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Handle database error
+            }
+        });
+
+
     }
 
     private void getUserLocation() {
@@ -113,9 +144,12 @@ public class HomeActivity extends AppCompatActivity {
         Home = findViewById(R.id.Home);
         Profile = findViewById(R.id.Profile);
         Favorite = findViewById(R.id.Favorite);
+        Explore = findViewById(R.id.Explore);
 
         edtSearch = findViewById(R.id.edtSearch);
+        txtUserName = findViewById(R.id.txtUserName);
         imgSearchAdvanced = findViewById(R.id.imgSearchAdvanced);
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     private void addEvents() {
@@ -138,6 +172,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, FavoriteListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Explore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, BlogActivity.class);
                 startActivity(intent);
             }
         });

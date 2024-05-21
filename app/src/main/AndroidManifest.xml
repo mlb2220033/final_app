@@ -19,7 +19,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
-
+        <activity
+            android:name=".booking.BlogAllCommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.BlogDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".booking.BlogActivity"
+            android:exported="false" />
         <activity
             android:name=".booking.FavoriteListActivity"
             android:exported="false" />

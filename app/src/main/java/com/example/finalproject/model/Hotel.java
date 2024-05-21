@@ -10,7 +10,7 @@ public class Hotel implements Serializable {
     boolean Liked;
     long timestamp;
     double distance;
-    float averageRating; // Add this line
+    float averageRating;
 
     public Hotel() {
     }
