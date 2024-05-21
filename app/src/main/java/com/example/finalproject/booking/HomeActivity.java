@@ -191,6 +191,7 @@ public class HomeActivity extends AppCompatActivity {
                             });
                         }
                     }
+                    binding.progressBarItem.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -243,6 +244,7 @@ public class HomeActivity extends AppCompatActivity {
                             });
                         }
                     }
+                    binding.progressBarPopular.setVisibility(View.INVISIBLE);
                 }
             }
 
